@@ -1,0 +1,18 @@
+[
+  {
+    "Eid": "1",
+    "name": "Aditya Raj",
+    "email": "yvaditya0001@gmail.com",
+    "phone": "9876543210",
+    "department": "Operational Team",
+    "addedBy": "Admin"
+  },
+  {
+    "Eid": "2",
+    "name": "Harshit Yadav",
+    "email": "yvharshit@gmail.com",
+    "phone": "9876543211",
+    "department": "SDE",
+    "addedBy": "Admin"
+  }
+]

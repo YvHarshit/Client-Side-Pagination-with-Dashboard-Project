@@ -1,0 +1,22 @@
+@import "tailwindcss";
+
+:root {
+    --bg: #161915;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #161915;
+    /* background-color: black; */
+    color: #e8f0e0;
+    min-height: 100vh;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
