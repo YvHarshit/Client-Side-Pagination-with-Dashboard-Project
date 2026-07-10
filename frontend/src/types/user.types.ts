@@ -55,4 +55,20 @@ export interface AppContextType {
 
   currPage : number ;
   setCurrPage : (val :number) => void ;
+
+  searchStr: string ;
+  setSearchStr : (val: string) => void ;
+  totalPages : number ;
+  setTotalPages : (val : number) => void ;
+  totalEmp : number ;
+  setTotalEmp : (val : number) => void ;
+  trigger : boolean ;
+  setTrigger : (val : boolean) => void ;
+
+  filteredData : number ;
+  setFilteredData : (val : number) => void ;
+  empDetails : Employee | null ; 
+  setEmpDetails : (val : Employee) => void ;
+  getEmpDetails : (val: string) => Promise<Employee> ;
+  fetchEmployeeDetails : () => Promise<void> ;
 } 
