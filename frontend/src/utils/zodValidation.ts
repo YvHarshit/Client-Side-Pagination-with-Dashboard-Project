@@ -7,6 +7,8 @@ export const employeeSchema = z.object({
     phone: z.string().min(1, "Phone is required").regex(/^\d{10}$/, "Phone number must be exactly 10 digits"),
     department: z.string().min(1, "Departemt is required"),
     skills: z.array(z.string()),
+
+    password : z.string().min(1, "Required Field").min(4, "Min. length should be 4")
 });
 
 export type EmployeeFormData = z.infer<typeof employeeSchema>;

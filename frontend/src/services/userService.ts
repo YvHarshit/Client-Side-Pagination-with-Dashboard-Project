@@ -1,22 +1,44 @@
 import axios from "axios"
 import type { Employee } from "../types/user.types"
 
-
-
-const hasDashboardFields = (employee: Employee): boolean => {
-  return [employee.name, employee.email, employee.phone, employee.department].every(
-    (value) => typeof value === 'string' && value.trim().length > 0
-  )
+interface UsersResponse {
+  users: Employee[];
+  currentPage: number;
+  totalPages: number;
+  totalUsers: number;
+  filteredUsers: number ;
 }
 
-export const fetchUsers = async():Promise<Employee[]> => {
+
+
+// const hasDashboardFields = (employee: Employee): boolean => {
+//   return [employee.name, employee.email, employee.phone, employee.department].every(
+//     (value) => typeof value === 'string' && value.trim().length > 0
+//   )
+// }
+
+// export const fetchUsers = async(page: number, limit: number, search: string):Promise<Employee[]> => {
+//   try {
+//     const  data : UsersResponse  = await axios.get<Employee[]>(`/api/users?page=${page}&limit=${limit}&search=${encodeURIComponent(search)}`, {withCredentials : true}) ;
+//     return data.filter(hasDashboardFields) ;
+//   } catch (error) {
+//     throw new Error("Failed to fetch users")    
+//   }
+// }
+
+export const fetchUsers = async (page: number,limit: number,search: string): Promise<UsersResponse> => {
   try {
-    const { data } = await axios.get<Employee[]>('/api/users', {withCredentials : true}) ;
-    return data.filter(hasDashboardFields) ;
+    const { data } = await axios.get<UsersResponse>("/api/users", {
+        params: { page,limit, search },
+        withCredentials: true 
+      }
+    );
+
+    return data ;
   } catch (error) {
-    throw new Error("Failed to fetch users")    
+    throw new Error("Failed to fetch users");
   }
-}
+};
 
 
 export const addUser = async(user :Employee): Promise<Employee> => {

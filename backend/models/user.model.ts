@@ -1,16 +1,5 @@
 import mongoose from "mongoose";
 
-// export interface Employee {
-//   readonly Eid: string ;
-//   name: string;
-//   email: string;
-//   phone: string;
-//   department: string;
-//   skills: string[];
-
-//   userId ?: string ;
-//   addedBy ?: string ;
-// }
 const employeeSchema = new mongoose.Schema({
 
   Eid: {  type: String,},
@@ -18,6 +7,7 @@ const employeeSchema = new mongoose.Schema({
   email: { type: String, },
   phone: { type: String, },
   department: { type: String,},
+  password : { type: String } ,
 
   skills: {
     type: [String],

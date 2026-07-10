@@ -13,8 +13,8 @@ const UserCard = ({ employee, isHighlighted, onDelete, onEditClick }: UserCardPr
     { employee.addedBy 
     && 
     <p className = "px-3 py-1 rounded-md text-lg text-[#a8d96c] bg-[#161715] float-right animate-pulse">
-      {employee.addedBy}
-      </p>
+     Seeded Data
+    </p>
     }
      <h3 className ="text-md font-semibold mb-4">
       Emp ID : {employee.Eid}

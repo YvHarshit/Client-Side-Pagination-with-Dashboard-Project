@@ -2,12 +2,10 @@ import { useAppContext } from "../../context/AppContext";
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
-interface PaginationProps  {
-    toatlPages : number ;
-}
 
-const Pagination = ({toatlPages} : PaginationProps) => {
-    const  { currPage, setCurrPage } = useAppContext() ;
+
+const Pagination = () => {
+    const  { currPage, setCurrPage, totalPages } = useAppContext() ;
   return (
     <div> 
 
@@ -18,11 +16,11 @@ const Pagination = ({toatlPages} : PaginationProps) => {
             className={ `bg-[#232f20] rounded-md cursor-pointer hover:scale-104 p-1 ${currPage > 1 ? "block" : "hidden"}`}> <ArrowBackIosNewIcon/> </button>
 
           
-            <button className="mx-3 bg-[#232f20] w-10 h-10 rounded-full"> { currPage } </button>
+            <button className="mx-3 bg-[#232f20] w-10 h-10 border border-[#3a5035] rounded-full"> { currPage } </button>
 
-            <button disabled = {currPage === toatlPages}
+            <button disabled = {currPage === totalPages}
             onClick={() => setCurrPage(currPage + 1)}
-            className= {`bg-[#232f20] rounded-md cursor-pointer hover:scale-104 p-1 ${currPage > toatlPages-1 ? "hidden" : "block"}`} > <ArrowForwardIosIcon/>  </button>
+            className= {`bg-[#232f20] rounded-md cursor-pointer hover:scale-104 p-1 ${currPage > totalPages-1 ? "hidden" : "block"}`} > <ArrowForwardIosIcon/>  </button>
 
         </div>
     </div>

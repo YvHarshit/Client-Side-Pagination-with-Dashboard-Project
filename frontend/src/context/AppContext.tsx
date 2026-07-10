@@ -1,8 +1,10 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import type { ReactNode } from "react";
 import axios from "axios";
-import type { UserData } from "../types/user.types";
+import { type Employee, type UserData } from "../types/user.types";
 import type { AppContextType } from "../types/user.types";
+
+import {getEmpDetails} from "../services/empService.js"
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
@@ -14,6 +16,14 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
 
   const [selectedDomain, setSelectedDomain] = useState("all") ;
   const [currPage, setCurrPage] = useState(1) ;
+
+  const [searchStr, setSearchStr] = useState("") ;
+  const [totalPages, setTotalPages] = useState(1) ;
+  const [totalEmp, setTotalEmp] = useState(1) ;
+  const [trigger, setTrigger] = useState(true) ;
+
+  const [filteredData, setFilteredData] = useState(0) ;
+  const [empDetails, setEmpDetails] = useState<Employee | null>(null) ;
   
   
   const getUserData = async () => {
@@ -36,9 +46,25 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  useEffect(() => {
-    getUserData();
-  }, []);
+  const fetchEmployeeDetails = async () => {
+  try {
+    const employee = await getEmpDetails(backendUrl);
+    setEmpDetails(employee.emp);
+
+    console.log("Setting employee:", employee);
+  } 
+  catch (error) {
+    console.log(error);
+    setEmpDetails(null);
+  }
+};
+
+useEffect(() => {
+  getUserData()
+  fetchEmployeeDetails() 
+}, []);
+
+  
 
   const value: AppContextType = {
     backendUrl,
@@ -47,7 +73,16 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
     getUserData,
 
     selectedDomain, setSelectedDomain ,
-    currPage, setCurrPage
+    currPage, setCurrPage,
+    searchStr, setSearchStr,
+    totalPages, setTotalPages,
+    totalEmp, setTotalEmp ,
+    trigger, setTrigger ,
+
+    filteredData, setFilteredData ,
+    empDetails, setEmpDetails ,
+    getEmpDetails,
+    fetchEmployeeDetails ,
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;

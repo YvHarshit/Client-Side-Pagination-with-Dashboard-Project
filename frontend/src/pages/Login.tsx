@@ -104,7 +104,36 @@ const validateForm = () => {
   };
 
 return (
-  <div className="flex items-center justify-center min-h-screen px-6 sm:px-0 bg-[#1d201c]">
+  <div className="flex items-center justify-center min-h-screen px-6 sm:px-0 bg-gray-800 relative">
+
+  {/* Top Right Button */}
+  <div className="absolute top-8 right-8 flex rounded-lg overflow-hidden border border-slate-500">
+
+  <button
+    onClick={() => navigate("/login")}
+    className={`px-6 py-3 transition-colors ${
+      location.pathname === "/login"
+        ? "bg-lime-400 text-black font-semibold"
+        : "bg-slate-700 text-white hover:bg-slate-600"
+    }`}
+  >
+    As Admin
+  </button>
+
+  <button
+    onClick={() => navigate("/emp-login")}
+    className={`px-6 py-3 transition-colors ${
+      location.pathname === "/emp-login"
+        ? "bg-lime-400 text-black font-semibold"
+        : "bg-slate-700 text-white hover:bg-slate-600"
+    }`}
+  >
+    As Employee
+  </button>
+
+</div>
+   
+
     <div className="border border-white p-12 rounded-lg w-full max-w-md bg-[#232f20]">
       <h2 className="text-4xl font-semibold mb-8 text-center text-lime-300"> {state === 'Sign Up' ? "Create Your Account" : "Login to Your Account"} </h2>
             

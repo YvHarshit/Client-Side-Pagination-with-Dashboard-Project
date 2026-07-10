@@ -122,7 +122,7 @@ export const login = async (req: Request, res: Response) => {
     }
 
     const token = jwt.sign({ id: user.userId }, process.env.JWT_SECRET as string, {
-      expiresIn: "1h",
+      expiresIn: "1d",
     });
 
 
@@ -133,9 +133,14 @@ export const login = async (req: Request, res: Response) => {
 }   );
 
     return res.json({ success: true, message: "Logged in successfully" });
-  } catch (error: any) {
-    return res.status(500).json({ success: false, message: error.message });
-  }
+  } catch (error : unknown) {
+        if(error instanceof Error) {
+            console.log(error.message) 
+            console.log(error.stack)
+        }
+        else console.log("An un-expected error : ", error)
+        
+    }
 };
 
 
@@ -155,7 +160,7 @@ export const logout = async (req: Request, res: Response) => {
 
 
 export const getMe = async (req: Request, res: Response) => {
-  console.log("req.userId in getMe =", (req.userId));
+  console.log("req.userId in getMe (auth.controller) =", (req.userId));
 
   try {
     const user = await AuthUser.findOne({ userId: Number(req.userId),}).select("-password");

@@ -5,6 +5,7 @@ import Dashboard from "./pages/Dashboard";
 import Login from "./pages/Login";
 import AuthenticateEmail from "./pages/AuthenticateEmail";
 import EmpDashboard from "./pages/EmpDashboard";
+import EmpLogin from "./pages/EmpLogin";
 
 function AppRoutes() {
   const { isLoggedin, userData } = useAppContext();
@@ -19,6 +20,8 @@ function AppRoutes() {
       <Route path="/auth-account" element={ isLoggedin ? userData?.isAuthenticated ? <Navigate to="/" />  : <AuthenticateEmail />: <Navigate to="/login" /> }/>
 
       <Route path="/emp-dashboard" element = { <EmpDashboard/> }/>
+
+      <Route path="/emp-login" element = { <EmpLogin/> }/>
 
     </Routes>
   );

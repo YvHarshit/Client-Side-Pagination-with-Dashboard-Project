@@ -11,47 +11,54 @@ import axios from 'axios'
 import {toast} from 'react-toastify'
 import { useNavigate } from 'react-router-dom'
 import {useAppContext} from '../context/AppContext'
-
-
 import FilterBar from "../components/users/FilterBar.js";
 import { filterByEmailDomain } from "../utils/filterByDomain.js";
+
 import Pagination from "../components/users/Pagination.js";
-
-
-
 
 const Dashboard = () => {
 
-  const { setIsLoggedin, setUserData, userData, backendUrl, currPage } = useAppContext();
+  const { setIsLoggedin, setUserData, userData, backendUrl, currPage, searchStr, setTotalPages, totalEmp, setTotalEmp, trigger, setTrigger, filteredData, setFilteredData } = useAppContext();
 
   const [employees, setEmployees] = useState<Employee[]>([])
-  const [search, setSearch] = useState('')
   const [error, setError] = useState('')
   const [editingEmployee, setEditingEmployee] = useState<Employee | null>(null);
   const navigate = useNavigate() ;
 
-  const {selectedDomain} = useAppContext () ;
 
 useEffect(() => {
   const loadData = async () => {
     try {
       setError('')
 
-      const users = await fetchUsers()
+      const {users, totalUsers, totalPages, currentPage, filteredUsers} = await fetchUsers(currPage, 3, searchStr)
       const sorted = sortData(users)
       setEmployees(sorted)
+
+      setTotalPages(totalPages)
+      setTotalEmp(totalUsers)
+      setFilteredData(filteredUsers)
+
+      console.log("Total Number of Users", totalUsers)
+      console.log("Total Number of Pages : ",totalPages)
+      console.log("Current Pages : ",currentPage)
+      console.log("Filtered Users : ",filteredUsers)
+      console.log("Users : ",users)
       
-    } catch (err) {
+    } 
+    catch (err) {
       console.error('Failed to fetch users :', err)
       setError('Could not load employees. Check that the backend is running on port 3000.')
     }
   }
   loadData()
-},[]) 
+},[searchStr, currPage, trigger]) 
 
 const handleAddEmployee = async (newEmployee: Employee) => {
   try {
-    const savedEmployee = await addUser(newEmployee)
+     const savedEmployee = 
+    await addUser(newEmployee)
+    setTrigger(!trigger)
     setEmployees((prevEmployees) => sortData([...prevEmployees,savedEmployee]))
   } 
   catch (err) {
@@ -102,8 +109,6 @@ const handleEditClick = (employee: Employee) => {
 };
 
 
-
-
 const handleLogout = async () => {
   try {
     axios.defaults.withCredentials = true;
@@ -128,14 +133,12 @@ const handleLogout = async () => {
   const sortedCompanies = Object.entries(departmentCounts)
     .sort((a, b) => b[1] - a[1])
 
-  const filteredEmployees = searchedFilterEmployees(employees, search)  
+  // const filteredEmployees = searchedFilterEmployees(employees, searchStr)  
+  // const searchEmployees = searchedFilterEmployees(employees,searchStr) ;
+  // const finalEmployees = filterByEmailDomain(searchEmployees, selectedDomain)
 
-  // const applyFilteredData = filterByEmailDomain(employees, selectedDomain)    //  this is for filter functionality
-
-  const searchEmployees = searchedFilterEmployees(employees,search) ;
-  const finalEmployees = filterByEmailDomain(searchEmployees, selectedDomain)
   
-  const n = Math.ceil( (finalEmployees.length)/3 )
+  
   
 
   // console.log("SelectedDomain in Dashboard.tsx: ",selectedDomain )
@@ -180,11 +183,11 @@ const handleLogout = async () => {
 
     <div className="grid grid-cols-2 gap-4 text-[#a8d96c]">
       <div className='bg-[#232f20] border border-[#3a5035] rounded-lg p-5' >
-        <p className='text-3xl'>  {employees.length}   </p>
+        <p className='text-3xl'>  {totalEmp}   </p>
         <p className='text-lg mt-2'>   Total Employees  </p>
       </div>
      <div className='bg-[#232f20] border border-[#3a5035] rounded-lg p-5'>
-        <p className='text-3xl'>   {finalEmployees.length}   </p> 
+        <p className='text-3xl'>   {filteredData}   </p> 
         <p className='text-lg mt-2'> Filtered Employees </p>
       </div>
     </div>
@@ -224,7 +227,7 @@ const handleLogout = async () => {
  
 
     <div className="flex gap-3 mt-2 mb-1">
-      <div className="flex-grow"> <SearchBar search={search} setSearch={setSearch} /> </div>
+      <div className="flex-grow"> <SearchBar/> </div>
       <div> <FilterBar/> </div>
    </div>
     
@@ -235,13 +238,13 @@ const handleLogout = async () => {
 : 
 (<div className="max-h-[500px] overflow-y-auto no-scrollbar"> 
   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 ">
-    { (filteredEmployees.length === 0 )
+    { (setFilteredData.length === 0 )
     ? 
     (
       <p className="text-center text-sm">No employees found.</p>) 
       : 
       (
-      finalEmployees.slice((currPage-1)*3 , (currPage-1)*3 + 3).map(emp => (
+      employees.map(emp => (
         <UserCard
           key={emp.Eid}
           employee={emp}
@@ -255,7 +258,7 @@ const handleLogout = async () => {
 )}
 
 
-{ <Pagination toatlPages={n}/>}
+{ <Pagination/>}
 
 
 

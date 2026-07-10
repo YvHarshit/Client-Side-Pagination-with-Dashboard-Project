@@ -1,4 +1,4 @@
-import {getUsers, addUser, getUserByID, deleteUserByID, updateUserByID} from "../controllers/user.controller.js"
+import {getUsers, addUser, deleteUserByID, updateUserByID, empLogin, getEmpDetail, updateDetailsFromDashboard, empLogout} from "../controllers/user.controller.js"
 import {Router} from "express";
 import logger from "../middleware/loggers.js"
 import { validate } from "../middleware/zodValidation.js";
@@ -12,9 +12,18 @@ const router = Router();
 
 router.get("/users",userAuth,logger, getUsers)
 router.post("/add-user",userAuth,checkAuth, validate(zodValidSchema), addUser)
-router.get("/user/:Eid",userAuth, getUserByID)
+// router.get("/user/:Eid",userAuth, getUserByID)
 router.delete("/user/:Eid",userAuth, deleteUserByID)
 router.put("/user/:Eid",userAuth, updateUserByID)
+
+
+router.post("/user/emplogin", empLogin)
+
+router.get("/user/emp-details", getEmpDetail)
+
+router.patch("/user/update-profile", updateDetailsFromDashboard)
+
+router.post("/user/emplogout", empLogout)
 
 export default router;
 

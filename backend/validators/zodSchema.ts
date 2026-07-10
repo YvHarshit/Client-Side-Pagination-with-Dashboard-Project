@@ -12,7 +12,9 @@ export const zodValidSchema = z.object({
 
     skills: z.array(z.string()),
 
-    userId: z.number().optional()
+    userId: z.number().optional() ,
+
+    password : z.string().min(1, "Required Field").min(4, "Min. length should be 4")
 
 })
 

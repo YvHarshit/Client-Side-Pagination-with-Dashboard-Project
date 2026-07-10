@@ -21,7 +21,7 @@ const authUserSchema = new mongoose.Schema(
     password: {
     type: String,
     default: "",
-},
+    },
 
 
     otp :{
@@ -43,6 +43,11 @@ const authUserSchema = new mongoose.Schema(
       type : String,
     default : "local"
     } ,
+
+    role:{
+      type : String ,
+      default : "Admin"
+    }
   },
   
 );

@@ -1,18 +1,26 @@
-import { useAppContext } from '../../context/AppContext.js';
-import type {SearchBarProps} from '../../types/user.types.js'
+import { useEffect, useState } from "react";
+import { useAppContext } from "../../context/AppContext.js";
 
-const SearchBar = ({ search, setSearch }: SearchBarProps) => {
+const SearchBar = () => {
+  const { setCurrPage, setSearchStr } = useAppContext();
 
-  const {setCurrPage} = useAppContext() ;
+  const [search, setSearch] = useState("");
 
-  console.log("Re-set Page Number to 1 in SearchBar.tsx")
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setSearchStr(search);
+      setCurrPage(1);
+    }, 1000); 
 
+    return () => clearTimeout(timer);
+  }, [search, setSearchStr, setCurrPage]);
 
   return (
-    <input  className="mb-4 p-2 w-full text-lg rounded-md border border-[#3a5035] outline-none"
-    type="text" placeholder="Search by name" value={search}
+    <input
+      className="mb-4 p-2 w-full text-lg rounded-md border border-[#3a5035] outline-none"
+      type="text" placeholder="Search by name"
+      value={search}
       onChange={(e) => setSearch(e.target.value)}
-      onClick={() => setCurrPage(1) }
     />
   );
 };

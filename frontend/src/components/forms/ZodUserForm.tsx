@@ -125,6 +125,12 @@ const UserForm = ({onAdd, onUpdate, editingEmployee}: UserFormProps) => {
             {errors.phone && ( <p className="text-red-500 text-sm mt-1"> {errors.phone.message} </p>)}
           </div>
 
+          <div>
+            <label className='block text-md m-2'>Password</label> 
+            <input className="p-3 w-full bg-[#161915] border border-[#3a5035] rounded-md text-[#e8f0e0] text-md outline-none"  placeholder="9876543210" {...register("password")} />
+            {errors.password && ( <p className="text-red-500 text-sm mt-1"> {errors.password.message} </p>)}
+          </div>
+
         
           <div>
             <label className='block text-md m-2'>Department</label>  
