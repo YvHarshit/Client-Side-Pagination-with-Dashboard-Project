@@ -67,8 +67,6 @@ const validateForm = () => {
   return true;
 };
 
-
-    
     
   const onSubmitHandler = async (e: React.FormEvent) => {
   e.preventDefault();
@@ -161,22 +159,22 @@ return (
               onChange={(e) => setPassword(e.target.value)}
               className="rounded-full px-5" />
       </div>
-      <button className="w-full px-5 py-3 rounded-full bg-[#a8d96c] text-black font-semibold cursor-pointer hover:scale-102 transition-all"
+      <button className="w-full px-5 py-3 rounded-full bg-lime-600 text-black font-semibold cursor-pointer hover:scale-102 transition-all"
           type="submit">{state === 'Sign Up' ? "Create Account" : "Login"}</button>
       {state === 'Login'
           &&
           (
-              <p className="text-center m-2"> Don't have an account? {' '}
+              <p className="text-center m-2"> Don't have an account {' '} ? {' '}
                   <span className="text-[#a8d96c] cursor-pointer" onClick={() => setState('Sign Up')}>Sign Up here</span></p>
           )}
       {state === 'Sign Up'
           &&
           (
-              <p className="text-center m-2"> Already have an account?{' '}
+              <p className="text-center m-2"> Already have an account{' '} ? {' '}
                   <span className="text-[#a8d96c] cursor-pointer  " onClick={() => setState('Login')}>Login here</span></p>
                     )}
 
-            <button className="w-full mt-4 px-5 py-3 rounded-full bg-[#a8d96c] text-black font-semibold cursor-pointer hover:scale-102 transition-all"
+            <button className="w-full mt-4 px-5 py-3 rounded-full bg-lime-600  text-black font-semibold cursor-pointer hover:scale-102 transition-all"
             type="button" onClick={googleLogin}> Continue with Google </button>        
             </form>
         </div>

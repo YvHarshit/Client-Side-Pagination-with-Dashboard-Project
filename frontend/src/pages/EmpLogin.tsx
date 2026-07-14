@@ -73,11 +73,11 @@ const formSubmit = async (e: React.FormEvent) => {
             <form onSubmit={formSubmit}>
                 <label className="block text-md font-medium text-gray-100">Email :</label> 
                 <input type="email" placeholder="Enter your email"  onChange={(e) => setEmail(e.target.value)} value={email}
-                className="mt-3 w-full rounded-md px-3 py-3 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-lime-500 sm:text-sm" />
+                className="mt-3 w-full rounded-md px-3 py-3 text-base text-white bg-[#2c3d28]  outline-1 -outline-offset-1 outline-white/10 focus:outline-2 focus:-outline-offset-2 focus:outline-lime-500 sm:text-sm" />
 
                 <label className="mt-3 block text-md font-medium text-gray-100">Password :</label> 
                 <input type="password" placeholder="Enter your password" onChange={(e) => setPassword(e.target.value)} value={password}
-                className="mt-3 block w-full rounded-md px-3 py-3 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-lime-500 sm:text-sm" />
+                className="mt-3 block w-full rounded-md px-3 py-3 text-base text-white bg-[#2c3d28]  outline-1 -outline-offset-1 outline-white/10 focus:outline-2 focus:-outline-offset-2 focus:outline-lime-500 sm:text-sm" />
 
                  <button type="submit" className="mt-6 flex w-full justify-center rounded-md bg-lime-600  px-3 py-1.5 text-md font-semibold text-white hover:bg-lime-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-500">Sign in</button>
       

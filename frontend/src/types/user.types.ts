@@ -1,3 +1,4 @@
+import type { DEPARTMENT, GENDER , EXPERIENCE} from "../utils/constants"
 
 export interface Employee {
   Eid?: string
@@ -5,11 +6,15 @@ export interface Employee {
   name: string
   email: string
   phone: string
+  age : number,
   username?: string
-  department?: string
+  department?: DEPARTMENT;
+  gender :  GENDER,
+  experience : EXPERIENCE ,
   skills: string[]
 
   addedBy ?: string
+  isFirstLogin : boolean
 }
 
 
@@ -72,3 +77,5 @@ export interface AppContextType {
   getEmpDetails : (val: string) => Promise<Employee> ;
   fetchEmployeeDetails : () => Promise<void> ;
 } 
+
+

@@ -4,6 +4,7 @@ import { nextId } from "../utils/idAllocator.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { string, success } from "zod";
+import transporter from "../utils/nodemailer.js";
 
 
 
@@ -83,7 +84,7 @@ export const getUsers =  async (req: Request, res: Response) => {
 export const addUser =  async (req : Request, res : Response): Promise<void> => {
     try {
     const employeeId = String(await nextId('employeeId'));
-    const { name, email, department, password, skills } = req.body;
+    const { name, email, department, phone, password, age, skills } = req.body;
 
     if (!req.userId) {
       res.status(401).json({ message: 'Unauthorized' });
@@ -95,13 +96,48 @@ export const addUser =  async (req : Request, res : Response): Promise<void> => 
     const emp = await Employee.create({
       Eid: employeeId,
       userId: req.userId,
-      name, email, department, skills, password: hashedPassword
+      name, email, department, phone, age, skills, 
+      password: hashedPassword
     });
+
+    await transporter.sendMail({
+        from: process.env.EMAIL,
+        to: email ,
+        subject : "Welcome, Employee account created" ,
+        html: `
+    <h2>Welcome Buddy! 🎉</h2>
+    <p>Your employee account has been created successfully.</p>
+    <p><strong>Please change your password on your first login.</strong></p>
+    <table cellpadding="6" cellspacing="0" border="1" style="border-collapse: collapse;">
+      <tr>
+        <td><strong>Employee ID</strong></td>
+        <td>${employeeId}</td>
+      </tr>
+      <tr>
+        <td><strong>Email</strong></td>
+        <td>${email}</td>
+      </tr>
+      <tr>
+        <td><strong>Temporary Password</strong></td>
+        <td>${password}</td>
+      </tr>
+    </table>
+    <br/>
+    <p>Regards,<br/>HR Team</p>
+  `,
+});
 
     res.json(emp);
   }
-        catch(err){res.status(500).json({ message: "Failed to add user"}); }
-    }
+    catch (err) {
+  console.error(err);
+  res.status(500).json({
+    success: false,
+    message: "Failed to add user",
+    error: err instanceof Error ? err.message : err,
+  });
+ }
+}
 
 // export const getUserByID =async (req : Request, res : Response): Promise<void> => {
 //     try{
@@ -146,17 +182,16 @@ export const updateUserByID = async (req: Request, res: Response): Promise<void>
             return;
         }
 
-        const updatedEmp = await Employee.findOneAndUpdate({
-            Eid: rawEid }, 
-            req.body, 
-            { returnDocument: 'after', 
-                runValidators: true }
+        const updatedEmp = await Employee.findOneAndUpdate({ Eid: rawEid }, 
+            req.body ,
+            { 
+                returnDocument: 'after', 
+                runValidators: true 
+            }
         );
 
         if (updatedEmp) res.json(updatedEmp);
-
-        else res.status(404).json({ message: "User not found" });
-       
+        else res.status(404).json({ message: "User not found" });       
     } 
     catch (err) {
         res.status(500).json({ message: "Failed to update user" });
@@ -285,13 +320,22 @@ export const updateDetailsFromDashboard = async (req: Request, res: Response) =>
         message: "Employee not found",
       });
     }
+    console.log("Request Body:", req.body);
+    console.log("Age from request:", req.body.age, typeof req.body.age);
+    console.log("Before:", emp.age);
 
-    emp.name = req.body.name ?? emp.name;
-    emp.phone = req.body.phone ?? emp.phone;
-    emp.department = req.body.department ?? emp.department;
-
+    const { name, phone, department, age, experience } = req.body;
+    
+    emp.name = name ;
+    emp.phone = phone ;
+    emp.department = department ;
+    emp.age = age;
+    emp.experience = experience ;
+    
+    console.log("After assignment:", emp.age);
+    
     await emp.save();
-
+    
     return res.status(200).json({
       success: true,
       message: "Profile updated successfully",
@@ -306,6 +350,8 @@ export const updateDetailsFromDashboard = async (req: Request, res: Response) =>
     });
   }
 };
+
+
 
 export const empLogout = async(req:Request, res: Response) => {
 
@@ -323,6 +369,56 @@ catch (error : unknown) {
     console.log(error.stack)
   }
   else console.log("Un-Expected error : ", error)    
+ }
 }
 
+
+
+export const empChangePassword = async(req: Request, res: Response) => {
+    const {newPassword} = req.body ;
+
+    if(!newPassword) {
+        return res.json ({
+            success: false ,
+            message : "New Password is missing !"
+        })
+    }
+    try {
+        const token = req.cookies.token ;
+        if(!token) {
+            return res.json ({
+                success : false ,
+                message : "Invalid Employee"
+            })
+         }    
+        const decoded = jwt.verify(token, process.env.JWT_SECRET as string) as {email : string}
+        const emp = await Employee.findOne({email: decoded.email})
+
+        if (!emp) {
+         return res.status(404).json({
+        success: false,
+        message: "Employee not found",
+        });
+      }
+
+        const hashedPassword = await bcrypt.hash(newPassword, 10);
+        emp.password = hashedPassword;
+        emp.isFirstLogin = false ;
+        await emp.save();
+
+        console.log(newPassword)
+        console.log(emp.isFirstLogin)
+
+        return res.status(200).json({
+          success: true,
+          message: "Password updated successfully",
+          employee: emp,
+        });  
+    } catch (error: unknown) {
+        if(error instanceof Error) {
+            console.log(error.stack)
+            console.log(error.message)
+        }
+        else console.log("Un-expected error : ", error)        
+    }
 }

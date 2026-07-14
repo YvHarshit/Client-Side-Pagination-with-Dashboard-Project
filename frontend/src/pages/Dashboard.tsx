@@ -101,7 +101,6 @@ const handleUpdate = async (employee: Employee) => {
 const handleEditClick = (employee: Employee) => {
   setEditingEmployee(employee);
   
-
   window.scrollTo({
     top: document.body.scrollHeight,
     behavior: 'smooth',
@@ -188,7 +187,7 @@ const handleLogout = async () => {
       </div>
      <div className='bg-[#232f20] border border-[#3a5035] rounded-lg p-5'>
         <p className='text-3xl'>   {filteredData}   </p> 
-        <p className='text-lg mt-2'> Filtered Employees </p>
+        <p className='text-lg mt-2'> Your Filtered Employees </p>
       </div>
     </div>
 

@@ -1,8 +1,9 @@
 import {type Request, type Response,type  NextFunction} from "express" ;
-import {type zodValidSchema} from "../validators/zodSchema.js" ;
+import z from "zod" ;
 
 
-export const validate = (schema:typeof zodValidSchema) => (req: Request, res: Response, next: NextFunction) =>{
+
+export const validate = (schema: z.ZodTypeAny) => (req: Request, res: Response, next: NextFunction) =>{
     const result = schema.safeParse(req.body);
 
     console.log("Zod Validation Middleware") ;
@@ -12,7 +13,7 @@ export const validate = (schema:typeof zodValidSchema) => (req: Request, res: Re
                 success : false ,
                 // errors :  result.error.issues }) } // Give full ERROR descripton
 
-                message : "400 - Validation Falied",
+                message : "400 - Zod Validation Failed",
                 errors : result.error.flatten().fieldErrors  }); 
             }
 
@@ -22,6 +23,7 @@ export const validate = (schema:typeof zodValidSchema) => (req: Request, res: Re
     next() ;
 
 }
+
 
 
 

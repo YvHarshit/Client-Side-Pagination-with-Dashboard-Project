@@ -1,34 +1,32 @@
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import type { SubmitHandler } from "react-hook-form";
 import type { EmployeeFormData } from "../../utils/zodValidation";
 import {employeeSchema} from "../../utils/zodValidation" ;
 import { zodResolver } from "@hookform/resolvers/zod";
 import type { Employee, UserFormProps } from "../../types/user.types";
-import { toast } from "react-toastify";
+import { DEPARTMENT, SKILLS, EXPERIENCE, GENDER} from "../../utils/constants";
 
 
 
 const UserForm = ({onAdd, onUpdate, editingEmployee}: UserFormProps) => {
   const [success, setSuccess] = useState(false);
 
-  enum SKILLS {
-  React = "React",
-  TypeScript = "TypeScript",
-  Node = "Node",
-  Python = "Python",
-  Design = "Design",
-  CPP = "C++",
-  Java = "Java",
-  }
-  const skillOptions = Object.values(SKILLS);
+  const skillOptions = Object.values(SKILLS) ;
+  const departmentOptions = Object.values(DEPARTMENT) ;
+  const experienceOptions = Object.values(EXPERIENCE) ;
 
   const { register, handleSubmit, reset, watch, setValue, formState: { errors }} = useForm<EmployeeFormData>({
-    resolver: zodResolver(employeeSchema),
+  resolver: zodResolver(employeeSchema),
+
     defaultValues: {
       name: "", 
       email: "", 
       phone: "", 
-      department: "", 
+      department: undefined,
+      gender: undefined,
+      experience: undefined,
+      password: "",
       skills: [],
     },
   });
@@ -53,35 +51,42 @@ const UserForm = ({onAdd, onUpdate, editingEmployee}: UserFormProps) => {
         name: editingEmployee.name ,
         email: editingEmployee.email ,
         phone: editingEmployee.phone ,
+        age: Number(editingEmployee.age),
         department: editingEmployee.department ,
+        experience: editingEmployee.experience ,
+        gender: editingEmployee.gender,
         skills: editingEmployee.skills || [],
       });
     }
   }, [editingEmployee, reset]);
 
 
-  const onSubmit = (data: EmployeeFormData) => {
-    const employeeData: Employee = {
-    ...(editingEmployee?.Eid && {  Eid: editingEmployee.Eid, }), ...data, };
+    const onSubmit: SubmitHandler<EmployeeFormData> = (data) => {
+      console.log(data);
+      console.log(typeof data.age);
 
-    if (editingEmployee) 
-    { onUpdate(employeeData); 
-      toast.success("Updated Successfully")
-    } 
-    else { onAdd(employeeData);
-      toast.success("Employee Added Successfully")
-     }
+
+    const employeeData: Employee = {
+      ...(editingEmployee?.Eid && { Eid: editingEmployee.Eid, }), ...data,
+      isFirstLogin: true
+    };
+
+    if (editingEmployee) onUpdate(employeeData); 
+    else onAdd(employeeData);    
       
     reset({
       name:"" ,
       email:"" ,
       phone:"" ,
-      department: "" ,
+      password: "" ,
+        department: "" as DEPARTMENT,
+  gender: "" as GENDER,
+  experience: "" as EXPERIENCE,
+      age: 18 ,
       skills : [] ,
     });
     setSuccess(true);
-    setTimeout(() => { setSuccess(false); }, 3000); 
-    
+    setTimeout(() => { setSuccess(false); }, 3000);     
   };
 
   return (
@@ -125,31 +130,71 @@ const UserForm = ({onAdd, onUpdate, editingEmployee}: UserFormProps) => {
             {errors.phone && ( <p className="text-red-500 text-sm mt-1"> {errors.phone.message} </p>)}
           </div>
 
+
+          <div>
+            <label className='block text-md m-2'>Age</label> 
+            <input className="p-3 w-full bg-[#161915] border border-[#3a5035] rounded-md text-[#e8f0e0] text-md outline-none" type="number" {...register("age", { valueAsNumber: true })} />
+            {errors.age && ( <p className="text-red-500 text-sm mt-1"> {errors.age.message} </p>)}
+          </div>
+
+
+
+           {
+            !editingEmployee
+            &&
           <div>
             <label className='block text-md m-2'>Password</label> 
-            <input className="p-3 w-full bg-[#161915] border border-[#3a5035] rounded-md text-[#e8f0e0] text-md outline-none"  placeholder="9876543210" {...register("password")} />
+            <input className="p-3 w-full bg-[#161915] border border-[#3a5035] rounded-md text-[#e8f0e0] text-md outline-none"  placeholder="password" {...register("password")} />
             {errors.password && ( <p className="text-red-500 text-sm mt-1"> {errors.password.message} </p>)}
           </div>
+         }
 
-        
-          <div>
-            <label className='block text-md m-2'>Department</label>  
-            <input className="p-3 w-full bg-[#161915] border border-[#3a5035] rounded-md text-[#e8f0e0] text-md outline-none"  placeholder="Department Name" {...register("department")} />
-            {errors.department && ( <p className="text-red-500 text-sm mt-1"> {errors.department.message} </p> )}
-          </div>
-        </div>
 
-         {/*<div>
-         <h2> Department </h2>
-            <select className="p-3 w-full bg-[#161915] border border-[#3a5035] rounded-md text-[#e8f0e0] text-md outline-none"  >
-              <option className="bg-[#232f20] text-white" > Select Your Department </option>
-              <option className="bg-[#232f20] text-white" > SDE </option>
-              <option className="bg-[#232f20] text-white" > AI/ML </option>
-              <option className="bg-[#232f20] text-white" > Office Staff </option>
-              <option className="bg-[#232f20] text-white" > HR </option>
-              <option className="bg-[#232f20] text-white" > Testing </option>
+         <div>
+            <label className="block text-md m-2"> Department  </label>
+          
+            <select {...register("department")} className="p-3 w-full bg-[#161915] border border-[#3a5035] rounded-md text-[#e8f0e0] text-md outline-none">
+              <option value="" className="bg-red-700"> Select Department </option>
+          
+              {departmentOptions.map((department) => ( <option key={department} value={department} className="bg-[#232f20]" >
+                  {department}
+                </option>
+              ))}
             </select>
-          </div> */}
+          
+            {errors.department && ( <p className="text-red-500 text-sm mt-1">
+                {errors.department.message}
+              </p>
+            )}
+          </div>
+
+          <div>
+            <label className="block text-md m-2"> Experience  </label>
+          
+            <select {...register("experience")} className="p-3 w-full bg-[#161915] border border-[#3a5035] rounded-md text-[#e8f0e0] text-md outline-none">
+              <option value="" className="bg-red-700"> Select Experience </option>
+          
+              {experienceOptions.map((experience) => ( <option key={experience} value={experience} className="bg-[#232f20]" >
+                  {experience}
+                </option>
+              ))} </select>
+          
+            {errors.experience && ( <p className="text-red-500 text-sm mt-1"> {errors.experience.message}  </p> )}
+          </div>
+
+        <div>
+          <label className="block text-md m-2"> Gender  </label>
+             <select {...register("gender")} className="p-3 w-full bg-[#161915] border border-[#3a5035] rounded-md text-[#e8f0e0] text-md outline-none">
+               <option value="" className="bg-red-700">Select Gender</option>
+               <option value="Male">Male</option>
+               <option value="Female">Female</option>
+               <option value="Others">Others</option>
+             </select> 
+               {errors.gender && ( <p className="text-red-500 text-sm mt-1"> {errors.gender.message} </p> )}
+
+        </div>
+      </div>
+
         
 
       
@@ -169,14 +214,15 @@ const UserForm = ({onAdd, onUpdate, editingEmployee}: UserFormProps) => {
           </div>
         </div>
 
-        <button type="submit" className="bg-[#a8d96c] text-black rounded-md py-3 px-5 text-md font-semibold font-sans cursor-pointer border-0 hover:scale-105 transition-all ">
+        <button type="submit" className="block bg-[#a8d96c] text-black rounded-md mt-15 py-3 px-8 text-md font-semibold font-sans cursor-pointer border-0 hover:scale-105 transition-all ">
           {editingEmployee ? "Update Employee" : "Add Employee"}
 
 
-        </button>
+        </button>        
 
       </form>
     </div>
+    
   );
 };
 

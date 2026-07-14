@@ -1,5 +1,6 @@
 import axios from "axios"
 import type { Employee } from "../types/user.types"
+import { toast } from "react-toastify";
 
 interface UsersResponse {
   users: Employee[];
@@ -10,12 +11,6 @@ interface UsersResponse {
 }
 
 
-
-// const hasDashboardFields = (employee: Employee): boolean => {
-//   return [employee.name, employee.email, employee.phone, employee.department].every(
-//     (value) => typeof value === 'string' && value.trim().length > 0
-//   )
-// }
 
 // export const fetchUsers = async(page: number, limit: number, search: string):Promise<Employee[]> => {
 //   try {
@@ -44,8 +39,10 @@ export const fetchUsers = async (page: number,limit: number,search: string): Pro
 export const addUser = async(user :Employee): Promise<Employee> => {
   try {
     const {data} = await  axios.post<Employee>('api/add-user', user , {withCredentials: true} ) ;
-    return data ;
-      
+    
+    console.log(data)
+    toast.success("Employee Added")
+    return data ;  
   } catch (error) {
     throw new Error("Failed to Add User in DB") ;   
   }  
@@ -71,5 +68,4 @@ export const updateEmployee = async(employee : Employee) : Promise<Employee> => 
   catch (error) {
     throw new Error("Failed to update User's Details")
   }
-
 }
