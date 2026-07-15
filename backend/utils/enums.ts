@@ -18,3 +18,17 @@ export enum EXPERIENCE {
   FiveToSevenYears = "5-7 Years",
   SevenPlusYears = "7+ Years"
 }
+
+export enum LEAVE_TYPE {
+  CASUAL = "Casual Leave",
+  SICK = "Sick Leave",
+  EMERGENCY = "Emergency Leave",
+  WORK_FROM_HOME = "Work From Home",
+  OTHER = "Other",
+}
+
+export enum LEAVE_STATUS {
+  PENDING = "Pending",
+  APPROVED = "Approved",
+  REJECTED = "Rejected",
+}

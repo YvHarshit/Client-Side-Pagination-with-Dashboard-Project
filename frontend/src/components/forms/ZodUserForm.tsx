@@ -28,6 +28,7 @@ const UserForm = ({onAdd, onUpdate, editingEmployee}: UserFormProps) => {
       experience: undefined,
       password: "",
       skills: [],
+      
     },
   });
 
@@ -56,6 +57,7 @@ const UserForm = ({onAdd, onUpdate, editingEmployee}: UserFormProps) => {
         experience: editingEmployee.experience ,
         gender: editingEmployee.gender,
         skills: editingEmployee.skills || [],
+        salary : Number(editingEmployee.salary),
       });
     }
   }, [editingEmployee, reset]);
@@ -80,10 +82,12 @@ const UserForm = ({onAdd, onUpdate, editingEmployee}: UserFormProps) => {
       phone:"" ,
       password: "" ,
         department: "" as DEPARTMENT,
-  gender: "" as GENDER,
-  experience: "" as EXPERIENCE,
+        gender: "" as GENDER,
+        experience: "" as EXPERIENCE,
       age: 18 ,
       skills : [] ,
+
+      salary : 0 ,
     });
     setSuccess(true);
     setTimeout(() => { setSuccess(false); }, 3000);     
@@ -98,13 +102,13 @@ const UserForm = ({onAdd, onUpdate, editingEmployee}: UserFormProps) => {
       (<h2  className="text-xl text-lime-400 mb-1 font-serif"> Edit Employee </h2>) 
       }      
       
-      {success 
+      {/* {success 
       && 
       (
         <div className="bg-[#3a5035] text-lime-300 rounded-md px-5 py-4 text-md mb-4">
           {!editingEmployee ? "Employee updated successfully!" : "Employee added successfully!"}
         </div>
-      )}
+      )} */}
 
       <form onSubmit={handleSubmit(onSubmit)}>
        <div className="grid grid-cols-2 gap-4 mb-4">
@@ -133,8 +137,14 @@ const UserForm = ({onAdd, onUpdate, editingEmployee}: UserFormProps) => {
 
           <div>
             <label className='block text-md m-2'>Age</label> 
-            <input className="p-3 w-full bg-[#161915] border border-[#3a5035] rounded-md text-[#e8f0e0] text-md outline-none" type="number" {...register("age", { valueAsNumber: true })} />
+            <input className="p-3 w-full bg-[#161915] border border-[#3a5035] rounded-md text-[#e8f0e0] text-md outline-none" placeholder="age" type="number" {...register("age", { valueAsNumber: true })} />
             {errors.age && ( <p className="text-red-500 text-sm mt-1"> {errors.age.message} </p>)}
+          </div>
+
+          <div>
+            <label className='block text-md m-2'> Salary </label> 
+            <input className="p-3 w-full bg-[#161915] border border-[#3a5035] rounded-md text-[#e8f0e0] text-md outline-none" placeholder="salary"  type="number" {...register("salary", { valueAsNumber: true })} />
+            {errors.salary && ( <p className="text-red-500 text-sm mt-1"> {errors.salary.message} </p>)}
           </div>
 
 

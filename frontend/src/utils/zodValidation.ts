@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { DEPARTMENT , GENDER, EXPERIENCE} from "./constants";
+import { DEPARTMENT , GENDER, EXPERIENCE, LEAVE_TYPE} from "./constants";
 
 export const employeeSchema = z.object({
     name: z.string().min(1, "Name is required").min(2, "Name must contain at least 2 characters").regex(/^[a-zA-Z\s]+$/, "Only Alphabets are allowed"),
@@ -16,8 +16,23 @@ export const employeeSchema = z.object({
    gender: z.nativeEnum(GENDER, { error: "Gender is required"}),
 
    experience: z.nativeEnum(EXPERIENCE, { error: "Experience is required"}),
+
+    salary : z.number() ,
 });
 
 
 export type EmployeeFormData = z.infer<typeof employeeSchema>;
+
+
+export const leaveSchema = z.object({
+    leaveType: z.nativeEnum(LEAVE_TYPE, "Please select a leave type"),
+
+    reason: z.string().min(5, "Reason should contain at least 5 characters"),
+
+    fromDate: z.string().min(1, "Select From Date"),
+
+    toDate: z.string().min(1, "Select To Date"),
+});
+
+export type LeaveFormData = z.infer<typeof leaveSchema>;
 

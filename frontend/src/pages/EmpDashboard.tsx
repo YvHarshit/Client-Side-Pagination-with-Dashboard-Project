@@ -25,6 +25,7 @@ const EmpDashboard = () => {
   gender: "",
   skills: [],
   isFirstLogin: false,
+  salary : 0 ,
 };
   const departmentOptions = Object.values(DEPARTMENT)
   const experienceOptions = Object.values(EXPERIENCE)
@@ -39,6 +40,8 @@ const EmpDashboard = () => {
     department: employee.department,
     gender: employee.gender || "",
     experience: employee.experience || "",
+
+    salary : employee.salary  ,
   });
 
 
@@ -53,6 +56,7 @@ const EmpDashboard = () => {
         department: empDetails.department || "",
         gender: empDetails.gender,
         experience: empDetails.experience,
+        salary : empDetails.salary ,
       });
     }
   }, [empDetails]);
@@ -80,6 +84,7 @@ const EmpDashboard = () => {
         department: empDetails.department || "",
         gender: empDetails.gender || "",
         experience: empDetails.experience || "",
+        salary : empDetails.salary ,
         
       });
     }
@@ -155,7 +160,7 @@ const EmpDashboard = () => {
 
 
   return (
-    <div className="min-h-screen bg-[#232f20]">
+    <div className="min-h-screen bg-[#232f20] font-serif">
       <div className="overflow-hidden rounded-md ">
 
         <div className="relative h-52 md:h-74">
@@ -279,12 +284,12 @@ const EmpDashboard = () => {
                   </select>
                 </div>
            )
-            : <ProfileField label="Experience" value={employee.experience} />
+            : <ProfileField label="Experience" value={employee.experience } />
           }
 
         
           <ProfileField label="Account Status" value="Active" />
-          <ProfileField label="Salary" value="₹45,000" />
+          <ProfileField label="Salary" value= {`₹ ${employee.salary}`}/>
 
           {/* {isEditing
             ? (

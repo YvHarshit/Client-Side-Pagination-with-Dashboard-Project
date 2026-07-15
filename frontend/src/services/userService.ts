@@ -1,14 +1,14 @@
 import axios from "axios"
-import type { Employee } from "../types/user.types"
+import type { Employee, UsersResponse } from "../types/user.types"
 import { toast } from "react-toastify";
 
-interface UsersResponse {
-  users: Employee[];
-  currentPage: number;
-  totalPages: number;
-  totalUsers: number;
-  filteredUsers: number ;
-}
+// interface UsersResponse {
+//   users: Employee[];
+//   currentPage: number;
+//   totalPages: number;
+//   totalUsers: number;
+//   filteredUsers: number ;
+// }
 
 
 
@@ -63,6 +63,7 @@ export const updateEmployee = async(employee : Employee) : Promise<Employee> => 
 
   try {
     const {data} = await axios.put(`/api/user/${employee.Eid}`, employee,  {withCredentials: true}) ;
+    toast.success("Employee Updated")
     return data ;
   } 
   catch (error) {

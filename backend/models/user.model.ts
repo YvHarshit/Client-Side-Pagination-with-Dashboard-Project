@@ -25,6 +25,8 @@ const employeeSchema = new mongoose.Schema({
 
   password : { type: String } ,
   isFirstLogin : {type : Boolean, default :true} ,
+
+
   age : {type : Number,  default: 20} ,
   
 
@@ -35,6 +37,8 @@ const employeeSchema = new mongoose.Schema({
 
   userId: { type: String },
   addedBy: { type: String },
+
+  salary : {type : Number,  default: 20} ,
 });
 
 export type employeeType = mongoose.InferSchemaType<typeof employeeSchema>

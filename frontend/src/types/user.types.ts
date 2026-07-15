@@ -13,8 +13,9 @@ export interface Employee {
   experience : EXPERIENCE ,
   skills: string[]
 
-  addedBy ?: string
-  isFirstLogin : boolean
+  addedBy ?: string ,
+  isFirstLogin : boolean ,
+  salary : number ,
 }
 
 
@@ -77,5 +78,25 @@ export interface AppContextType {
   getEmpDetails : (val: string) => Promise<Employee> ;
   fetchEmployeeDetails : () => Promise<void> ;
 } 
+export interface UsersResponse {
+  users: Employee[];
+  currentPage: number;
+  totalPages: number;
+  totalUsers: number;
+  filteredUsers: number ;
+}
 
 
+
+export interface Leave {
+  _id: string;
+  employeeId: string;
+  leaveType: string;
+  reason: string;
+  fromDate: string;
+  toDate: string;
+  totalDays: number;
+  status: string;
+  adminRemark?: string;
+  createdAt: string;
+}

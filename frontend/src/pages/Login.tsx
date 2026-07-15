@@ -133,7 +133,7 @@ return (
    
 
     <div className="border border-white p-12 rounded-lg w-full max-w-md bg-[#232f20]">
-      <h2 className="text-4xl font-semibold mb-8 text-center text-lime-300"> {state === 'Sign Up' ? "Create Your Account" : "Login to Your Account"} </h2>
+      <h2 className="text-4xl font-semibold mb-8 text-center text-lime-300"> {state === 'Sign Up' ? "Create Admin Account" : "Login to Admin Account"} </h2>
             
         <form onSubmit={onSubmitHandler}>
             {state === "Sign Up"

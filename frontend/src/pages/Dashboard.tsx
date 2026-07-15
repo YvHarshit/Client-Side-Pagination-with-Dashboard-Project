@@ -136,10 +136,6 @@ const handleLogout = async () => {
   // const searchEmployees = searchedFilterEmployees(employees,searchStr) ;
   // const finalEmployees = filterByEmailDomain(searchEmployees, selectedDomain)
 
-  
-  
-  
-
   // console.log("SelectedDomain in Dashboard.tsx: ",selectedDomain )
   // console.log("applyFilteredData in Dashboard.tsx: ",applyFilteredData )
 
@@ -175,7 +171,7 @@ const handleLogout = async () => {
   </div>
 
   <div className='my-7'>
-    <h1 className='text-4xl font-semibold text-center'> Company Dashboard  </h1>
+    <h1 className='text-4xl font-semibold text-center'> Admin Dashboard  </h1>
   </div>
 
 
@@ -221,9 +217,30 @@ const handleLogout = async () => {
         </div>
       </div>
 
-<h2 className="text-2xl mt-6"> Employees List </h2>
+      {/* //============================================================== */}
+      <div className="mt-8 mb-6">
+        <h2 className="text-2xl mb-4">Employee Requests</h2>
       
- 
+        <div className="bg-[#232f20] border border-[#3a5035] rounded-lg p-6 flex items-center justify-between">
+      
+          <div>
+            <h3 className="text-xl font-semibold text-[#a8d96c]"> Leave Requests </h3>      
+            <p className="text-md text-indigo-200 mt-2"> View, approve or reject leave requests raised by employees. </p>
+          </div>
+      
+          <button
+            onClick={() => navigate("/admin/leaves")}
+            className="bg-[#a8d96c] text-black px-6 py-3 rounded-md font-semibold hover:scale-105 transition-all"
+          >
+            View Requests
+          </button>
+      
+        </div>
+      </div>
+
+      {/* //============================================================== */}
+
+<h2 className="text-2xl mt-6"> Employees List </h2>
 
     <div className="flex gap-3 mt-2 mb-1">
       <div className="flex-grow"> <SearchBar/> </div>

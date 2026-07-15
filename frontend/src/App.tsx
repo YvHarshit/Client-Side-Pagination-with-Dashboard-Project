@@ -7,6 +7,11 @@ import AuthenticateEmail from "./pages/AuthenticateEmail";
 import EmpDashboard from "./pages/EmpDashboard";
 import EmpLogin from "./pages/EmpLogin";
 import EmpPasswodChange from "./pages/EmpPasswodChange";
+import MainEmpDas from "./pages/MainEmpDas";
+import ApplyLeave from "./pages/ApplyLeave";
+import MyLeaves from "./pages/MyLeaves";
+import AdminLeave from "./pages/AdminLeave";
+import CompanyAnalytics from "./pages/CompanyAnalytics";
 
 function AppRoutes() {
   const { isLoggedin, userData,empDetails } = useAppContext();
@@ -22,9 +27,19 @@ function AppRoutes() {
 
       <Route path="/emp-login" element = { <EmpLogin/> }/>
 
-      <Route path="/emp-dashboard" element = {  empDetails?.isFirstLogin  ? ( <Navigate to="/emp-change-password"/> ) : ( <EmpDashboard />) } />
+      <Route path="/emp-dashboard" element = {  empDetails?.isFirstLogin  ? ( <Navigate to="/emp-change-password"/> ) : ( <MainEmpDas />) } />
       
       <Route  path="/emp-change-password" element={ empDetails?.isFirstLogin ? ( <EmpPasswodChange /> ) : ( <Navigate to="/emp-dashboard"/> )} />
+
+      <Route path="/profile" element={<EmpDashboard/>}/>
+
+      <Route path = "/emp/apply-leave" element={<ApplyLeave/>} />
+
+      <Route path= "/emp/my-leaves" element = { <MyLeaves/>}/>
+
+      <Route path="/admin/leaves" element={<AdminLeave />} />
+
+      <Route path="/company/analytics" element ={<CompanyAnalytics/>}/>
 
     </Routes>
   );

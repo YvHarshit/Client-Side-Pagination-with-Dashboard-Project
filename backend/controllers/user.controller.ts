@@ -84,7 +84,7 @@ export const getUsers =  async (req: Request, res: Response) => {
 export const addUser =  async (req : Request, res : Response): Promise<void> => {
     try {
     const employeeId = String(await nextId('employeeId'));
-    const { name, email, department, phone, password, age, skills } = req.body;
+    const { name, email, department, phone, password, age, skills, salary } = req.body;
 
     if (!req.userId) {
       res.status(401).json({ message: 'Unauthorized' });
@@ -96,7 +96,7 @@ export const addUser =  async (req : Request, res : Response): Promise<void> => 
     const emp = await Employee.create({
       Eid: employeeId,
       userId: req.userId,
-      name, email, department, phone, age, skills, 
+      name, email, department, phone, age, skills, salary ,
       password: hashedPassword
     });
 

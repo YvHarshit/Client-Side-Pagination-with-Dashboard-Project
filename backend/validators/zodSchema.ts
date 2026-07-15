@@ -22,7 +22,9 @@ export const zodValidSchema = z.object({
 
     gender: z.nativeEnum(GENDER, { message: "Please select a gender" }),
 
-    experience : z.nativeEnum(EXPERIENCE, "Please select the correct Option for experienece" )
+    experience : z.nativeEnum(EXPERIENCE, "Please select the correct Option for experienece" ) ,
+
+    salary :  z.number().optional(),
 
 })
 //export type zodValidSchemaType = z.infer<typeof zodValidSchema>

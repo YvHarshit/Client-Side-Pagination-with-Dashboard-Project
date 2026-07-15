@@ -5,6 +5,7 @@ import { validate } from "../middleware/zodValidation.js";
 import { updateEmployeeSchema, zodValidSchema} from "../validators/zodSchema.js"
 import userAuth from "../middleware/userAuth.js";
 import checkAuth from "../middleware/checkAuth.js";
+import { createleave, getMyLeaves } from "../controllers/leave.controller.js";
 
 
 
@@ -26,6 +27,9 @@ router.patch("/user/update-profile", validate(updateEmployeeSchema), updateDetai
 router.post("/user/emplogout", empLogout)
 
 router.post("/user/emp-change-password", empChangePassword)
+
+router.post("/emp/create/leave", createleave)
+router.get("/emp/get/leave", getMyLeaves)
 
 export default router;
 
