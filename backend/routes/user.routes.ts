@@ -21,15 +21,14 @@ router.put("/user/:Eid",userAuth, updateUserByID)
 router.post("/user/emplogin", empLogin)
 
 router.get("/user/emp-details", getEmpDetail)
-
 router.patch("/user/update-profile", validate(updateEmployeeSchema), updateDetailsFromDashboard)
-
 router.post("/user/emplogout", empLogout)
-
 router.post("/user/emp-change-password", empChangePassword)
 
 router.post("/emp/create/leave", createleave)
 router.get("/emp/get/leave", getMyLeaves)
+
+
 
 export default router;
 

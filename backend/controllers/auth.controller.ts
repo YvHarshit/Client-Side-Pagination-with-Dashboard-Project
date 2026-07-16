@@ -292,3 +292,4 @@ export const authenticateAccount = async( req: Request, res: Response) => {
         })        
     }
 }
+

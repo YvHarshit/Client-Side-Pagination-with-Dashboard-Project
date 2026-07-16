@@ -41,6 +41,8 @@ function AppRoutes() {
 
       <Route path="/company/analytics" element ={<CompanyAnalytics/>}/>
 
+      
+
     </Routes>
   );
 }

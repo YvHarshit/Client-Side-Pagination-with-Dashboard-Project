@@ -31,7 +31,7 @@ const ApplyLeave = () => {
     return (
         <div className="min-h-screen bg-gray-800 flex justify-center pt-10 font-serif ">
             <div className="bg-[#232f20] h-full w-full max-w-xl rounded-lg p-8 mt-6 border-3 border-lime-700">
-                <h2 className="text-3xl text-lime-400 mb-8">   Apply Leave  </h2>
+                <h2 className="text-3xl text-lime-400 mb-8">   Apply Leave/ Raise Query  </h2>
 
                 <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
                     <div>
@@ -39,7 +39,7 @@ const ApplyLeave = () => {
                         <select {...register("leaveType")} className="w-full p-3 rounded bg-[#161915] border border-[#3a5035]">
                             <option value=""> Select Leave </option>
                             {Object.values(LEAVE_TYPE).map(type => (
-                                <option key={type} value={type}                                >
+                                <option key={type} value={type}>
                                     {type}
                                 </option>
                             ))}
@@ -51,8 +51,7 @@ const ApplyLeave = () => {
 
                         <label className="block mb-2"> Reason  </label>
 
-                        <textarea rows={4}  {...register("reason")}
-                            className="w-full rounded p-3 bg-[#161915] border border-[#3a5035] border border-[#3a5035]" />
+                        <textarea rows={4}  {...register("reason")} className="w-full rounded p-3 bg-[#161915] border border-[#3a5035] border border-[#3a5035]" />
                         <p className="text-red-500 text-sm">   {errors.reason?.message}  </p>
                     </div>
 

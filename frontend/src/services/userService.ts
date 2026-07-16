@@ -2,13 +2,7 @@ import axios from "axios"
 import type { Employee, UsersResponse } from "../types/user.types"
 import { toast } from "react-toastify";
 
-// interface UsersResponse {
-//   users: Employee[];
-//   currentPage: number;
-//   totalPages: number;
-//   totalUsers: number;
-//   filteredUsers: number ;
-// }
+
 
 
 

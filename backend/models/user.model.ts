@@ -15,19 +15,19 @@ const employeeSchema = new mongoose.Schema({
   gender: {
         type: String,
         enum: Object.values(GENDER),
-        default: GENDER.MALE },
+        },
 
   experience : {
     type : String ,
     enum : Object.values(EXPERIENCE) ,
-    default : EXPERIENCE.ZeroToOneYears },      
+    },      
 
 
   password : { type: String } ,
   isFirstLogin : {type : Boolean, default :true} ,
 
 
-  age : {type : Number,  default: 20} ,
+  age : {type : Number} ,
   
 
   skills: {

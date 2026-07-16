@@ -3,29 +3,39 @@ import Employee from "../models/user.model.js";
 import { nextId } from "../utils/idAllocator.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import { string, success } from "zod";
 import transporter from "../utils/nodemailer.js";
 
 
 
 
-// export const getUsers =  async (req : Request, res : Response): Promise<void> => {
-//  try {
-//     const userId = req.userId;
+export const getAllEmployees =  async (req : Request, res : Response): Promise<void> => {
+ try {
+    const userId = req.userId;
 
-//     if (!userId) {
-//       res.status(401).json({ message: "Unauthorized" });
-//       return;
-//     }
+    if (!userId) {
+      res.status(401).json({ message: "Unauthorized" });
+      return;
+    }
 
-//     const users = await Employee.find({
-//       $or: [{ userId }, { addedBy: "Admin" }]
-//     });
+    const employees = await Employee.find() ;
 
-//     res.json(users);
-//   } 
-//   catch (err) {res.status(500).json({message: "500 - Failed to fetch users"});}
-//   };
+    if(employees.length === 0) {
+        res.json({
+            success : true ,
+            message : "No employee"
+        })
+    }
+
+    res.json ({
+        success : true ,
+        message : "Employee Found" ,
+        totalEmployee : employees.length ,
+        employees
+    });
+  } 
+  catch (err) {res.status(500).json({
+    message: "500 - Failed to fetch users"});}
+  };
 
 
 export const getUsers =  async (req: Request, res: Response) => {
@@ -193,8 +203,12 @@ export const updateUserByID = async (req: Request, res: Response): Promise<void>
         if (updatedEmp) res.json(updatedEmp);
         else res.status(404).json({ message: "User not found" });       
     } 
-    catch (err) {
-        res.status(500).json({ message: "Failed to update user" });
+   catch (error: unknown) {
+        if(error instanceof Error) {
+            console.log(error.message) 
+            console.log(error.stack)
+        }
+        else console.log("An Un expected Error occured ", error)        
     }
 }
 

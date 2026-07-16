@@ -19,7 +19,6 @@ export enum SKILLS {
 export enum GENDER {
   Male = "Male",
   Female = "Female",
-  Others = "Others",
 }
 
 export enum EXPERIENCE {

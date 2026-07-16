@@ -84,7 +84,7 @@ const UserForm = ({onAdd, onUpdate, editingEmployee}: UserFormProps) => {
         department: "" as DEPARTMENT,
         gender: "" as GENDER,
         experience: "" as EXPERIENCE,
-      age: 18 ,
+      age: 0 ,
       skills : [] ,
 
       salary : 0 ,
@@ -198,7 +198,6 @@ const UserForm = ({onAdd, onUpdate, editingEmployee}: UserFormProps) => {
                <option value="" className="bg-red-700">Select Gender</option>
                <option value="Male">Male</option>
                <option value="Female">Female</option>
-               <option value="Others">Others</option>
              </select> 
                {errors.gender && ( <p className="text-red-500 text-sm mt-1"> {errors.gender.message} </p> )}
 

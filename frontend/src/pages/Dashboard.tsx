@@ -4,7 +4,7 @@ import ZodUserForm from '../components/forms/ZodUserForm.js'
 import SearchBar from '../components/users/SearchBar.js'
 import { fetchUsers , addUser, deleteEmployee, updateEmployee} from '../services/userService.js'
 import type { Employee } from '../types/user.types.js'
-import {searchedFilterEmployees, getMostCommonDomain,countByDomain,countPerDepart} from '../utils/filterUsers.js'
+import {searchedFilterEmployees, getMostCommonDomain,countByDomain,countPerDepart} from '../utils/filterEmp.js'
 import { sortData } from '../utils/sortUsers.js'
 import UserCard from '../components/users/UserCard.js'
 import axios from 'axios'
@@ -13,8 +13,12 @@ import { useNavigate } from 'react-router-dom'
 import {useAppContext} from '../context/AppContext'
 import FilterBar from "../components/users/FilterBar.js";
 import { filterByEmailDomain } from "../utils/filterByDomain.js";
+import EastIcon from '@mui/icons-material/East';
 
 import Pagination from "../components/users/Pagination.js";
+import { AdminDasboardChart } from "./AdminDasboardChart.js";
+
+//import { allEmployee } from "../services/analyticsService.js";
 
 const Dashboard = () => {
 
@@ -176,29 +180,59 @@ const handleLogout = async () => {
 
 
 
-    <div className="grid grid-cols-2 gap-4 text-[#a8d96c]">
+    <div className="grid grid-cols-1 gap-4 text-[#a8d96c] sm:grid-cols-2">
+
       <div className='bg-[#232f20] border border-[#3a5035] rounded-lg p-5' >
         <p className='text-3xl'>  {totalEmp}   </p>
         <p className='text-lg mt-2'>   Total Employees  </p>
       </div>
-     <div className='bg-[#232f20] border border-[#3a5035] rounded-lg p-5'>
+      
+      <div className='bg-[#232f20] border border-[#3a5035] rounded-lg p-5'>
         <p className='text-3xl'>   {filteredData}   </p> 
         <p className='text-lg mt-2'> Your Filtered Employees </p>
-      </div>
+       </div>
+
     </div>
 
-    <h2 className="text-2xl mt-6"> Company Analytics </h2>
+    
 
-      <div className='mt-3 bg-[#232f20] rounded-lg px-3 py-5 mb-6'>
+  <h2 className="text-2xl mt-6 mb-2"> Company Analytics </h2>
+ 
+    
+    
+    <div className="grid grid-cols-1 gap-4 text-[#a8d96c] sm:grid-cols-2">
+
+      <AdminDasboardChart num={filteredData} total={totalEmp} />
+
+      <div className="relative bg-[#232f20] border border-[#3a5035] rounded-lg p-5 min-h-[380px]">
+         <p className="text-lg text-[#a8d96c]"> Most common email domain of employee in the currently displayed card : </p>
+         <div className="flex items-center justify-between mt-3">  
+          <span className="bg-gray-700 rounded-lg px-4 py-2">  @{topDomain} </span>
+          <span className="text-white">[ {topDomainCount} employees ] </span>
+         </div>
+  
+        <button onClick={() => navigate("/company/analytics")}
+        className="absolute bottom-5 right-5 bg-[#a8d96c] text-black px-4 py-3 rounded-md font-semibold hover:scale-105 transition-all">
+         Full Analytics <EastIcon />   </button>
+      </div>
+
+    </div>
+
+
+
+      {/* <div className='mt-3 bg-[#232f20] rounded-lg px-3 py-5 mb-6 flex items-center justify-between'>
         <p className='text-md'> 
           Most common email domain:{' '}
           <strong className="text-[#a8d96c]">  @ {topDomain} </strong>
           {' '}—{' '}
           <span className='text-[#7a9970]'>  {topDomainCount} employees </span>
         </p>
-      </div>     
+        <button className="bg-[#a8d96c] text-black px-2 py-3 rounded-md font-semibold hover:scale-105 transition-all"> 
+          Full Analytics <EastIcon/></button>
+      </div> */}
+          
 
-      <div className='bg-[#232f20] border border-[#3a5035] rounded-md p-4'>
+      <div className='bg-[#232f20] border border-[#3a5035] rounded-md p-4 mt-6'>
         <h2 className='text-lg mb-3' >  Employees per Department </h2>
 
 
@@ -230,7 +264,7 @@ const handleLogout = async () => {
       
           <button
             onClick={() => navigate("/admin/leaves")}
-            className="bg-[#a8d96c] text-black px-6 py-3 rounded-md font-semibold hover:scale-105 transition-all"
+            className="bg-[#a8d96c] text-black px-3 py-3 rounded-md font-semibold hover:scale-105 transition-all"
           >
             View Requests
           </button>

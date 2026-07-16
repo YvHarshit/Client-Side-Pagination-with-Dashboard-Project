@@ -39,8 +39,8 @@ const MainEmpDas = () => {
         <div  onClick={() => navigate("/emp/apply-leave")}
           className="mx-3 text-center cursor-pointer rounded-xl bg-[#2b3528] border-3 border-[#3a5035] p-6 hover:bg-[#394636] transition"
         >
-          <h2 className="text-xl font-semibold text-lime-600 mb-3"> Apply Leave </h2>
-          <p className="text-indigo-300">  Submit a leave request. </p>
+          <h2 className="text-xl font-semibold text-lime-600 mb-3"> Apply Leave/ Raise Query </h2>
+          <p className="text-indigo-300">  Submit a leave request or raise a query. </p>
 
         </div>
 
