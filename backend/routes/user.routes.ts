@@ -6,6 +6,7 @@ import { updateEmployeeSchema, zodValidSchema} from "../validators/zodSchema.js"
 import userAuth from "../middleware/userAuth.js";
 import checkAuth from "../middleware/checkAuth.js";
 import { createleave, getMyLeaves } from "../controllers/leave.controller.js";
+import { checkIn, checkOut, getAttendancehistory } from "../controllers/attendance.controller.js";
 
 
 
@@ -27,6 +28,10 @@ router.post("/user/emp-change-password", empChangePassword)
 
 router.post("/emp/create/leave", createleave)
 router.get("/emp/get/leave", getMyLeaves)
+
+router.post("/emp/checkin" , checkIn)
+router.patch("/emp/checkout", checkOut)
+router.get("/emp/attendace/history", getAttendancehistory)
 
 
 

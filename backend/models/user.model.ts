@@ -44,5 +44,4 @@ const employeeSchema = new mongoose.Schema({
 export type employeeType = mongoose.InferSchemaType<typeof employeeSchema>
 
 const Employee = mongoose.model<employeeType>("Employee", employeeSchema);
-
 export default Employee;

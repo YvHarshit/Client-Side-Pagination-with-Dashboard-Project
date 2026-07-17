@@ -35,7 +35,7 @@ useEffect(() => {
     try {
       setError('')
 
-      const {users, totalUsers, totalPages, currentPage, filteredUsers} = await fetchUsers(currPage, 3, searchStr)
+      const {users, totalUsers, totalPages, currentPage, filteredUsers} = await fetchUsers(currPage, 6, searchStr)
       const sorted = sortData(users)
       setEmployees(sorted)
 
@@ -145,7 +145,7 @@ const handleLogout = async () => {
 
   return (
 
-<div className="max-w-[1100px] mx-auto py-10 px-6 font-serif">
+<div className="max-w-[1300px] mx-auto py-10 px-6 font-serif">
 
   <div className="flex items-center justify-between">
     <span className='text-xl'>Welcome, {" "} 
@@ -205,7 +205,7 @@ const handleLogout = async () => {
       <AdminDasboardChart num={filteredData} total={totalEmp} />
 
       <div className="relative bg-[#232f20] border border-[#3a5035] rounded-lg p-5 min-h-[380px]">
-         <p className="text-lg text-[#a8d96c]"> Most common email domain of employee in the currently displayed card : </p>
+         <p className="text-lg text-[#a8d96c]"> Most common email domain of employee in the currently displayed card  </p>
          <div className="flex items-center justify-between mt-3">  
           <span className="bg-gray-700 rounded-lg px-4 py-2">  @{topDomain} </span>
           <span className="text-white">[ {topDomainCount} employees ] </span>
@@ -218,19 +218,6 @@ const handleLogout = async () => {
 
     </div>
 
-
-
-      {/* <div className='mt-3 bg-[#232f20] rounded-lg px-3 py-5 mb-6 flex items-center justify-between'>
-        <p className='text-md'> 
-          Most common email domain:{' '}
-          <strong className="text-[#a8d96c]">  @ {topDomain} </strong>
-          {' '}—{' '}
-          <span className='text-[#7a9970]'>  {topDomainCount} employees </span>
-        </p>
-        <button className="bg-[#a8d96c] text-black px-2 py-3 rounded-md font-semibold hover:scale-105 transition-all"> 
-          Full Analytics <EastIcon/></button>
-      </div> */}
-          
 
       <div className='bg-[#232f20] border border-[#3a5035] rounded-md p-4 mt-6'>
         <h2 className='text-lg mb-3' >  Employees per Department </h2>

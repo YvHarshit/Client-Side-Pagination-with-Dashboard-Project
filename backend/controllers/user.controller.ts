@@ -8,36 +8,6 @@ import transporter from "../utils/nodemailer.js";
 
 
 
-export const getAllEmployees =  async (req : Request, res : Response): Promise<void> => {
- try {
-    const userId = req.userId;
-
-    if (!userId) {
-      res.status(401).json({ message: "Unauthorized" });
-      return;
-    }
-
-    const employees = await Employee.find() ;
-
-    if(employees.length === 0) {
-        res.json({
-            success : true ,
-            message : "No employee"
-        })
-    }
-
-    res.json ({
-        success : true ,
-        message : "Employee Found" ,
-        totalEmployee : employees.length ,
-        employees
-    });
-  } 
-  catch (err) {res.status(500).json({
-    message: "500 - Failed to fetch users"});}
-  };
-
-
 export const getUsers =  async (req: Request, res: Response) => {
     
         const userId = req.userId ;
@@ -149,17 +119,6 @@ export const addUser =  async (req : Request, res : Response): Promise<void> => 
  }
 }
 
-// export const getUserByID =async (req : Request, res : Response): Promise<void> => {
-//     try{
-//         const emp = await Employee.findOne({Eid: req.params.Eid as string}) ;
-
-//         if(emp)  res.json(emp)
-//         else     res.status(404).json({message: "404 - User not found" })
-//     }
-//     catch(err){
-//         res.status(500).json({message: "Failed to fetch user"});
-//     }
-// }
 
 export const deleteUserByID = async (req : Request, res : Response): Promise<void> => {
     try {
@@ -244,7 +203,7 @@ export const empLogin = async (req: Request, res: Response) => {
 
         if (!isMatch)  return res.status(400).json({ success: false, message: "Invalid password" });
             
-        const token = jwt.sign({email:emp.email}, process.env.JWT_SECRET as string , {expiresIn : "2d"})   
+        const token = jwt.sign({email:emp.email}, process.env.JWT_SECRET as string , {expiresIn : "7d"})   
         res.cookie("token", token, {
             httpOnly : true ,
             secure : false ,
@@ -436,3 +395,33 @@ export const empChangePassword = async(req: Request, res: Response) => {
         else console.log("Un-expected error : ", error)        
     }
 }
+
+
+export const getAllEmployees =  async (req : Request, res : Response): Promise<void> => {
+ try {
+    const userId = req.userId;
+
+    if (!userId) {
+      res.status(401).json({ message: "Unauthorized" });
+      return;
+    }
+
+    const employees = await Employee.find() ;
+
+    if(employees.length === 0) {
+        res.json({
+            success : true ,
+            message : "No employee"
+        })
+    }
+
+    res.json ({
+        success : true ,
+        message : "Employee Found" ,
+        totalEmployee : employees.length ,
+        employees
+    });
+  } 
+  catch (err) {res.status(500).json({
+    message: "500 - Failed to fetch users"});}
+  };

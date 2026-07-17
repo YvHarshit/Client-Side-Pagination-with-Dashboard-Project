@@ -12,6 +12,8 @@ import ApplyLeave from "./pages/ApplyLeave";
 import MyLeaves from "./pages/MyLeaves";
 import AdminLeave from "./pages/AdminLeave";
 import CompanyAnalytics from "./pages/CompanyAnalytics";
+import EmpAttendance from "./pages/EmpAttendance"
+import AttendanceCalendar from "./pages/AttendanceCalendar";
 
 function AppRoutes() {
   const { isLoggedin, userData,empDetails } = useAppContext();
@@ -40,6 +42,10 @@ function AppRoutes() {
       <Route path="/admin/leaves" element={<AdminLeave />} />
 
       <Route path="/company/analytics" element ={<CompanyAnalytics/>}/>
+
+      <Route path = "/emp/attendance" element = {<EmpAttendance/>}/>
+
+      <Route path = "/emp/calender" element = {<AttendanceCalendar />}/>
 
       
 

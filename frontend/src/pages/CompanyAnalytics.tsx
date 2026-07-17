@@ -1,10 +1,15 @@
 import { useEffect, useState } from "react";
 import { allEmployee } from "../services/analyticsService";
 import type { Employee } from "../types/user.types";
-import { ageInfo, avgAge, countByGender, departDistribution, getMostCommonDomain, mailSummary, salaryInfo, skillsSummary} from "../utils/filterEmp.js";
-import {BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, LineChart, Line} from "recharts";
+import { ageInfo, avgAge, countByGender, departDistribution, getMostCommonDomain, mailSummary, salaryInfo, skillsSummary } from "../utils/filterEmp.js";
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, Legend } from "recharts";
 
-const COLORS = ["#A8D96C","#8BC34A","#7CB342","#689F38","#558B2F","#9CCC65","#AED581","#C5E1A5"];
+const SKILL_COLORS = ["#A78BFA", "#86EFAC", "#38BDF8", "#FBBF24", "#F472B6"];
+
+interface ChartDatum {
+  name: string;
+  count: number;
+}
 
 const CompanyAnalytics = () => {
   const [allEmployees, setAllEmployees] = useState<Employee[]>([]);
@@ -13,226 +18,284 @@ const CompanyAnalytics = () => {
     const fetchEmployees = async () => {
       try {
         const data = await allEmployee();
-        setAllEmployees(data);        
-      } 
+        setAllEmployees(data);
+      }
       catch (err) { console.error(err); }
     };
     fetchEmployees();
   }, []);
 
-  const genderCount = countByGender(allEmployees);
-  const departmentCount = departDistribution(allEmployees)
+  const genderCount: Record<string, number> = countByGender(allEmployees);
+  const departmentCount: Record<string, number> = departDistribution(allEmployees);
 
-  const totalNumberOfDepartments = Object.keys(departmentCount).length
-  const averageAge = avgAge(allEmployees)
-  const salaryInformation = salaryInfo(allEmployees)
-  const ageInformation = ageInfo(allEmployees)
+  const totalNumberOfDepartments = Object.keys(departmentCount).length;
+  const averageAge = avgAge(allEmployees);
+  const salaryInformation = salaryInfo(allEmployees);
+  const ageInformation = ageInfo(allEmployees);
 
-  const mailAnalytics = mailSummary(allEmployees)
-  const skillsAnalytics = skillsSummary(allEmployees)
-  const topDomain = getMostCommonDomain(allEmployees)
+  const mailAnalytics: Record<string, number> = mailSummary(allEmployees);
+  const skillsAnalytics: Record<string, number> = skillsSummary(allEmployees);
+  const topDomain = getMostCommonDomain(allEmployees);
 
-  const skillsDonutGraph = Object.entries(skillsAnalytics).map(([skill, cnt]) => ({skill, cnt}))
-  const emailChartData = Object.entries(mailSummary(allEmployees)).map(([domain, count]) => ({domain, count }))
+  const skillsDonutGraph: { skill: string; cnt: number }[] = Object.entries(skillsAnalytics).map(([skill, cnt]) => ({ skill, cnt }));
 
-  const genderChartData = Object.entries(genderCount).map(([gender, count]) => ({gender, count}));
-  const departmentChartData = Object.entries(departmentCount).map(([department, count]) => ({department, count}));
+  const genderChartData: ChartDatum[] = Object.entries(genderCount).map(([name, count]) => ({ name, count }));
+  const departmentChartData: ChartDatum[] = Object.entries(departmentCount).map(([name, count]) => ({ name, count }));
+  const emailChartData: ChartDatum[] = Object.entries(mailAnalytics).map(([name, count]) => ({ name, count }));
 
+  const totalSkills = Object.values(skillsAnalytics).reduce((sum, n) => sum + n, 0);
+  const totalGender = Object.values(genderCount).reduce((sum, n) => sum + n, 0);
+  const totalDept = Object.values(departmentCount).reduce((sum, n) => sum + n, 0);
+  const totalMail = Object.values(mailAnalytics).reduce((sum, n) => sum + n, 0);
 
+  return (
+    <div className=" mx-auto py-10 px-6 bg-[#0A0F0A] min-h-screen text-gray-200">
 
+      <h1 className="text-4xl font-serif font-bold text-white text-center mb-8">Company Analytics</h1>
 
+     
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 mb-8">
 
+        <div className="bg-[#101F14] border border-[#2C4A34] rounded-lg p-4">
+          <p className="text-2xl font-serif text-white">{allEmployees.length}</p>
+          <p className="text-green-400 text-sm mt-1">Total Employees</p>
+        </div>
 
+        <div className="bg-[#101F14] border border-[#2C4A34] rounded-lg p-4">
+          <p className="text-2xl font-serif text-white">{totalNumberOfDepartments}</p>
+          <p className="text-green-400 text-sm mt-1">Total Departments</p>
+        </div>
 
+        <div className="bg-[#101F14] border border-[#2C4A34] rounded-lg p-4">
+          <p className="text-2xl font-serif text-white">{topDomain}</p>
+          <p className="text-green-400 text-sm mt-1">Top Mail Domain</p>
+        </div>
 
+        <div className="bg-[#101F14] border border-[#2C4A34] rounded-lg p-4">
+          <p className="text-2xl font-serif text-white">{averageAge}</p>
+          <p className="text-green-400 text-sm mt-1">Average Age</p>
+        </div>
 
+        <div className="bg-[#101F14] border border-[#2C4A34] rounded-lg p-4">
+          <p className="text-2xl font-serif text-white">{salaryInformation[2]}</p>
+          <p className="text-green-400 text-sm mt-1">Average Salary</p>
+        </div>
 
+        <div className="bg-[#101F14] border border-[#2C4A34] rounded-lg p-4">
+          <p className="text-2xl font-serif text-white">{salaryInformation[1]} - {salaryInformation[0]}</p>
+          <p className="text-green-400 text-sm mt-1">Salary Range</p>
+        </div>
 
-
-
-return (
-    <div className="max-w-[1800px] mx-auto py-10 px-6 font-serif bg-gray-800">
-
-      <div className="flex justify-center ">
-        <h1 className="text-4xl mt-5"> Company Analytics</h1></div>
-
-        <div className="mx-2 grid grid-cols-2 gap-4 sm:grid-cols-4 text-center mt-4 text-lime-300 text-lg"> 
-
-          <div className="border border-white rounded p-4">
-            <p> Total Employees </p>
-            <p className="text-xl text-indigo-300">  {allEmployees.length} </p>
-          </div>
-
-          <div className="border border-white rounded p-4">
-            <p> Top Domain</p>
-            <p className="text-xl text-indigo-300"> {topDomain} </p>
-          </div>
-
-          <div className="border border-white rounded p-4">
-            <p> Total Departments </p>
-            <p className="text-xl text-indigo-300">  {totalNumberOfDepartments}</p>
-          </div>
-
-          <div className="border border-white rounded p-4">
-            <p> Average Salary </p>
-            <p className="text-xl text-indigo-300"> {salaryInformation[2]}</p>
-          </div>
-
-          <div className="border border-white rounded p-4">
-            <p> Average Age </p>
-            <p className="text-xl text-indigo-300">  { averageAge } </p>
-          </div>
-          
-          <div className="border border-white rounded p-4">
-            <p> Salary Info </p>
-            <p className="text-xl text-indigo-300">  Highest Salary : { salaryInformation[0] } </p>
-            <p className="text-xl text-indigo-300">  Lowest Salary : { salaryInformation[1] } </p>
-            <p className="text-xl text-indigo-300">  Avg Salary : { salaryInformation[2] } </p>
-          </div>
-
-          <div className="border border-white rounded p-4">
-            <p> Age Analytics </p>
-            <p className="text-xl text-indigo-300">  Youngest Employee : { ageInformation[0] } </p>
-            <p className="text-xl text-indigo-300">  Oldest Employee : { ageInformation[1] } </p>
-            <p className="text-xl text-indigo-300">  Avg Age : { ageInformation[2] } </p>
-            <p className="text-xl text-indigo-300">  Total Validate Count: { ageInformation[3] } </p>
-          </div>
-                  
       </div>
+
       
-<div className="grid grid-cols-2">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
 
-  <div className="p-5 rounded-lg">    
-  <h2 className="text-xl mb-4">Skills Distribution</h2>
-  {Object.entries(skillsAnalytics).map(([skills, count]) => (
-    <div key={skills} className="w-[400px] flex justify-between border-b border-gray-700 py-2" >
-      <span>{skills}</span>
-      <span>{count}</span>
-    </div>
-  ))
-  }
-  </div>
+        
+        <div className="flex flex-col gap-4">
 
-  <div className="p-5 rounded-lg"> 
-  <h2 className="text-xl mb-4">Gender Distribution</h2>
-  {Object.entries(genderCount).map(([gender, count]) => (
-    <div key={gender} className="w-[400px] flex justify-between border-b border-gray-700 py-2" >
-      <span>{gender}</span>
-      <span>{count}</span>
-    </div>
-  ))
-  }
-  </div>
 
-  <div className="p-5 rounded-lg">
-    <h2 className="text-xl mb-4"> Department Distribution</h2>
 
-  {Object.entries(departmentCount).map(([department, count]) => (
-    <div key={department} className="w-[400px] flex justify-between border-b border-gray-700 py-2" >
-      <span>{department}</span>
-      <span>{count}</span>
-    </div>
-  ))}
-   </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
+          <div className="bg-[#101F14] border border-[#2C4A34] rounded-lg p-5">
+            <h2 className="text-green-400 font-serif text-lg mb-3">Salary Breakdown</h2>
+            <div className="flex justify-between text-sm py-1.5 border-b border-[#2C4A34]">
+              <span className="text-gray-400">Highest Salary</span>
+              <span className="text-white">{salaryInformation[0]}</span>
+            </div>
+            <div className="flex justify-between text-sm py-1.5 border-b border-[#2C4A34]">
+              <span className="text-gray-400">Lowest Salary</span>
+              <span className="text-white">{salaryInformation[1]}</span>
+            </div>
+            <div className="flex justify-between text-sm py-1.5">
+              <span className="text-gray-400">Average Salary</span>
+              <span className="text-white">{salaryInformation[2]}</span>
+            </div>
+          </div>
 
-   <div className="p-5 rounded-lg">
-  <h2 className="text-xl mb-4">Mail Domain Distribution</h2>
-  {
-    Object.entries(mailAnalytics).map(([domain, cnt]) => (
-      <div key={domain} className="w-[400px] flex justify-between border-b border-gray-700 py-2" >
-      <span>{ domain }</span>
-      <span>{cnt}</span>
+           <div className="bg-[#101F14] border border-[#2C4A34] rounded-lg p-5">
+            <h2 className="text-green-400 font-serif text-lg mb-3">Gender</h2>
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="text-gray-500 text-[11px] uppercase">
+                  <th className="text-left font-medium pb-2">Gender</th>
+                  <th className="text-right font-medium pb-2">Count</th>
+                </tr>
+              </thead>
+              <tbody>
+                {Object.entries(genderCount).map(([gender, count]) => (
+                  <tr key={gender} className="border-t border-[#2C4A34]">
+                    <td className="py-2 text-gray-300">{gender}</td>
+                    <td className="py-2 text-right text-white">
+                      {count} <span className="text-gray-500 text-xs">({Math.round((count / totalGender) * 100)}%)</span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>  
+
+
+
+          <div className="bg-[#101F14] border border-[#2C4A34] rounded-lg p-5">
+            <h2 className="text-green-400 font-serif text-lg mb-3">Age Breakdown</h2>
+            <div className="flex justify-between text-sm py-1.5 border-b border-[#2C4A34]">
+              <span className="text-gray-400">Youngest Employee</span>
+              <span className="text-white">{ageInformation[0]}</span>
+            </div>
+            <div className="flex justify-between text-sm py-1.5 border-b border-[#2C4A34]">
+              <span className="text-gray-400">Oldest Employee</span>
+              <span className="text-white">{ageInformation[1]}</span>
+            </div>
+            <div className="flex justify-between text-sm py-1.5 border-b border-[#2C4A34]">
+              <span className="text-gray-400">Average Age</span>
+              <span className="text-white">{ageInformation[2]}</span>
+            </div>
+            <div className="flex justify-between text-sm py-1.5">
+              <span className="text-gray-400">Records Validated</span>
+              <span className="text-white">{ageInformation[3]}</span>
+            </div>
+          </div>
+
+          <div className="bg-[#101F14] border border-[#2C4A34] rounded-lg p-5">
+            <h2 className="text-green-400 font-serif text-lg mb-3">Skills</h2>
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="text-gray-500 text-[11px] uppercase">
+                  <th className="text-left font-medium pb-2">Skill</th>
+                  <th className="text-right font-medium pb-2">Count</th>
+                </tr>
+              </thead>
+              <tbody>
+                {Object.entries(skillsAnalytics).map(([skill, count]) => (
+                  <tr key={skill} className="border-t border-[#2C4A34]">
+                    <td className="py-2 text-gray-300">{skill}</td>
+                    <td className="py-2 text-right text-white">
+                      {count} <span className="text-gray-500 text-xs">({Math.round((count / totalSkills) * 100)}%)</span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+         
+
+          <div className="bg-[#101F14] border border-[#2C4A34] rounded-lg p-5">
+            <h2 className="text-green-400 font-serif text-lg mb-3">Department</h2>
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="text-gray-500 text-[11px] uppercase">
+                  <th className="text-left font-medium pb-2">Department</th>
+                  <th className="text-right font-medium pb-2">Count</th>
+                </tr>
+              </thead>
+              <tbody>
+                {Object.entries(departmentCount).map(([department, count]) => (
+                  <tr key={department} className="border-t border-[#2C4A34]">
+                    <td className="py-2 text-gray-300">{department}</td>
+                    <td className="py-2 text-right text-white">
+                      {count} <span className="text-gray-500 text-xs">({Math.round((count / totalDept) * 100)}%)</span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          <div className="bg-[#101F14] border border-[#2C4A34] rounded-lg p-5">
+            <h2 className="text-green-400 font-serif text-lg mb-3">Mail Domain</h2>
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="text-gray-500 text-[11px] uppercase">
+                  <th className="text-left font-medium pb-2">Domain</th>
+                  <th className="text-right font-medium pb-2">Count</th>
+                </tr>
+              </thead>
+              <tbody>
+                {Object.entries(mailAnalytics).map(([domain, count]) => (
+                  <tr key={domain} className="border-t border-[#2C4A34]">
+                    <td className="py-2 text-gray-300">{domain}</td>
+                    <td className="py-2 text-right text-white">
+                      {count} <span className="text-gray-500 text-xs">({Math.round((count / totalMail) * 100)}%)</span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div className="flex flex-col gap-4">         
+
+          <div className="bg-[#101F14] border border-[#2C4A34] rounded-lg p-5">
+            <h2 className="text-green-400 font-serif text-lg mb-4">Skills Distribution</h2>
+            <ResponsiveContainer width="100%" height={240}>
+              <PieChart>
+                <Tooltip contentStyle={{ background: "#0A0F0A", border: "1px solid #2C4A34" }} />
+                <Legend verticalAlign="middle" align="right" layout="vertical" wrapperStyle={{ fontSize: 12, color: "#D1D5DB" }} />
+                <Pie
+                  data={skillsDonutGraph}
+                  dataKey="cnt"
+                  nameKey="skill"
+                  cx="38%"
+                  cy="50%"
+                  outerRadius={80}
+                  innerRadius={45}
+                  paddingAngle={2}
+                  stroke="#0A0F0A"
+                  strokeWidth={2}
+                >
+                  {skillsDonutGraph.map((_, index) => (
+                    <Cell key={`cell-${index}`} fill={SKILL_COLORS[index % SKILL_COLORS.length]} />
+                  ))}
+                </Pie>
+              </PieChart>
+            </ResponsiveContainer>
+          </div>
+
+          <div className="bg-[#101F14] border border-[#2C4A34] rounded-lg p-5">
+            <h2 className="text-green-400 font-serif text-lg mb-4">Department Distribution</h2>
+            <ResponsiveContainer width="100%" height={260}>
+              <BarChart data={departmentChartData} layout="vertical" margin={{ left: 10 }}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#2C4A34" horizontal={false} />
+                <XAxis type="number" stroke="#9CA3AF" tick={{ fontSize: 12 }} />
+                <YAxis dataKey="name" type="category" stroke="#9CA3AF" tick={{ fontSize: 12 }} width={80} />
+                <Tooltip contentStyle={{ background: "#0A0F0A", border: "1px solid #2C4A34" }} />
+                <Bar dataKey="count" fill="#38BDF8" radius={[0, 4, 4, 0]} maxBarSize={20} />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+
+          <div className="bg-[#101F14] border border-[#2C4A34] rounded-lg p-5">
+            <h2 className="text-green-400 font-serif text-lg mb-4">Email Domain Distribution</h2>
+            <ResponsiveContainer width="100%" height={220}>
+              <BarChart data={emailChartData}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#2C4A34" vertical={false} />
+                <XAxis dataKey="name" stroke="#9CA3AF" tick={{ fontSize: 12 }} />
+                <YAxis stroke="#9CA3AF" tick={{ fontSize: 12 }} />
+                <Tooltip contentStyle={{ background: "#0A0F0A", border: "1px solid #2C4A34" }} />
+                <Bar dataKey="count" fill="#FBBF24" radius={[4, 4, 0, 0]} maxBarSize={60} />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+
+          <div className="bg-[#101F14] border border-[#2C4A34] rounded-lg p-5">
+            <h2 className="text-green-400 font-serif text-lg mb-4">Gender Distribution</h2>
+            <ResponsiveContainer width="100%" height={220}>
+              <BarChart data={genderChartData}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#2C4A34" vertical={false} />
+                <XAxis dataKey="name" stroke="#9CA3AF" tick={{ fontSize: 12 }} />
+                <YAxis stroke="#9CA3AF" tick={{ fontSize: 12 }} />
+                <Tooltip contentStyle={{ background: "#0A0F0A", border: "1px solid #2C4A34" }} />
+                <Bar dataKey="count" fill="#A78BFA" radius={[4, 4, 0, 0]} maxBarSize={60} />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
       </div>
-    ))
-  }
-  </div>
-
-
- 
-
-    <div className="bg-[#232f20] p-5 rounded-lg my-2">
-      <h2 className="text-xl mb-5">Gender Distribution</h2>
-    
-      <ResponsiveContainer width="100%" >
-        <BarChart data={genderChartData}>
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="gender" />
-          <YAxis />
-          <Tooltip />
-          <Bar dataKey="count" fill="#81a358" />
-        </BarChart>
-      </ResponsiveContainer>
     </div>
-
-    
-    <div>
-  <h2 className="text-xl mb-5">Skills Distribution</h2>
-
-  <PieChart width={700} height={700}>
-    <Tooltip />
-
-    <Pie
-      data={skillsDonutGraph}
-      dataKey="cnt"
-      nameKey="skill"
-      cx="50%"
-      cy="50%"
-      outerRadius={250}
-      innerRadius={150}
-      label={({ payload }) => `${payload.skill}: ${payload.cnt}`}>
-      {skillsDonutGraph.map(( _ , index) => (
-        <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-       ))
-      }
-    </Pie>
-
-  </PieChart>
-</div> 
-
-
-    
-    <div className="bg-[#232f20] p-5 my-9 rounded-lg">
-      <h2 className="text-xl mb-5">Department Distribution</h2>
-    
-      <ResponsiveContainer width="100%" height={350}>
-        <BarChart data={departmentChartData}>
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="department" />
-          <YAxis />
-          <Tooltip />
-          <Bar dataKey="count" fill="#6bc5ff" />
-        </BarChart>
-      </ResponsiveContainer>
-    </div>
-
-    <div className="ml-9">
-      <h2> Department Distribution </h2>
-
-      <BarChart data={departmentChartData} layout="vertical">
-        <XAxis type="number" />
-        <YAxis dataKey="department" type="category" />
-        <Tooltip />
-        <Bar dataKey="count" fill="green" />
-      </BarChart>
-    </div>
-
-    <div className="bg-[#232f20] rounded-lg p-5">
-     <h2 className="text-xl mb-5">Email Domain Distribution</h2>
-
-      <ResponsiveContainer width="100%" height={350}>
-       <BarChart data={emailChartData}>
-       <CartesianGrid strokeDasharray="3 3" />
-         <XAxis dataKey="domain" />
-         <YAxis />
-       <Tooltip />
-       <Bar dataKey="count" fill="#A8D96C" />
-       </BarChart>
-      </ResponsiveContainer>
-    </div>
-
-
-  </div>
-</div> 
   );
 }
 
