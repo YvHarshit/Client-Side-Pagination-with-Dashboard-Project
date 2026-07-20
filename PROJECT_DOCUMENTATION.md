@@ -5,6 +5,7 @@
 This is a **full-stack Employee Management and Dashboard System** built with React, TypeScript, Node.js, and MongoDB. The application provides role-based access for **Admins** (manage employees, view analytics, approve leaves) and **Employees** (view profile, apply leaves, track attendance).
 
 ### Key Purposes:
+
 - Manage employee records and profiles
 - Track attendance and generate reports
 - Handle leave requests and approvals
@@ -16,6 +17,7 @@ This is a **full-stack Employee Management and Dashboard System** built with Rea
 ## 2. Tech Stack
 
 ### Frontend
+
 - **React** (v19.2.6) - UI library
 - **TypeScript** - Type safety
 - **Vite** - Build tool
@@ -31,6 +33,7 @@ This is a **full-stack Employee Management and Dashboard System** built with Rea
 - **SweetAlert2** (v11.26.25) - Alert modals
 
 ### Backend
+
 - **Node.js** with **Express** (v5.2.1) - Server framework
 - **TypeScript** - Type safety
 - **MongoDB** with **Mongoose** (v9.6.3) - Database & ODM
@@ -154,6 +157,7 @@ Client-Side-Pagination-with-Dashboard-Project/
 ### 4.1 Authentication & Access Control
 
 #### Admin Login (`/login`)
+
 - **Email & Password Authentication**: Admins can log in with credentials
 - **Google OAuth Integration**: Sign in with Google account
 - **Sign-Up**: New admin can create accounts (optional)
@@ -161,11 +165,13 @@ Client-Side-Pagination-with-Dashboard-Project/
 - **Session Management**: Credentials stored in secure cookies
 
 #### Employee Login (`/emp-login`)
+
 - **Email & Password Authentication**: Employees log in with credentials
 - **First-Time Login Password Change** (`/emp-change-password`): Mandatory password update on first login
 - **Persistent Session**: Employee login state maintained across sessions
 
 #### Authentication Flow:
+
 1. User logs in with credentials
 2. Backend verifies password and generates JWT token
 3. Token stored in HTTP-only cookie for security
@@ -177,9 +183,11 @@ Client-Side-Pagination-with-Dashboard-Project/
 ## 5. Admin Features & Pages
 
 ### 5.1 Dashboard (`/` or `/dashboard`)
+
 **Purpose**: Central hub for admin to manage all employees
 
 **Key UI Components**:
+
 - **Search Bar**: Real-time search employees by name, email, department
 - **Filter Bar**: Filter employees by department/domain
 - **Pagination**: Client-side pagination (6 employees per page)
@@ -188,6 +196,7 @@ Client-Side-Pagination-with-Dashboard-Project/
 - **Edit/Delete**: Inline editing and deletion of employee records
 
 **Functionality**:
+
 - Fetch paginated employee list from backend
 - Add new employees with validation (Zod schemas)
 - Edit existing employee details
@@ -197,6 +206,7 @@ Client-Side-Pagination-with-Dashboard-Project/
 - Shows "Seeded Data" badge for pre-loaded employees
 
 **Analytics Cards** (from AdminDasboardChart):
+
 - Total employees count
 - Total departments
 - Most common email domain
@@ -207,9 +217,11 @@ Client-Side-Pagination-with-Dashboard-Project/
 ---
 
 ### 5.2 Admin Leave Management (`/admin/leaves`)
+
 **Purpose**: Review and approve/reject employee leave requests
 
 **Key Features**:
+
 - Display all leave requests with employee details
 - **Status**: Pending, Approved, Rejected
 - **Leave Information**:
@@ -220,11 +232,13 @@ Client-Side-Pagination-with-Dashboard-Project/
   - Requested date
 
 **Admin Actions**:
+
 - **Approve Leave**: Accepts leave request and sends notification
 - **Reject Leave**: Denies leave request with optional remarks
 - **View Admin Remarks**: See previous admin comments
 
 **UI Elements**:
+
 - Leave cards with employee info
 - Status badges (color-coded: Yellow=Pending, Green=Approved, Red=Rejected)
 - Action buttons for approval/rejection
@@ -233,9 +247,11 @@ Client-Side-Pagination-with-Dashboard-Project/
 ---
 
 ### 5.3 Company Analytics (`/company/analytics`)
+
 **Purpose**: View comprehensive company-wide insights and metrics
 
 **Dashboard Cards** (Summary Stats):
+
 - **Total Employees**: Complete employee count
 - **Total Departments**: Number of unique departments
 - **Top Mail Domain**: Most common email provider (e.g., @gmail.com)
@@ -244,6 +260,7 @@ Client-Side-Pagination-with-Dashboard-Project/
 - **Salary Range**: Min - Max salary displayed
 
 **Data Visualizations** (using Recharts):
+
 1. **Gender Distribution** (Pie Chart): Male/Female/Other breakdown
 2. **Department Distribution** (Bar Chart): Employees per department
 3. **Email Domain Distribution** (Pie Chart): Email providers breakdown
@@ -252,6 +269,7 @@ Client-Side-Pagination-with-Dashboard-Project/
 6. **Salary Distribution** (Box plot or histogram): Salary ranges
 
 **Key Metrics Calculated**:
+
 - Employee count by department
 - Gender ratio
 - Age statistics (average, min, max)
@@ -264,9 +282,11 @@ Client-Side-Pagination-with-Dashboard-Project/
 ## 6. Employee Features & Pages
 
 ### 6.1 Employee Profile (`/profile`)
+
 **Purpose**: View and manage personal information
 
 **Features**:
+
 - Display employee details:
   - Employee ID, Name, Email
   - Phone, Age
@@ -279,6 +299,7 @@ Client-Side-Pagination-with-Dashboard-Project/
 - **Cover & Profile Images**: Visual profile display (assets included)
 
 **Edit Fields**:
+
 - Name, Email, Phone
 - Age
 - Department (dropdown)
@@ -287,6 +308,7 @@ Client-Side-Pagination-with-Dashboard-Project/
 - Salary (read-only)
 
 **UI Elements**:
+
 - Profile cover image banner
 - Profile picture circle
 - Two-column layout on desktop
@@ -296,9 +318,11 @@ Client-Side-Pagination-with-Dashboard-Project/
 ---
 
 ### 6.2 Apply Leave (`/emp/apply-leave`)
+
 **Purpose**: Submit leave requests for approval
 
 **Form Fields**:
+
 - **Leave Type** (Select dropdown):
   - Sick Leave
   - Casual Leave
@@ -310,12 +334,14 @@ Client-Side-Pagination-with-Dashboard-Project/
 - **To Date** (Date picker): End date of leave
 
 **Validation**:
+
 - All fields required (Zod schema)
 - Date validation: To Date cannot be before From Date
 - Character limits on reason
 - Date format validation
 
 **Functionality**:
+
 - Submit leave request to backend
 - Backend calculates total days
 - Shows success/error toast notification
@@ -323,6 +349,7 @@ Client-Side-Pagination-with-Dashboard-Project/
 - Status automatically set to "Pending"
 
 **Styling**:
+
 - Dark green theme matching company branding
 - Responsive form layout
 - Clear section headers
@@ -331,15 +358,18 @@ Client-Side-Pagination-with-Dashboard-Project/
 ---
 
 ### 6.3 My Leave Requests (`/emp/my-leaves`)
+
 **Purpose**: View personal leave request history and status
 
 **Summary Cards**:
+
 - **Total Requests**: Count of all leave applications
 - **Pending**: Awaiting approval
 - **Approved**: Accepted by admin
 - **Rejected**: Declined by admin
 
 **Leave History Table**:
+
 - Leave Type (displays type with color coding)
 - Reason (text of request)
 - From Date
@@ -349,6 +379,7 @@ Client-Side-Pagination-with-Dashboard-Project/
 - Admin Remark (if applicable)
 
 **Table Features**:
+
 - Sortable columns
 - Responsive scrolling on mobile
 - No data message when empty
@@ -358,9 +389,11 @@ Client-Side-Pagination-with-Dashboard-Project/
 ---
 
 ### 6.4 Employee Dashboard (`/emp-dashboard`)
+
 **Purpose**: Main employee portal with navigation options
 
 **Key Sections**:
+
 - Navigation menu to all employee features:
   - View Profile
   - Apply Leave
@@ -371,6 +404,7 @@ Client-Side-Pagination-with-Dashboard-Project/
 - Breadcrumb navigation
 
 **UI Elements**:
+
 - Welcome message
 - Menu cards or sidebar navigation
 - Profile summary
@@ -381,24 +415,29 @@ Client-Side-Pagination-with-Dashboard-Project/
 ### 6.5 Attendance Management
 
 #### Attendance Status (`/emp/attendance`)
+
 **Purpose**: View current and recent attendance status
 
 **Display Information**:
+
 - Today's attendance status (Present/Absent/Late/On Leave)
 - Clock-in/Clock-out times
 - Last 7 days attendance summary
 - Total working hours today
 
 **Features**:
+
 - Real-time attendance status
 - Visual indicators (green=present, red=absent, yellow=late)
 - Time duration display
 - Attendance streak counter (consecutive present days)
 
 #### Attendance Calendar (`/emp/calender`)
+
 **Purpose**: Visual calendar view of attendance history
 
 **Calendar Features**:
+
 - Monthly calendar view
 - Navigation between months (Previous/Next buttons)
 - Color-coded date cells:
@@ -411,6 +450,7 @@ Client-Side-Pagination-with-Dashboard-Project/
 - Legend showing status meanings
 
 **Functionality**:
+
 - Fetch attendance history from backend
 - Generate calendar grid
 - Map attendance data to dates
@@ -418,6 +458,7 @@ Client-Side-Pagination-with-Dashboard-Project/
 - Navigate to any month/year
 
 **UI Elements**:
+
 - Month/Year header
 - Day of week labels (Sun-Sat)
 - Date cells in grid
@@ -430,9 +471,11 @@ Client-Side-Pagination-with-Dashboard-Project/
 ## 7. UI Components
 
 ### 7.1 Pagination Component
+
 **Location**: `src/components/users/Pagination.tsx`
 
 **Features**:
+
 - Previous/Next buttons with arrow icons
 - Current page display in center
 - Disabled state when at first/last page
@@ -440,14 +483,17 @@ Client-Side-Pagination-with-Dashboard-Project/
 - Keyboard accessibility
 
 **Props**:
+
 - Manages through AppContext (currPage, totalPages)
 
 ---
 
 ### 7.2 User Card Component
+
 **Location**: `src/components/users/UserCard.tsx`
 
 **Displays**:
+
 - Employee ID
 - Name
 - Email
@@ -456,6 +502,7 @@ Client-Side-Pagination-with-Dashboard-Project/
 - Seeded data indicator (animated pulse)
 
 **Actions**:
+
 - Edit button (pencil icon) - opens edit form
 - Delete button (trash icon) - SweetAlert confirmation
 - Edit/Delete buttons only for manually added employees
@@ -464,9 +511,11 @@ Client-Side-Pagination-with-Dashboard-Project/
 ---
 
 ### 7.3 Search Bar Component
+
 **Location**: `src/components/users/SearchBar.tsx`
 
 **Features**:
+
 - Real-time search as user types
 - Search filters by: Name, Email, Department
 - Clear button to reset search
@@ -476,9 +525,11 @@ Client-Side-Pagination-with-Dashboard-Project/
 ---
 
 ### 7.4 Filter Bar Component
+
 **Location**: `src/components/users/FilterBar.tsx`
 
 **Features**:
+
 - Filter by department/domain
 - Dropdown or button selection
 - "All" option to show all employees
@@ -490,11 +541,13 @@ Client-Side-Pagination-with-Dashboard-Project/
 ### 7.5 Form Components
 
 #### Zod User Form
+
 **Location**: `src/components/forms/ZodUserForm.tsx`
 
 **Purpose**: Add/Edit employee with validation
 
 **Fields**:
+
 - Name (required)
 - Email (required, unique)
 - Phone (required)
@@ -507,6 +560,7 @@ Client-Side-Pagination-with-Dashboard-Project/
 - Password (for new employees)
 
 **Validation Rules** (Zod schemas):
+
 - Name: Min 2 chars, alphabets only
 - Email: Valid format, unique check
 - Phone: Valid format
@@ -515,6 +569,7 @@ Client-Side-Pagination-with-Dashboard-Project/
 - Age: Positive number, realistic range
 
 **Features**:
+
 - Error messages display below each field
 - Submit/Cancel buttons
 - Automatic field mapping
@@ -526,6 +581,7 @@ Client-Side-Pagination-with-Dashboard-Project/
 ## 8. Database Models
 
 ### 8.1 User Model (Admin)
+
 ```typescript
 {
   _id: ObjectId,
@@ -545,6 +601,7 @@ Client-Side-Pagination-with-Dashboard-Project/
 ---
 
 ### 8.2 Employee Model
+
 ```typescript
 {
   Eid: string (auto-generated, e.g., "EMP001"),
@@ -572,6 +629,7 @@ Client-Side-Pagination-with-Dashboard-Project/
 ---
 
 ### 8.3 Leave Model
+
 ```typescript
 {
   _id: ObjectId,
@@ -593,6 +651,7 @@ Client-Side-Pagination-with-Dashboard-Project/
 ---
 
 ### 8.4 Attendance Model
+
 ```typescript
 {
   _id: ObjectId,
@@ -612,6 +671,7 @@ Client-Side-Pagination-with-Dashboard-Project/
 ---
 
 ### 8.5 Counter Model
+
 **Purpose**: Maintains auto-incrementing ID counters
 
 ```typescript
@@ -626,6 +686,7 @@ Client-Side-Pagination-with-Dashboard-Project/
 ## 9. API Endpoints
 
 ### Admin Authentication
+
 - `POST /api/auth/signup` - Admin sign up
 - `POST /api/auth/login` - Admin login
 - `POST /api/auth/google` - Google OAuth login
@@ -634,6 +695,7 @@ Client-Side-Pagination-with-Dashboard-Project/
 - `POST /api/auth/send-otp` - Send OTP for email verification
 
 ### Employee Management
+
 - `GET /api/users` - Get paginated employees with filters (Pagination: page, limit, search)
 - `POST /api/users` - Add new employee
 - `PUT /api/users/:eid` - Update employee details
@@ -643,17 +705,20 @@ Client-Side-Pagination-with-Dashboard-Project/
 - `PUT /api/emp/password` - Change password (first login)
 
 ### Leave Management
+
 - `POST /api/auth/leave/create` - Create leave request
 - `GET /api/auth/admin/get/leave` - Get all leave requests (Admin)
 - `GET /api/auth/leave/my-leaves` - Get employee's leave requests
 - `PATCH /api/auth/admin/update/leave/:id` - Approve/Reject leave (Admin)
 
 ### Attendance
+
 - `GET /api/attendance/history` - Get attendance history
 - `POST /api/attendance/clock-in` - Clock in (if implemented)
 - `POST /api/attendance/clock-out` - Clock out (if implemented)
 
 ### Analytics
+
 - `GET /api/analytics/all-employees` - Get all employees for analytics
 
 ---
@@ -663,6 +728,7 @@ Client-Side-Pagination-with-Dashboard-Project/
 **Location**: `src/context/AppContext.tsx`
 
 **State Variables**:
+
 ```typescript
 // Authentication
 - isLoggedin: boolean - User login status
@@ -701,7 +767,8 @@ Client-Side-Pagination-with-Dashboard-Project/
 - backendUrl: string - API base URL from env
 ```
 
-**Usage**: 
+**Usage**:
+
 ```typescript
 const { isLoggedin, userData, currPage } = useAppContext();
 ```
@@ -711,16 +778,19 @@ const { isLoggedin, userData, currPage } = useAppContext();
 ## 11. Routing Structure
 
 ### Public Routes
+
 - `/login` - Admin login
 - `/emp-login` - Employee login
 
 ### Protected Admin Routes
+
 - `/` - Dashboard (employee management)
 - `/auth-account` - Email verification
 - `/admin/leaves` - Leave approval
 - `/company/analytics` - Company analytics
 
 ### Protected Employee Routes
+
 - `/profile` - Employee profile
 - `/emp-dashboard` - Employee main dashboard
 - `/emp-change-password` - Change password (first login only)
@@ -730,6 +800,7 @@ const { isLoggedin, userData, currPage } = useAppContext();
 - `/emp/calender` - Attendance calendar
 
 ### Route Protection
+
 - Routes check `isLoggedin` status from AppContext
 - Unauthorized access redirects to `/login` or `/emp-login`
 - First-time employees forced to `/emp-change-password`
@@ -739,6 +810,7 @@ const { isLoggedin, userData, currPage } = useAppContext();
 ## 12. Validation Schemas (Zod)
 
 ### Employee Schema
+
 - Name: `string().min(2, "Min 2 chars").regex(/^[A-Za-z\s]+$/)`
 - Email: `string().email("Invalid email").unique`
 - Phone: `string().min(10, "Invalid phone")`
@@ -751,6 +823,7 @@ const { isLoggedin, userData, currPage } = useAppContext();
 - Password: `string().min(8)`
 
 ### Leave Schema
+
 - leaveType: `string().enum([...])`
 - reason: `string().min(10).max(500)`
 - fromDate: `date()`
@@ -761,6 +834,7 @@ const { isLoggedin, userData, currPage } = useAppContext();
 ## 13. Key Features Summary
 
 ### For Admins:
+
 ✅ Employee CRUD operations
 ✅ Search & filter employees
 ✅ Paginated employee list
@@ -771,6 +845,7 @@ const { isLoggedin, userData, currPage } = useAppContext();
 ✅ Skills and demographics overview
 
 ### For Employees:
+
 ✅ View/edit personal profile
 ✅ Apply for leaves
 ✅ Track leave status (Pending/Approved/Rejected)
@@ -780,6 +855,7 @@ const { isLoggedin, userData, currPage } = useAppContext();
 ✅ View leave history with admin remarks
 
 ### Security Features:
+
 ✅ Password hashing with bcryptjs
 ✅ JWT token-based authentication
 ✅ HTTP-only secure cookies
@@ -793,6 +869,7 @@ const { isLoggedin, userData, currPage } = useAppContext();
 ## 14. UI Styling & Design
 
 ### Color Scheme:
+
 - **Primary Dark**: `#0A0F0A`, `#232f20` - Dark green background
 - **Accent Green**: `#a8d96c`, `#7a9970` - Lime/green accents
 - **Lime Button**: `bg-lime-400`, `bg-lime-500` - Call-to-action
@@ -806,10 +883,12 @@ const { isLoggedin, userData, currPage } = useAppContext();
   - Rejected: Red
 
 ### Typography:
+
 - Font: `font-serif` for headings
 - Text Colors: `text-white`, `text-gray-200` on dark backgrounds
 
 ### Responsive Design:
+
 - Mobile-first approach
 - `grid` and `flex` layouts
 - Tailwind breakpoints: `sm:`, `md:`, `lg:`
@@ -820,6 +899,7 @@ const { isLoggedin, userData, currPage } = useAppContext();
 ## 15. Environment Variables
 
 ### Frontend (`.env` or `.env.local`)
+
 ```
 VITE_BACKEND_URL=http://localhost:3000/api
 VITE_FIREBASE_API_KEY=xxxxx
@@ -828,6 +908,7 @@ VITE_FIREBASE_PROJECT_ID=xxxxx
 ```
 
 ### Backend (`.env`)
+
 ```
 MONGO_URL=mongodb://localhost:27017/employee-db
 PORT=3000
@@ -840,6 +921,7 @@ FIREBASE_PROJECT_ID=xxxxx
 ## 16. How to Run the Project
 
 ### Backend Setup
+
 ```bash
 cd backend
 npm install
@@ -848,6 +930,7 @@ npm run seed        # Seed database with sample data
 ```
 
 ### Frontend Setup
+
 ```bash
 cd frontend
 npm install
@@ -857,6 +940,7 @@ npm run lint         # Run ESLint
 ```
 
 ### Database
+
 - MongoDB must be running (local or Atlas connection)
 - Sample data available in `backend/seed/sampleData.json`
 
@@ -898,21 +982,25 @@ npm run lint         # Run ESLint
 ### Common Issues:
 
 **Backend Connection Error**
+
 - Ensure backend server is running on port 3000
 - Check MongoDB connection
 - Verify CORS configuration
 
 **Authentication Issues**
+
 - Clear cookies and session storage
 - Check JWT token expiration
 - Verify Firebase credentials
 
 **Pagination Not Working**
+
 - Check currPage and totalPages in AppContext
 - Verify API returns correct page data
 - Check search/filter query strings
 
 **Validation Errors**
+
 - Review Zod schemas in `zodValidation.ts`
 - Check form field names match schema
 - Ensure data types are correct
@@ -921,29 +1009,30 @@ npm run lint         # Run ESLint
 
 ## 20. File Structure Summary
 
-| File | Purpose |
-|------|---------|
-| `App.tsx` | Route definitions & main app structure |
-| `AppContext.tsx` | Global state & authentication |
-| `Dashboard.tsx` | Admin employee management interface |
-| `CompanyAnalytics.tsx` | Analytics & data visualization |
-| `EmpDashboard.tsx` | Employee profile management |
-| `ApplyLeave.tsx` | Leave request form |
-| `AdminLeave.tsx` | Leave approval interface |
-| `AttendanceCalendar.tsx` | Attendance calendar view |
-| `userService.ts` | Employee API calls |
-| `leaveServices.ts` | Leave API calls |
-| `analyticsService.ts` | Analytics API calls |
-| `user.model.ts` | Admin user schema |
-| `user.controller.ts` | Employee CRUD endpoints |
-| `leave.model.ts` | Leave schema |
-| `server.ts` | Express server setup |
+| File                     | Purpose                                |
+| ------------------------ | -------------------------------------- |
+| `App.tsx`                | Route definitions & main app structure |
+| `AppContext.tsx`         | Global state & authentication          |
+| `Dashboard.tsx`          | Admin employee management interface    |
+| `CompanyAnalytics.tsx`   | Analytics & data visualization         |
+| `EmpDashboard.tsx`       | Employee profile management            |
+| `ApplyLeave.tsx`         | Leave request form                     |
+| `AdminLeave.tsx`         | Leave approval interface               |
+| `AttendanceCalendar.tsx` | Attendance calendar view               |
+| `userService.ts`         | Employee API calls                     |
+| `leaveServices.ts`       | Leave API calls                        |
+| `analyticsService.ts`    | Analytics API calls                    |
+| `user.model.ts`          | Admin user schema                      |
+| `user.controller.ts`     | Employee CRUD endpoints                |
+| `leave.model.ts`         | Leave schema                           |
+| `server.ts`              | Express server setup                   |
 
 ---
 
 ## Conclusion
 
 This is a comprehensive, full-stack **Employee Management Dashboard** with:
+
 - Advanced pagination and filtering
 - Real-time search capabilities
 - Role-based access control
@@ -957,5 +1046,5 @@ The project demonstrates production-ready practices with TypeScript, validation,
 
 ---
 
-*Last Updated: 2026*
-*Version: 1.0.0*
+_Last Updated: 2026_
+_Version: 1.0.0_
