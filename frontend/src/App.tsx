@@ -1,22 +1,20 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import { AppContextProvider, useAppContext } from "./context/AppContext";
-import Dashboard from "./pages/Dashboard";
-import Login from "./pages/Login";
-import AuthenticateEmail from "./pages/AuthenticateEmail";
-import EmpDashboard from "./pages/EmpDashboard";
-import EmpLogin from "./pages/EmpLogin";
-import EmpPasswodChange from "./pages/EmpPasswodChange";
-import MainEmpDas from "./pages/MainEmpDas";
-import ApplyLeave from "./pages/ApplyLeave";
-import MyLeaves from "./pages/MyLeaves";
-import AdminLeave from "./pages/AdminLeave";
-import CompanyAnalytics from "./pages/CompanyAnalytics";
-import EmpAttendance from "./pages/EmpAttendance"
-import AttendanceCalendar from "./pages/AttendanceCalendar";
-// import AddEmployee from "./pages/AddEmployee";
-import Testimonials from "./pages/Testimonials";
-import About from "./pages/About";
+import Dashboard from "./pages/Admin/Dashboard";
+import Login from "./pages/Admin/Login";
+import AuthenticateEmail from "./pages/Admin/AuthenticateEmail";
+import EmpDashboard from "./pages/Employee/EmpProfile";
+import EmpLogin from "./pages/Employee/EmpLogin";
+import EmpPasswodChange from "./pages/Employee/EmpPasswodChange";
+import MainEmpDas from "./pages/Employee/EmpDashboard";
+import ApplyLeave from "./pages/Employee/ApplyLeave";
+import MyLeaves from "./pages/Employee/MyLeaves";
+import AdminLeave from "./pages/Admin/AdminLeave";
+import CompanyAnalytics from "./pages/Admin/CompanyAnalytics";
+import EmpAttendance from "./pages/Employee/EmpAttendance"
+import Testimonials from "./pages/Admin/Testimonials";
+import About from "./pages/Admin/About";
 
 function AppRoutes() {
   const { isLoggedin, userData,empDetails } = useAppContext();
@@ -48,13 +46,9 @@ function AppRoutes() {
 
       <Route path = "/emp/attendance" element = {<EmpAttendance/>}/>
 
-      <Route path = "/emp/calender" element = {<AttendanceCalendar />}/>
-
-      {/* <Route path="/add-employee" element={<AddEmployee />} /> */}
       <Route path="/testimonials" element={<Testimonials />} />
-      <Route path="/about" element={<About />} />
 
-      
+      <Route path="/about" element={<About />} />      
 
     </Routes>
   );

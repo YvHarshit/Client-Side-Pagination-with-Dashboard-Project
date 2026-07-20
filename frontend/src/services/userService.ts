@@ -4,17 +4,6 @@ import { toast } from "react-toastify";
 
 
 
-
-
-// export const fetchUsers = async(page: number, limit: number, search: string):Promise<Employee[]> => {
-//   try {
-//     const  data : UsersResponse  = await axios.get<Employee[]>(`/api/users?page=${page}&limit=${limit}&search=${encodeURIComponent(search)}`, {withCredentials : true}) ;
-//     return data.filter(hasDashboardFields) ;
-//   } catch (error) {
-//     throw new Error("Failed to fetch users")    
-//   }
-// }
-
 export const fetchUsers = async (page: number,limit: number,search: string): Promise<UsersResponse> => {
   try {
     const { data } = await axios.get<UsersResponse>("/api/users", {
@@ -64,3 +53,18 @@ export const updateEmployee = async(employee : Employee) : Promise<Employee> => 
     throw new Error("Failed to update User's Details")
   }
 }
+
+
+export const sendOtp = async (backendUrl: string) => {
+  const { data } = await axios.post(`${backendUrl}/auth/send-otp`,
+    {}, { withCredentials: true } );
+  return data;
+};
+
+
+export const verifyOtp = async ( backendUrl: string, otp: string ) => {
+  const { data } = await axios.post( `${backendUrl}/auth/authenticate-account`,
+    { otp }, { withCredentials: true } );
+
+  return data;
+};

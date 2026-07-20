@@ -3,7 +3,6 @@ import type { ReactNode } from "react";
 import axios from "axios";
 import { type Employee, type UserData } from "../types/user.types";
 import type { AppContextType } from "../types/user.types";
-
 import {getEmpDetails} from "../services/empService.js"
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -51,8 +50,8 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
     const employee = await getEmpDetails(backendUrl);
     setEmpDetails(employee.emp);
 
-    console.log("Setting employee:", employee);
-    console.log("employee.emp:", employee.emp);
+    // console.log("Setting employee:", employee);
+    // console.log("employee.emp:", employee.emp);
   } 
   catch (error) {
     console.log(error);

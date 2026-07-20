@@ -88,6 +88,20 @@ export interface UsersResponse {
 }
 
 
+export interface SidebarProps {
+  handleLogout: () => void;
+  userName: string;
+}
+
+export interface  Attendance  {
+  _id: string;
+  date: string;
+  clockIn: string;
+  checkOut?: string;
+  totalHours?: string;
+  status: string;
+};
+
 
 export interface Leave {
   _id: string;

@@ -97,18 +97,11 @@ const UserForm = ({onAdd, onUpdate, editingEmployee}: UserFormProps) => {
     <div className="bg-[#232f20] rounded-md p-5 mt-2 ">
       
       {
-      editingEmployee
+       editingEmployee
       &&
       (<h2  className="text-xl text-lime-400 mb-1 font-serif"> Edit Employee </h2>) 
       }      
       
-      {/* {success 
-      && 
-      (
-        <div className="bg-[#3a5035] text-lime-300 rounded-md px-5 py-4 text-md mb-4">
-          {!editingEmployee ? "Employee updated successfully!" : "Employee added successfully!"}
-        </div>
-      )} */}
 
       <form onSubmit={handleSubmit(onSubmit)}>
        <div className="grid grid-cols-2 gap-4 mb-4">

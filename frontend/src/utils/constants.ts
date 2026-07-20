@@ -37,3 +37,5 @@ export enum LEAVE_TYPE {
   WORK_FROM_HOME = "Work From Home",
   OTHER = "Other",
 }
+
+export const SKILL_COLORS = ["#A78BFA", "#86EFAC", "#38BDF8", "#FBBF24", "#F472B6"];

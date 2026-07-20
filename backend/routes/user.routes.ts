@@ -14,13 +14,10 @@ const router = Router();
 
 router.get("/users",userAuth,logger, getUsers)
 router.post("/add-user",userAuth,checkAuth, validate(zodValidSchema), addUser)
-// router.get("/user/:Eid",userAuth, getUserByID)
 router.delete("/user/:Eid",userAuth, deleteUserByID)
 router.put("/user/:Eid",userAuth, updateUserByID)
 
-
 router.post("/user/emplogin", empLogin)
-
 router.get("/user/emp-details", getEmpDetail)
 router.patch("/user/update-profile", validate(updateEmployeeSchema), updateDetailsFromDashboard)
 router.post("/user/emplogout", empLogout)
@@ -28,12 +25,9 @@ router.post("/user/emp-change-password", empChangePassword)
 
 router.post("/emp/create/leave", createleave)
 router.get("/emp/get/leave", getMyLeaves)
-
 router.post("/emp/checkin" , checkIn)
 router.patch("/emp/checkout", checkOut)
 router.get("/emp/attendace/history", getAttendancehistory)
-
-
 
 export default router;
 
