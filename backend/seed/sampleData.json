@@ -4,7 +4,19 @@
     "name": "Aditya Raj",
     "email": "yvaditya0001@gmail.com",
     "phone": "9876543210",
-    "department": "Operational Team",
+    "department": "SDE",
+    "gender": "Male",
+    "experience": "0-1 Years",
+    "password": "$2b$10$exampleHashedPassword1",
+    "isFirstLogin": true,
+    "age": 22,
+    "skills": [
+      "MS Excel",
+      "Communication",
+      "Operations"
+    ],
+    "salary": 80000,
+    "userId": "1",
     "addedBy": "Admin"
   },
   {
@@ -13,6 +25,19 @@
     "email": "yvharshit@gmail.com",
     "phone": "9876543211",
     "department": "SDE",
+    "gender": "Male",
+    "experience": "1-3 Years",
+    "password": "$2b$10$exampleHashedPassword2",
+    "isFirstLogin": true,
+    "age": 24,
+    "skills": [
+      "React",
+      "TypeScript",
+      "Node.js",
+      "MongoDB"
+    ],
+    "salary": 90000,
+    "userId": "1",
     "addedBy": "Admin"
   }
 ]

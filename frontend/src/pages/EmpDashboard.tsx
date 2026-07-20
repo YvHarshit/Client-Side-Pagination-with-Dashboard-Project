@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/set-state-in-effect */
 import { useEffect, useState } from "react";
 import cover from "../assests/cover2.jpg";
 import profile from "../assests/profile.jpg";
@@ -8,6 +9,7 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { employeeSchema } from "../utils/zodValidation";
 import { DEPARTMENT, EXPERIENCE } from "../utils/constants";
+import { ArrowBack } from "@mui/icons-material";
 
 
 const EmpDashboard = () => {
@@ -40,7 +42,6 @@ const EmpDashboard = () => {
     department: employee.department,
     gender: employee.gender || "",
     experience: employee.experience || "",
-
     salary : employee.salary  ,
   });
 
@@ -136,7 +137,7 @@ const EmpDashboard = () => {
     } 
     catch (error) {
       console.log(error);
-      toast.error
+      toast.error("Failed to update profile");
     }
   };
 
@@ -157,53 +158,58 @@ const EmpDashboard = () => {
 
   }
 
+  console.log("Employee Details:", empDetails);
+console.log("Gender:", empDetails?.gender);
+console.log("Experience:", empDetails?.experience);
+
 
 
   return (
     <div className="min-h-screen bg-[#232f20] font-serif">
-      <div className="overflow-hidden rounded-md ">
+      
+    <div className="overflow-hidden rounded-md ">
 
-        <div className="relative h-52 md:h-74">
-              <img src={cover} alt="Cover"
-                className="h-full w-full object-cover "/>
-            </div>
+      <div className="relative h-52 md:h-74">
+        <img src={cover} alt="Cover" className="h-full w-full object-cover "/>
+      </div>
+
+      <button onClick={() => navigate(-1)}
+        className="absolute top-4 left-4 flex items-center gap-2 px-4 py-2 text-white transition hover:scale-102">
+        <ArrowBack />
+        <span className="font-semibold text-lime-400">Back to Dashboard</span>
+      </button>
  
-            <div className="absolute left-8 top-32 md:left-14 md:top-36">
-               <div className="h-32 w-32 overflow-hidden rounded-full border-2 shadow-md md:h-60 md:w-60 ">
-                <img src={profile} alt="Employee Avatar" className="object-cover"/>
-              </div>
-            </div>
+      <div className="absolute left-8 top-32 md:left-14 md:top-36">
+        <div className="h-32 w-32 overflow-hidden rounded-full border-2 md:h-60 md:w-60 ">
+          <img src={profile} alt="Employee Avatar" className="object-cover"/>
         </div>
+      </div>
+    </div>
 
-      <div className="pt-20 md:px-16">
-        <div className="mb-10 flex justify-end gap-4">
+    <div className="pt-20 md:px-16">
+      <div className="mb-10 flex justify-end gap-4">        
 
-          
+    {!isEditing 
+      ? (
+    <div>
+      <button onClick={handleEdit} 
+      className="rounded-lg bg-lime-700 px-6 py-2 text-white hover:bg-lime-600  mx-3">
+        Edit Profile </button> 
 
-          {!isEditing 
-            ? (<div>
-            <button onClick={handleEdit} 
-            className="rounded-lg bg-lime-700 px-6 py-2 text-white hover:bg-lime-600  mx-3">
-              Edit Profile </button> 
-
-            <button onClick={handleLogout} 
-            className="rounded-lg bg-red-800 px-6 py-2 text-white hover:bg-red-700 mx-3">
-              Logout </button>
-            </div>     
-            ) 
-            : (
-            <>
-              <button onClick={handleUpdate}
-                className="rounded-lg bg-green-600 px-6 py-2 text-white hover:bg-green-700">
-                Save </button>
-
-              <button onClick={handleCancel}
-                className="rounded-lg bg-red-800 px-6 py-2 text-white hover:bg-red-700">
-                Cancel </button>
-            </>
-            )}
-
-        </div>
+      <button onClick={handleLogout} 
+      className="rounded-lg bg-red-800 px-6 py-2 text-white hover:bg-red-700 mx-3">
+        Logout </button>
+        </div> ) 
+      : (
+        <div>
+          <button onClick={handleUpdate}
+            className="rounded-lg bg-green-600 px-6 py-2 text-white hover:bg-green-700">
+            Save </button>
+          <button onClick={handleCancel}
+            className="rounded-lg bg-red-800 px-6 py-2 text-white hover:bg-red-700">
+            Cancel </button>
+        </div> )}
+      </div>
 
         <div className="ml-4 grid grid-cols-1 gap-8 md:ml-32 md:grid-cols-2">
 
@@ -291,19 +297,7 @@ const EmpDashboard = () => {
           <ProfileField label="Account Status" value="Active" />
           <ProfileField label="Salary" value= {`₹ ${employee.salary}`}/>
 
-          {/* {isEditing
-            ? (
-              <div>
-                 <label className="mb-2 block font-semibold text-lg">Experience</label>
-                 <input type="text" name="experience" value={formData.experience} onChange={handleChange}
-                className="w-max border-0 border-b-3 rounded border-indigo-600 p-2" />
-              </div>
-            ) 
-            : 
-            ( <ProfileField label = "Experience" value = "2 Years" /> )
-          } */}
-          {/* <ProfileField label = "Experience" value = "2+ Years" />  */}
-          
+      
         </div>
       </div>
     </div>

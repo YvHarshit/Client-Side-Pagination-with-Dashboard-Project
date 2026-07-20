@@ -1,10 +1,10 @@
-import { LogoutRounded as LogoutRoundedIcon, VerifiedUser as VerifiedUserIcon, AddModerator as AddModeratorIcon, GppMaybe as GppMaybeIcon} from "@mui/icons-material";
+import { LogoutRounded as LogoutRoundedIcon,  AddModerator as AddModeratorIcon} from "@mui/icons-material";
 import { useEffect, useState } from 'react'
 import ZodUserForm from '../components/forms/ZodUserForm.js'
 import SearchBar from '../components/users/SearchBar.js'
 import { fetchUsers , addUser, deleteEmployee, updateEmployee} from '../services/userService.js'
 import type { Employee } from '../types/user.types.js'
-import {searchedFilterEmployees, getMostCommonDomain,countByDomain,countPerDepart} from '../utils/filterEmp.js'
+import { getMostCommonDomain,countByDomain,countPerDepart} from '../utils/filterEmp.js'
 import { sortData } from '../utils/sortUsers.js'
 import UserCard from '../components/users/UserCard.js'
 import axios from 'axios'
@@ -12,15 +12,21 @@ import {toast} from 'react-toastify'
 import { useNavigate } from 'react-router-dom'
 import {useAppContext} from '../context/AppContext'
 import FilterBar from "../components/users/FilterBar.js";
-import { filterByEmailDomain } from "../utils/filterByDomain.js";
 import EastIcon from '@mui/icons-material/East';
-
 import Pagination from "../components/users/Pagination.js";
 import { AdminDasboardChart } from "./AdminDasboardChart.js";
+// import Sidebar from "./Sidebar.js";
+
+import MenuIcon from "@mui/icons-material/Menu";
+import CloseIcon from "@mui/icons-material/Close";
+import LockPersonIcon from "@mui/icons-material/LockPerson";
+import PersonAddAlt1Icon from "@mui/icons-material/PersonAddAlt1";
 
 //import { allEmployee } from "../services/analyticsService.js";
 
 const Dashboard = () => {
+
+  const [openSidebar, setOpenSidebar] = useState(false);
 
   const { setIsLoggedin, setUserData, userData, backendUrl, currPage, searchStr, setTotalPages, totalEmp, setTotalEmp, trigger, setTrigger, filteredData, setFilteredData } = useAppContext();
 
@@ -56,17 +62,19 @@ useEffect(() => {
     }
   }
   loadData()
+// eslint-disable-next-line react-hooks/exhaustive-deps
 },[searchStr, currPage, trigger]) 
 
 const handleAddEmployee = async (newEmployee: Employee) => {
   try {
-     const savedEmployee = 
-    await addUser(newEmployee)
+     const savedEmployee =  await addUser(newEmployee)
     setTrigger(!trigger)
     setEmployees((prevEmployees) => sortData([...prevEmployees,savedEmployee]))
+    toast.success("Employee Added Successfully");
   } 
   catch (err) {
   console.error( 'Failed to add employee:',err)
+  toast.error("Failed to add employee");
   }}
 
 const handleDelete = async (Eid: string) => {
@@ -90,10 +98,9 @@ const handleUpdate = async (employee: Employee) => {
   try {
     const updatedEmployee = await updateEmployee(employee);
 
-    setEmployees(prev =>
-      prev.map(emp => (emp.Eid === updatedEmployee.Eid ) ? updatedEmployee : emp)
-    );
-    setEditingEmployee(null); 
+    setEmployees(prev => prev.map(emp => (emp.Eid === updatedEmployee.Eid ) ? updatedEmployee : emp));
+    setEditingEmployee(null);
+    toast.success("Employee Updated Successfully");
   } 
   catch (error) {
   console.error(error);
@@ -101,15 +108,20 @@ const handleUpdate = async (employee: Employee) => {
   toast.error("Failed to update employee, Email already exists");
   }
 };
-
-const handleEditClick = (employee: Employee) => {
-  setEditingEmployee(employee);
-  
+const scrollToRegistration = () => {
   window.scrollTo({
     top: document.body.scrollHeight,
     behavior: 'smooth',
   });
 };
+
+const handleEditClick = (employee: Employee) => {
+  setEditingEmployee(employee);
+  
+  scrollToRegistration()
+};
+
+
 
 
 const handleLogout = async () => {
@@ -131,53 +143,147 @@ const handleLogout = async () => {
 
   const topDomainCount = countByDomain(employees,topDomain)
 
-  const departmentCounts = countPerDepart(employees)
+  // const departmentCounts = countPerDepart(employees)
 
-  const sortedCompanies = Object.entries(departmentCounts)
-    .sort((a, b) => b[1] - a[1])
-
-  // const filteredEmployees = searchedFilterEmployees(employees, searchStr)  
-  // const searchEmployees = searchedFilterEmployees(employees,searchStr) ;
-  // const finalEmployees = filterByEmailDomain(searchEmployees, selectedDomain)
-
-  // console.log("SelectedDomain in Dashboard.tsx: ",selectedDomain )
-  // console.log("applyFilteredData in Dashboard.tsx: ",applyFilteredData )
+  // const sortedCompanies = Object.entries(departmentCounts)
+  //   .sort((a, b) => b[1] - a[1])
 
   return (
 
-<div className="max-w-[1300px] mx-auto py-10 px-6 font-serif">
+<div>
 
-  <div className="flex items-center justify-between">
-    <span className='text-xl'>Welcome, {" "} 
-      <span className='text-2xl font-semibold text-[#a8d96c] my-5'>  {userData?.name} {" "}
-        {userData?.isAuthenticated ? 
-          <VerifiedUserIcon fontSize="large" className="text-lime-400 text-3xl"/> :
-          <span className = "cursor-pointer" onClick={() => navigate('/auth-account')}>
-          <GppMaybeIcon  fontSize="large" className="text-red-500 text-3xl "/>
-          </span>
-          } 
-      </span>
-    </span>
+    <header className="sticky top-0 z-40 bg-[#171f11] border-b border-[#3a5035] font-serif">
+        <div className="max-w-[1300px] mx-auto px-6 py-4 flex justify-between items-center">           
+            <div>
+                <h1 className="text-3xl font-bold text-white">  Admin Dashboard </h1>
+                <p className="text-sm text-gray-400 mt-1">
+                    Welcome back, <span className="text-lg text-[#a8d96c]">{userData?.name}</span>
+                </p>
+                <p className="text-gray-400 text-xs mt-1"> Manage employees, attendance and analytics. </p>
+            </div>
+        </div>
+    </header>
 
- 
-    <div className='inline px-3 py-2 border border-3 text-4xl font-semibold rounded-full bg-[#171f11] text-[#a8d96c] relative group'>
-     {userData?.name[0].toUpperCase()}
- 
-     <div className='absolute hidden group-hover:block right-0 top-0 pt-15 z-10 text-[#a8d96c] text-sm '>
-       <ul className='p-2 list-none m-0 bg-[#232f20] border rounded-md w-max'>
-         <li onClick={handleLogout} 
-         className="cursor-pointer py-1 px-2 hover:text-red-400 hover:bg-[#3a5035] text-sm"><LogoutRoundedIcon/> Logout</li>
-         <li onClick={() => (userData?.isAuthenticated ? toast("User Already Authenticated") : navigate('/auth-account'))}
-         className="cursor-pointer py-1 px-2 hover:text-green-400 hover:bg-[#3a5035] text-sm"> <AddModeratorIcon/> Auth-Email </li>
-       </ul>
-     </div>
+    <div className="max-w-[1300px] mx-auto py-5 px-6 font-serif">
+
+<div className="flex justify-between items-center mb-4">
+
+    <div className="flex items-center gap-4">
+        <button onClick={() => setOpenSidebar(true)}
+            className="p-2 rounded-md hover:bg-[#232f20] transition">
+            <MenuIcon className="text-[#a8d96c]" />
+        </button>
+    </div>
+
+  <div className="relative group">
+    <div className="flex items-center gap-3 cursor-pointer">
+      <div
+        className=" w-12 h-12 rounded-full bg-[#232f20] border border-[#3a5035] flex items-center justify-center text-[#a8d96c] font-bold text-xl">
+        {userData?.name?.[0]?.toUpperCase()}
+      </div>
+
+      <div>
+        <p className="text-white font-semibold"> {userData?.name} </p>
+        <p className="text-xs text-gray-400"> Administrator  </p>
+      </div>
+    </div>
+
+
+    <div className=" absolute right-0 top-12 hidden group-hover:block bg-[#232f20] border border-[#3a5035] rounded-md shadow-lg w-56 overflow-hidden z-20">
+
+      <button onClick={() => userData?.isAuthenticated ? toast("User Already Authenticated") : navigate("/auth-account")}
+        className="w-full flex items-center gap-2 px-4 py-3 hover:bg-[#3a5035] transition">
+          <AddModeratorIcon fontSize="small" />
+          Authenticate Email
+      </button>
+
+      <button
+        onClick={handleLogout}
+        className=" w-full flex items-center gap-2 px-4 py-3 text-red-400 hover:bg-[#3a5035] transition">
+          <LogoutRoundedIcon fontSize="small" />
+          Logout
+      </button>
     </div>
   </div>
 
-  <div className='my-7'>
-    <h1 className='text-4xl font-semibold text-center'> Admin Dashboard  </h1>
-  </div>
+  {/* Backdrop - fades in/out, click to close */}
+  <div
+    onClick={() => setOpenSidebar(false)}
+    className={`fixed inset-0 bg-black/40 z-40 transition-opacity duration-300 ease-in-out ${
+      openSidebar ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+    }`}
+  />
 
+  {/* Sidebar drawer - slides in/out. Always mounted so the transition can animate. */}
+  <div
+    className={`fixed top-0 left-0 h-full w-72 bg-[#232f20] border-r border-[#3a5035] p-6 z-50 flex flex-col transform transition-transform duration-300 ease-in-out ${
+      openSidebar ? 'translate-x-0' : '-translate-x-full'}`}>
+
+        <div className="flex justify-between items-center">
+            <h2 className="text-xl font-semibold text-[#a8d96c]"> Menu </h2>
+            <button onClick={() => setOpenSidebar(false)}> <CloseIcon className="text-white"/> </button>
+        </div>
+
+    <div className="mt-8">
+
+      <div className="w-16 h-16 rounded-full bg-[#171f11] flex items-center justify-center text-[#a8d96c] text-2xl font-bold">
+        {userData?.name?.[0]?.toUpperCase()}
+      </div>
+      <h2 className="mt-3 text-xl text-white">  {userData?.name} </h2>
+      <p className="text-sm text-gray-400"> Administrator </p>
+    </div>
+
+    <div className="mt-10 space-y-2 overflow-y-auto flex-1">
+    <button onClick={() => setOpenSidebar(false)}
+      className="w-full text-left px-4 py-3 rounded-md hover:bg-[#3a5035]">Dashboard </button>
+
+            
+
+      <button className="w-full text-left px-4 py-3 rounded-md hover:bg-[#3a5035]"
+        onClick={() => { 
+        setOpenSidebar(false); 
+        scrollToRegistration();
+        }} > Add Employee </button>
+
+      <button className="w-full text-left px-4 py-3 rounded-md hover:bg-[#3a5035]"
+          onClick={() => {
+            setOpenSidebar(false);
+            navigate("/admin/leaves");
+            }}> Leave Requests </button>
+
+     <button className="w-full text-left px-4 py-3 rounded-md hover:bg-[#3a5035]"
+          onClick={() => {
+            setOpenSidebar(false);
+            navigate("/company/analytics"); 
+            }}> Analytics </button>
+
+      <button  className="w-full text-left px-4 py-3 rounded-md hover:bg-[#3a5035]"
+        onClick={() => {
+          setOpenSidebar(false);
+          if (userData?.isAuthenticated) toast("User Already Authenticated");
+          else  navigate("/auth-account");
+        }}>  Authenticate Email </button>
+
+      <button className="w-full text-left px-4 py-3 rounded-md hover:bg-[#3a5035]"
+      onClick={() => {
+          setOpenSidebar(false);
+          navigate("/testimonials"); 
+        }}> Testimonials </button>
+
+      <button className="w-full text-left px-4 py-3 rounded-md hover:bg-[#3a5035]"
+      onClick={() => { 
+          setOpenSidebar(false);
+          navigate("/about"); }}
+          >  About Company  </button>
+          
+     </div>
+
+        <button onClick={handleLogout}
+        className=" mt-4 bg-red-500 rounded-md py-3 font-semibold">
+            Logout </button>
+
+  </div>
+</div>
 
 
     <div className="grid grid-cols-1 gap-4 text-[#a8d96c] sm:grid-cols-2">
@@ -219,7 +325,7 @@ const handleLogout = async () => {
     </div>
 
 
-      <div className='bg-[#232f20] border border-[#3a5035] rounded-md p-4 mt-6'>
+      {/* <div className='bg-[#232f20] border border-[#3a5035] rounded-md p-4 mt-6'>
         <h2 className='text-lg mb-3' >  Employees per Department </h2>
 
 
@@ -236,10 +342,10 @@ const handleLogout = async () => {
             </div>
           ))}
         </div>
-      </div>
+      </div> */}
 
       {/* //============================================================== */}
-      <div className="mt-8 mb-6">
+      {/* <div className="mt-8 mb-6">
         <h2 className="text-2xl mb-4">Employee Requests</h2>
       
         <div className="bg-[#232f20] border border-[#3a5035] rounded-lg p-6 flex items-center justify-between">
@@ -257,13 +363,13 @@ const handleLogout = async () => {
           </button>
       
         </div>
-      </div>
+      </div> */}
 
       {/* //============================================================== */}
 
 <h2 className="text-2xl mt-6"> Employees List </h2>
 
-    <div className="flex gap-3 mt-2 mb-1">
+    <div className="flex gap-3 mt-4 mb-1">
       <div className="flex-grow"> <SearchBar/> </div>
       <div> <FilterBar/> </div>
    </div>
@@ -275,7 +381,7 @@ const handleLogout = async () => {
 : 
 (<div className="max-h-[500px] overflow-y-auto no-scrollbar"> 
   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 ">
-    { (setFilteredData.length === 0 )
+    { (employees.length === 0)
     ? 
     (
       <p className="text-center text-sm">No employees found.</p>) 
@@ -295,27 +401,90 @@ const handleLogout = async () => {
 )}
 
 
-{ <Pagination/>}
+<Pagination/>
 
 
+<h2 className="text-2xl mt-12 mb-4"> {editingEmployee ? "Edit Employee" : "Registration"} </h2>
 
-<h2 className="text-2xl mt-12"> Registration </h2>
+  { !userData?.isAuthenticated ? (
 
-  { !userData?.isAuthenticated 
-  && 
-    <h2 className="text-2xl text-center text-red-500 rounded-sm my-2 p-10 bg-[#232f20]"> 
-    First Authenticate yourself to add employee </h2>
-  }  
-  { userData?.isAuthenticated 
-   &&
-   (
-   <div className="mt-1">
+    <div className="flex items-center justify-center py-10">
+      <div className="max-w-2xl w-full bg-[#232f20] border border-[#3a5035] rounded-3xl shadow-2xl overflow-hidden">
+
+        <div className="bg-gradient-to-r from-red-400 to-green-900 border-b border-[#3a5035] py-10 flex flex-col items-center">
+          <div className="w-24 h-24 rounded-full bg-red-500/10 border border-red-500 flex items-center justify-center">
+            <LockPersonIcon sx={{ fontSize: 55, color: "#ef4444" }}/>
+          </div>
+          <h1 className="text-4xl font-bold text-white mt-6 text-center"> Authentication Required </h1>
+          <p className="text-gray-900 text-center mt-4 max-w-md">
+            Your account must be verified before you can register new employees.
+          </p>
+        </div>
+
+        <div className="p-8">
+          <div className="space-y-5">
+
+            <div className="flex items-center gap-4">
+              <div className="w-3 h-3 rounded-full bg-lime-400"></div>
+              <span>Secure Employee Registration</span>
+            </div>
+
+            <div className="flex items-center gap-4">
+              <div className="w-3 h-3 rounded-full bg-lime-400"></div>
+              <span>Protects Company Data</span>
+            </div>
+
+            <div className="flex items-center gap-4">
+              <div className="w-3 h-3 rounded-full bg-lime-400"></div>
+              <span>Only Verified Administrators can add employees</span>
+            </div>
+
+          </div>
+
+          <button onClick={() => navigate("/auth-account")}
+            className="mt-10 w-full bg-[#a8d96c] text-black font-semibold py-4 rounded-xl hover:scale-[1.02] transition-all duration-300">
+            Authenticate Now
+          </button>
+
+        </div>
+      </div>
+    </div>
+
+  ) : (
+
+    <div className="mt-1 bg-[#232f20] border border-[#3a5035] rounded-3xl shadow-2xl overflow-hidden">
+
+      <div className="bg-gradient-to-r from-[#2b3b24] to-[#171f11] px-8 py-8 border-b border-[#3a5035]">
+        <div className="flex items-center gap-5">
+          <div className="w-16 h-16 rounded-full bg-[#a8d96c] flex items-center justify-center shadow-lg">
+            <PersonAddAlt1Icon sx={{fontSize: 36, color: "#171f11" }}/>
+          </div>
+          <div>
+            <h2 className="text-3xl font-bold text-white"> {editingEmployee ? "Edit Employee" : "Employee Registration"} </h2>
+            <p className="text-gray-400 mt-1">
+              {editingEmployee
+                ? "Update this employee's information below."
+                : "Enter employee information to create a new account."}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div className="p-8">
         <ZodUserForm
           onAdd={handleAddEmployee}
           onUpdate={handleUpdate}
-          editingEmployee={editingEmployee}  />
-    </div>)
-  }
+          editingEmployee={editingEmployee}
+        />
+      </div>
+    </div>
+
+  )}
+
+  
+  </div>
+
+  
   </div>
   )
 }

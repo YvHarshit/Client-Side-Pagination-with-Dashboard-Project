@@ -5,8 +5,11 @@ import { toast } from "react-toastify";
 import { leaveSchema, type LeaveFormData } from "../utils/zodValidation"
 import { createLeave } from "../services/leaveServices"
 import { LEAVE_TYPE } from "../utils/constants"
+import { ArrowBack } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
 
 const ApplyLeave = () => {
+    const navigate = useNavigate() ;
 
     const {register,handleSubmit,reset,formState: { errors }} = useForm<LeaveFormData>({
         resolver: zodResolver(leaveSchema) });
@@ -29,7 +32,15 @@ const ApplyLeave = () => {
     };
 
     return (
-        <div className="min-h-screen bg-gray-800 flex justify-center pt-10 font-serif ">
+        <div className="min-h-screen flex justify-center pt-10 font-serif ">
+
+        <button onClick={() => navigate(-1)}
+          className="absolute top-4 left-4 flex items-center gap-2 px-4 py-2 text-white transition">
+           <ArrowBack />
+          <span className="font-semibold">Back to Dashboard</span>
+        </button>
+
+        
             <div className="bg-[#232f20] h-full w-full max-w-xl rounded-lg p-8 mt-6 border-3 border-lime-700">
                 <h2 className="text-3xl text-lime-400 mb-8">   Apply Leave/ Raise Query  </h2>
 

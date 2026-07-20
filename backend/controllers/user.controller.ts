@@ -64,7 +64,7 @@ export const getUsers =  async (req: Request, res: Response) => {
 export const addUser =  async (req : Request, res : Response): Promise<void> => {
     try {
     const employeeId = String(await nextId('employeeId'));
-    const { name, email, department, phone, password, age, skills, salary } = req.body;
+    const { name, email, department, phone, password, age, skills, salary, gender } = req.body;
 
     if (!req.userId) {
       res.status(401).json({ message: 'Unauthorized' });
@@ -76,7 +76,7 @@ export const addUser =  async (req : Request, res : Response): Promise<void> => 
     const emp = await Employee.create({
       Eid: employeeId,
       userId: req.userId,
-      name, email, department, phone, age, skills, salary ,
+      name, email, department, phone, age, skills, salary ,gender,
       password: hashedPassword
     });
 
@@ -297,13 +297,15 @@ export const updateDetailsFromDashboard = async (req: Request, res: Response) =>
     console.log("Age from request:", req.body.age, typeof req.body.age);
     console.log("Before:", emp.age);
 
-    const { name, phone, department, age, experience } = req.body;
+    const { name, phone, department, age, experience, gender, } = req.body;
     
     emp.name = name ;
     emp.phone = phone ;
     emp.department = department ;
     emp.age = age;
     emp.experience = experience ;
+    emp.gender = gender ;
+    
     
     console.log("After assignment:", emp.age);
     

@@ -130,22 +130,30 @@ export const getAttendancehistory = async(req: Request, res : Response) => {
         }
     
     const decoded = jwt.verify(token, process.env.JWT_SECRET as string ) as {email : string}  
-    const attendance = await AttendenceModel.find({ email: decoded.email}).sort({ date: -1 });     
+    //const attendance = await AttendenceModel.find({ email: decoded.email}).sort({ date: -1 });   
     
-    if (!attendance) {
-     return res.status(404).json({
-       success: false,
-       message: "Attendance record not found",
-      });
-    }
-    
-    return res.json({
-        success: true ,
-        message : "Data Found",
-        attendance
-    })
+    const attendance = await AttendenceModel
+      .find({ email: decoded.email})
+      .sort({ date: -1 })
+      .limit(60); // last ~2 months is plenty for a % calc — no need to pull the whole history
 
+    return res.status(200).json({ attendance });
   }
+    
+    // if (!attendance) {
+    //  return res.status(404).json({
+    //    success: false,
+    //    message: "Attendance record not found",
+    //   });
+    // }
+    
+    // return res.json({
+    //     success: true ,
+    //     message : "Data Found",
+    //     attendance
+    // })
+
+  
     catch (error : unknown) {
         if(error instanceof Error){
             console.error(error.message)
@@ -158,5 +166,4 @@ export const getAttendancehistory = async(req: Request, res : Response) => {
         message : "Failed To Bring the Attendance data"
        }) 
     }
-
 }

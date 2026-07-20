@@ -78,6 +78,7 @@ export interface AppContextType {
   getEmpDetails : (val: string) => Promise<Employee> ;
   fetchEmployeeDetails : () => Promise<void> ;
 } 
+
 export interface UsersResponse {
   users: Employee[];
   currentPage: number;

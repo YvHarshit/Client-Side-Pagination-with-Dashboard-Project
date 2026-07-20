@@ -14,6 +14,9 @@ import AdminLeave from "./pages/AdminLeave";
 import CompanyAnalytics from "./pages/CompanyAnalytics";
 import EmpAttendance from "./pages/EmpAttendance"
 import AttendanceCalendar from "./pages/AttendanceCalendar";
+// import AddEmployee from "./pages/AddEmployee";
+import Testimonials from "./pages/Testimonials";
+import About from "./pages/About";
 
 function AppRoutes() {
   const { isLoggedin, userData,empDetails } = useAppContext();
@@ -46,6 +49,10 @@ function AppRoutes() {
       <Route path = "/emp/attendance" element = {<EmpAttendance/>}/>
 
       <Route path = "/emp/calender" element = {<AttendanceCalendar />}/>
+
+      {/* <Route path="/add-employee" element={<AddEmployee />} /> */}
+      <Route path="/testimonials" element={<Testimonials />} />
+      <Route path="/about" element={<About />} />
 
       
 

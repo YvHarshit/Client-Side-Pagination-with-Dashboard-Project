@@ -3,6 +3,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { useAppContext } from "../context/AppContext";
 import { useNavigate } from "react-router-dom";
+import { ArrowBack, FactCheck } from "@mui/icons-material";
 
 type Attendance = {
   _id: string;
@@ -142,13 +143,34 @@ const Attendance = () => {
   };
 
   return (
-    <div className="max-w-6xl mx-auto py-10 px-6">
-      <h1 className="text-4xl font-semibold mb-8">  Attendance  </h1>
+    <div className="max-w-6xl mx-auto py-10 px-6 font-serif">
+
+      <button onClick={() => navigate(-1)}
+       className="absolute top-4 left-4 flex items-center gap-2 px-4 py-2 text-white transition">
+        <ArrowBack />
+        <span className="font-semibold">Back to Dashboard</span>
+     </button>
+
+
+    <h1 className="mb-8 flex items-center gap-3 text-4xl font-semibold text-white">
+      <FactCheck fontSize="large" className="text-lime-500" /> Attendance </h1>
+
       <div className="bg-[#232f20] rounded-lg border border-[#3a5035] p-8">
         <h2 className="text-2xl mb-6"> Today's Attendance  </h2>
 
+        <div className="mb-8 flex gap-8">
+          <div>
+           <p className="text-gray-400">  Status </p>
+           <p className="text-2xl font-bold text-lime-300"> {todayAttendance?.status ?? "Not Checked In"} </p>
+          </div>
+        <div>
+          <p className="text-gray-400"> Check In </p>
+          <p className="text-xl"> {todayAttendance ? new Date(todayAttendance.clockIn).toLocaleTimeString()  : "--"} </p>
+        </div>
+      </div>
 
-        {!todayAttendance
+
+      {!todayAttendance
          ? (
           <button  onClick={handleCheckIn}
             className="bg-lime-600 hover:bg-lime-500 text-black font-semibold px-8 py-3 rounded-md transition" >
@@ -169,8 +191,8 @@ const Attendance = () => {
           
 
           
-           <button className="float-right cursor-pointer rounded-lg bg-red-800 py-2 px-6 hover:bg-red-700 transition-colors duration-200 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-red-500"
-             onClick={() => navigate("/emp/calender")} > Attendance </button>
+           {/* <button className="float-right cursor-pointer rounded-lg bg-red-800 py-2 px-6 hover:bg-red-700 transition-colors duration-200 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+             onClick={() => navigate("/emp/calender")} > Attendance </button> */}
           </div>
         )}
 
@@ -183,7 +205,7 @@ const Attendance = () => {
         </div>
 
         <table className="w-full">
-          <thead className="bg-[#171f11]">
+          <thead className="bg-[#1d2919] text-lime-300 uppercase text-sm tracking-wider">
             <tr> 
               <th className="py-4">Date</th>
               <th>Check In</th>
@@ -195,11 +217,23 @@ const Attendance = () => {
           <tbody>
             {history.length === 0 
               ? (
-              <tr>
-                <td colSpan={5} className="text-center py-10">
-                  No Attendance Found
-                </td>
-              </tr>)
+             <td colSpan={5} className="py-16 text-center">
+
+<div className="flex flex-col items-center">
+
+<div className="mb-3 text-6xl">📅</div>
+
+<h3 className="text-xl font-semibold text-white">
+No Attendance Yet
+</h3>
+
+<p className="mt-2 text-gray-400">
+Start by checking in today.
+</p>
+
+</div>
+
+</td>)
               : ( history.map((item) => (
                 <tr key={item._id}  className="border-t border-[#3a5035] hover:bg-[#171f11]">
 

@@ -102,7 +102,7 @@ const validateForm = () => {
   };
 
 return (
-  <div className="flex items-center justify-center min-h-screen px-6 sm:px-0 bg-gray-800 relative">
+  <div className="flex items-center justify-center min-h-screen px-6 sm:px-0 relative">
 
   {/* Top Right Button */}
   <div className="absolute top-8 right-8 flex rounded-lg overflow-hidden border border-slate-500">

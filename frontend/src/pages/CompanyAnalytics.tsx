@@ -3,15 +3,17 @@ import { allEmployee } from "../services/analyticsService";
 import type { Employee } from "../types/user.types";
 import { ageInfo, avgAge, countByGender, departDistribution, getMostCommonDomain, mailSummary, salaryInfo, skillsSummary } from "../utils/filterEmp.js";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, Legend } from "recharts";
+// import { ArrowBack } from "@mui/icons-material";
+import { ArrowBack, PeopleAltOutlined, ApartmentOutlined, AlternateEmailOutlined, CalendarMonthOutlined, PaidOutlined, TrendingUpOutlined } from "@mui/icons-material";
+
+import { useNavigate } from "react-router-dom";
 
 const SKILL_COLORS = ["#A78BFA", "#86EFAC", "#38BDF8", "#FBBF24", "#F472B6"];
 
-interface ChartDatum {
-  name: string;
-  count: number;
-}
+interface ChartDatum { name: string; count: number;}
 
 const CompanyAnalytics = () => {
+  const navigate = useNavigate()
   const [allEmployees, setAllEmployees] = useState<Employee[]>([]);
 
   useEffect(() => {
@@ -49,41 +51,82 @@ const CompanyAnalytics = () => {
   const totalMail = Object.values(mailAnalytics).reduce((sum, n) => sum + n, 0);
 
   return (
+
     <div className=" mx-auto py-10 px-6 bg-[#0A0F0A] min-h-screen text-gray-200">
 
-      <h1 className="text-4xl font-serif font-bold text-white text-center mb-8">Company Analytics</h1>
+      <button onClick={() => navigate(-1)}
+        className="flex items-center gap-2 text-[#a8d96c] hover:text-white transition mb-2">
+        <ArrowBack />
+        <span className="font-semibold"> Back to Dashboard </span>
+      </button>
+
+       <div className="text-center mb-8">
+        <h1 className="text-4xl font-serif font-bold text-white">Company Analytics</h1>
+        <p className="text-sm text-gray-500 mt-2"> Insights into your workforce</p>
+      </div>
 
      
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 mb-8">
+  <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 mb-8">
 
-        <div className="bg-[#101F14] border border-[#2C4A34] rounded-lg p-4">
-          <p className="text-2xl font-serif text-white">{allEmployees.length}</p>
-          <p className="text-green-400 text-sm mt-1">Total Employees</p>
-        </div>
+     <div className="bg-[#232f20] border border-[#2C4A34] rounded-lg p-5 flex items-center gap-4 transition-all duration-300 hover:border-green-500 hover:shadow-lg hover:shadow-green-900/20">
+      <div className="p-3 rounded-lg bg-[#86EFAC]/10 text-[#86EFAC]">
+       <PeopleAltOutlined sx={{ fontSize: 30 }} />
+      </div>
+      <div>
+        <p className="text-3xl font-serif font-bold text-white"> {allEmployees.length} </p>
+       <p className="text-xs uppercase tracking-wider text-green-400 mt-1"> Total Employees </p>
+      </div>
 
-        <div className="bg-[#101F14] border border-[#2C4A34] rounded-lg p-4">
+  </div>
+
+     <div className="bg-[#232f20] border border-[#2C4A34] rounded-lg p-5 flex items-center gap-4 transition-all duration-300 hover:border-green-500 hover:shadow-lg hover:shadow-green-900/20">
+          <div className="p-3 rounded-lg bg-[#86EFAC]/10 text-[#86EFAC]">
+           <ApartmentOutlined sx={{ fontSize: 30 }} />
+          </div>
+         <div>
           <p className="text-2xl font-serif text-white">{totalNumberOfDepartments}</p>
           <p className="text-green-400 text-sm mt-1">Total Departments</p>
+          </div>
         </div>
 
-        <div className="bg-[#101F14] border border-[#2C4A34] rounded-lg p-4">
+        <div className="bg-[#232f20] border border-[#2C4A34] rounded-lg p-5 flex items-center gap-4 transition-all duration-300 hover:border-green-500 hover:shadow-lg hover:shadow-green-900/20">
+          <div className="p-3 rounded-lg bg-[#86EFAC]/10 text-[#86EFAC]">
+           <AlternateEmailOutlined sx={{ fontSize: 30 }} />
+          </div>
+         <div>
           <p className="text-2xl font-serif text-white">{topDomain}</p>
           <p className="text-green-400 text-sm mt-1">Top Mail Domain</p>
         </div>
+        </div>
 
-        <div className="bg-[#101F14] border border-[#2C4A34] rounded-lg p-4">
+        <div className="bg-[#232f20] border border-[#2C4A34] rounded-lg p-5 flex items-center gap-4 transition-all duration-300 hover:border-green-500 hover:shadow-lg hover:shadow-green-900/20">
+          <div className="p-3 rounded-lg bg-[#86EFAC]/10 text-[#86EFAC]">
+           <CalendarMonthOutlined sx={{ fontSize: 30 }} />
+          </div>
+         <div>
           <p className="text-2xl font-serif text-white">{averageAge}</p>
           <p className="text-green-400 text-sm mt-1">Average Age</p>
         </div>
+        </div>
 
-        <div className="bg-[#101F14] border border-[#2C4A34] rounded-lg p-4">
+        <div className="bg-[#232f20] border border-[#2C4A34] rounded-lg p-5 flex items-center gap-4 transition-all duration-300 hover:border-green-500 hover:shadow-lg hover:shadow-green-900/20">
+          <div className="p-3 rounded-lg bg-[#86EFAC]/10 text-[#86EFAC]">
+           <PaidOutlined sx={{ fontSize: 30 }} />
+          </div>
+         <div>
           <p className="text-2xl font-serif text-white">{salaryInformation[2]}</p>
           <p className="text-green-400 text-sm mt-1">Average Salary</p>
         </div>
+        </div>
 
-        <div className="bg-[#101F14] border border-[#2C4A34] rounded-lg p-4">
+        <div className="bg-[#232f20] border border-[#2C4A34] rounded-lg p-5 flex items-center gap-4 transition-all duration-300 hover:border-green-500 hover:shadow-lg hover:shadow-green-900/20">
+          <div className="p-3 rounded-lg bg-[#86EFAC]/10 text-[#86EFAC]">
+           <TrendingUpOutlined sx={{ fontSize: 30 }} />
+          </div>
+         <div>
           <p className="text-2xl font-serif text-white">{salaryInformation[1]} - {salaryInformation[0]}</p>
           <p className="text-green-400 text-sm mt-1">Salary Range</p>
+        </div>
         </div>
 
       </div>
@@ -97,7 +140,7 @@ const CompanyAnalytics = () => {
 
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
-          <div className="bg-[#101F14] border border-[#2C4A34] rounded-lg p-5">
+          <div className="bg-[#232f20] border border-[#2C4A34] rounded-lg p-5">
             <h2 className="text-green-400 font-serif text-lg mb-3">Salary Breakdown</h2>
             <div className="flex justify-between text-sm py-1.5 border-b border-[#2C4A34]">
               <span className="text-gray-400">Highest Salary</span>
@@ -113,7 +156,7 @@ const CompanyAnalytics = () => {
             </div>
           </div>
 
-           <div className="bg-[#101F14] border border-[#2C4A34] rounded-lg p-5">
+           <div className="bg-[#232f20] border border-[#2C4A34] rounded-lg p-5">
             <h2 className="text-green-400 font-serif text-lg mb-3">Gender</h2>
             <table className="w-full text-sm">
               <thead>
@@ -138,7 +181,7 @@ const CompanyAnalytics = () => {
 
 
 
-          <div className="bg-[#101F14] border border-[#2C4A34] rounded-lg p-5">
+          <div className="bg-[#232f20] border border-[#2C4A34] rounded-lg p-5">
             <h2 className="text-green-400 font-serif text-lg mb-3">Age Breakdown</h2>
             <div className="flex justify-between text-sm py-1.5 border-b border-[#2C4A34]">
               <span className="text-gray-400">Youngest Employee</span>
@@ -158,7 +201,7 @@ const CompanyAnalytics = () => {
             </div>
           </div>
 
-          <div className="bg-[#101F14] border border-[#2C4A34] rounded-lg p-5">
+          <div className="bg-[#232f20] border border-[#2C4A34] rounded-lg p-5">
             <h2 className="text-green-400 font-serif text-lg mb-3">Skills</h2>
             <table className="w-full text-sm">
               <thead>
@@ -182,7 +225,7 @@ const CompanyAnalytics = () => {
 
          
 
-          <div className="bg-[#101F14] border border-[#2C4A34] rounded-lg p-5">
+          <div className="bg-[#232f20] border border-[#2C4A34] rounded-lg p-5">
             <h2 className="text-green-400 font-serif text-lg mb-3">Department</h2>
             <table className="w-full text-sm">
               <thead>
@@ -204,7 +247,7 @@ const CompanyAnalytics = () => {
             </table>
           </div>
 
-          <div className="bg-[#101F14] border border-[#2C4A34] rounded-lg p-5">
+          <div className="bg-[#232f20] border border-[#2C4A34] rounded-lg p-5">
             <h2 className="text-green-400 font-serif text-lg mb-3">Mail Domain</h2>
             <table className="w-full text-sm">
               <thead>
@@ -229,7 +272,7 @@ const CompanyAnalytics = () => {
 
         <div className="flex flex-col gap-4">         
 
-          <div className="bg-[#101F14] border border-[#2C4A34] rounded-lg p-5">
+          <div className="bg-[#232f20] border border-[#2C4A34] rounded-lg p-5">
             <h2 className="text-green-400 font-serif text-lg mb-4">Skills Distribution</h2>
             <ResponsiveContainer width="100%" height={240}>
               <PieChart>
@@ -255,7 +298,7 @@ const CompanyAnalytics = () => {
             </ResponsiveContainer>
           </div>
 
-          <div className="bg-[#101F14] border border-[#2C4A34] rounded-lg p-5">
+          <div className="bg-[#232f20] border border-[#2C4A34] rounded-lg p-5">
             <h2 className="text-green-400 font-serif text-lg mb-4">Department Distribution</h2>
             <ResponsiveContainer width="100%" height={260}>
               <BarChart data={departmentChartData} layout="vertical" margin={{ left: 10 }}>
@@ -268,7 +311,7 @@ const CompanyAnalytics = () => {
             </ResponsiveContainer>
           </div>
 
-          <div className="bg-[#101F14] border border-[#2C4A34] rounded-lg p-5">
+          <div className="bg-[#232f20] border border-[#2C4A34] rounded-lg p-5">
             <h2 className="text-green-400 font-serif text-lg mb-4">Email Domain Distribution</h2>
             <ResponsiveContainer width="100%" height={220}>
               <BarChart data={emailChartData}>
@@ -281,7 +324,7 @@ const CompanyAnalytics = () => {
             </ResponsiveContainer>
           </div>
 
-          <div className="bg-[#101F14] border border-[#2C4A34] rounded-lg p-5">
+          <div className="bg-[#232f20] border border-[#2C4A34] rounded-lg p-5">
             <h2 className="text-green-400 font-serif text-lg mb-4">Gender Distribution</h2>
             <ResponsiveContainer width="100%" height={220}>
               <BarChart data={genderChartData}>

@@ -52,6 +52,7 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
     setEmpDetails(employee.emp);
 
     console.log("Setting employee:", employee);
+    console.log("employee.emp:", employee.emp);
   } 
   catch (error) {
     console.log(error);
