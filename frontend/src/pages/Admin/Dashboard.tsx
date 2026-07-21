@@ -226,6 +226,12 @@ return (
       navigate("/company/analytics"); 
       }}> Analytics </button>
 
+     <button className="w-full text-left px-4 py-3 rounded-md hover:bg-[#3a5035]"
+      onClick={() => {
+      setOpenSidebar(false);
+      navigate("/admin/today/attendance"); 
+      }}> Today's Emp Attendance </button>
+
      <button  className="w-full text-left px-4 py-3 rounded-md hover:bg-[#3a5035]"
       onClick={() => {
       setOpenSidebar(false);

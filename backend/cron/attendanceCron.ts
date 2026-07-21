@@ -3,7 +3,7 @@ import { ATTENDANCE_CONFIG } from "../config/attendance.config.js";
 import Employee from "../models/user.model.js";
 import { AttendenceModel } from "../models/attendace.model.js";
 
-console.log("Attendance Cron Loaded");
+//console.log("Mark Late Attendance Cron Loaded");
 
 cron.schedule(`${ATTENDANCE_CONFIG.absentCheckMinute} ${ATTENDANCE_CONFIG.absentCheckHour}  * * *`, async () => {
 

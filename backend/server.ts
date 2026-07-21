@@ -6,6 +6,7 @@ import userRoutes from "./routes/user.routes.js";
 import authRouter from "./routes/auth.routes.js";
 import cookieParser from "cookie-parser";
 import "./cron/attendanceCron.js"
+import "./cron/markAbsent.js"
 dotenv.config();
 const app: Application = express();
 

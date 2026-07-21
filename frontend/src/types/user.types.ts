@@ -94,6 +94,9 @@ export interface SidebarProps {
 }
 
 export interface  Attendance  {
+  employeeId: string;
+  email: string, 
+  name: string ,
   _id: string;
   date: string;
   clockIn: string;

@@ -8,9 +8,9 @@ import type {Attendance} from "../../types/user.types"
 import { checkIn, checkOut, getAttendanceHistory } from "../../services/attendanceServices";
 
 
-const Attendance = () => {
-    const navigate = useNavigate() ;
-   const { backendUrl } = useAppContext() ;
+const EmpAttendance = () => {
+  const navigate = useNavigate() ;
+  const { backendUrl } = useAppContext() ;
 
   const [todayAttendance, setTodayAttendance] = useState<Attendance | null>(null);
   const [history, setHistory] = useState<Attendance[]>([]);
@@ -28,7 +28,7 @@ const Attendance = () => {
       setHistory(data.attendance);
       const today = new Date().toISOString().split("T")[0];
 
-      const todayRecord = data.attendance.find( (item: Attendance) => item.date === today );
+      const todayRecord = data.attendance.find((item: Attendance) => item.date === today );
       setTodayAttendance(todayRecord ?? null);
       } 
     else {
@@ -48,15 +48,13 @@ const Attendance = () => {
   const handleCheckIn = async () => {
     try {
       const data = await checkIn(backendUrl);
-
       toast(data.message);
       fetchAttendance();
-    } catch (error) {
+    } 
+    catch (error) {
       console.log(error);
-
       if (axios.isAxiosError(error))
         toast.error(error.response?.data?.message);
-
       else toast.error("Something went wrong");
     }
   };
@@ -69,19 +67,14 @@ const Attendance = () => {
     } 
     catch (error) {
       console.log(error);
-
       if (axios.isAxiosError(error))
         toast.error(error.response?.data?.message);
-
       else toast.error("Something went wrong");
     }
   };
 
   if (loading) {
-    return (
-      <div className="text-center mt-20 text-lg">
-        Loading Attendance...
-      </div>
+    return ( <div className="text-center mt-20 text-xl">  Loading Attendance... </div>
     );
   }
 
@@ -175,46 +168,44 @@ const Attendance = () => {
               ? (
              <td colSpan={5} className="py-16 text-center">
 
-<div className="flex flex-col items-center">
-
-<div className="mb-3 text-6xl">📅</div>
-
-<h3 className="text-xl font-semibold text-white">
-No Attendance Yet
-</h3>
-
-<p className="mt-2 text-gray-400">
-Start by checking in today.
-</p>
-
-</div>
-
-</td>)
+            <div className="flex flex-col items-center">            
+            <div className="mb-3 text-6xl">📅</div>
+            
+            <h3 className="text-xl font-semibold text-white">
+            No Attendance Yet
+            </h3>
+            
+            <p className="mt-2 text-gray-400">
+            Start by checking in today.
+            </p>
+            
+            </div>
+            
+            </td>)
               : ( history.map((item) => (
-                <tr key={item._id}  className="border-t border-[#3a5035] hover:bg-[#171f11]">
+              <tr key={item._id}  className="border-t border-[#3a5035] hover:bg-[#171f11]">
 
-                  <td className="py-4 text-center"> 
-                    {item.date}
-                  </td>
-
-                  <td className="text-center"> {
-                item.clockIn ? new Date(item.clockIn).toLocaleTimeString() : "-" }
+                <td className="py-4 text-center"> 
+                  {item.date}
                 </td>
 
-                  <td className="text-center">
-                    {item.checkOut ? new Date(item.checkOut).toLocaleTimeString() : "-"}
-                  </td>
+                <td className="text-center"> 
+                  { item.clockIn ? new Date(item.clockIn).toLocaleTimeString() : "-" }
+                </td>
 
-                  <td className="text-center">
-                    {calculateWorkHours(item.clockIn, item.checkOut)}
-                  </td>
+                <td className="text-center">
+                  {item.checkOut ? new Date(item.checkOut).toLocaleTimeString() : "-"}
+                </td>
 
-                  <td
-                    className={`text-center font-semibold ${item.status === "Present"  ? "text-lime-400" : "text-red-400"}`}>
-                    {item.status}
-                  </td>
+                <td className="text-center">
+                  {calculateWorkHours(item.clockIn, item.checkOut)}
+                </td>
 
-                </tr>
+                <td className="text-center">
+                  {(item.status)}
+                </td>
+
+              </tr>
               ))
             )}
           </tbody>
@@ -224,4 +215,4 @@ Start by checking in today.
   );
 };
 
-export default Attendance;
+export default EmpAttendance;

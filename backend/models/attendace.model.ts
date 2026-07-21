@@ -1,4 +1,4 @@
-import mongoose, { mongo } from "mongoose"
+import mongoose from "mongoose"
 
 const AttendanceSchema = new mongoose.Schema({
     employeeId : {type : String, required : true} ,
@@ -7,7 +7,7 @@ const AttendanceSchema = new mongoose.Schema({
     clockIn: {type: Date},
     checkOut: {type: Date},
     status: {type: String,
-    enum: ['Present', 'Absent', 'Late', 'On Leave'],
+    enum: ['Present', 'Absent', 'Late', 'Half Day'],
       default: 'Absent'},
     email : {type: String, required: true}
 }, 
