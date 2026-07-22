@@ -1,14 +1,12 @@
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { Description, EventNote, PendingActions, CheckCircle, Cancel, ArrowBack, } from "@mui/icons-material";
-import { useNavigate } from "react-router-dom";
+import { Description, EventNote, PendingActions, CheckCircle, Cancel} from "@mui/icons-material";
 import type { Leave } from "../../types/user.types";
 import { getMyLeaves } from "../../services/leaveServices";
 import { useAppContext } from "../../context/AppContext";
 import EmpNavbar from "./EmpNavbar";
 
 const MyLeaves = () => {
-  const navigate = useNavigate()
   const {backendUrl} = useAppContext() ;
   
   const [leaves, setLeaves] = useState<Leave[]>([]);
@@ -47,14 +45,11 @@ const MyLeaves = () => {
   const rejectedLeaves = leaves.filter( (leave) => leave.status === "Rejected").length;
 
 return (
-  <div className="font-serif">
-    <EmpNavbar/>
-    <div className="max-w-[1300px] mx-auto py-10 px-6">
-
-      <button onClick={() => navigate(-1)}
-      className="flex items-center gap-2 text-[#a8d96c] hover:text-white transition mb-8">
-      <ArrowBack />  Back to Dashboard </button>
-
+  <div>
+    <div  className="sticky top-0 z-40 ">      
+      <EmpNavbar/> 
+    </div>
+    <div className="max-w-[1300px] mx-auto py-10 px-6 font-serif">
 
       <div className="mb-10 flex items-center justify-between">
         <div>
@@ -66,7 +61,7 @@ return (
 
  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
 
-  <div className="rounded-2xl bg-[#263423] p-6 transition-all duration-300 hover:-translate-y-1">
+  <div className="rounded-2xl bg-[#263423] p-6 border border-[#3a5035] bg-[#232f20] p-6 transition-all duration-300 hover:-translate-y-1 hover:border-[#a8d96c]">
    <div className="flex items-center justify-between">
     <div>
       <p className="text-4xl font-bold text-lime-400">  {leaves.length}  </p>
@@ -79,7 +74,7 @@ return (
   </div>
 
 
-  <div className="rounded-2xl bg-[#263423] p-6 transition-all duration-300 hover:-translate-y-1">
+  <div className="rounded-2xl bg-[#263423] p-6 border border-[#3a5035] bg-[#232f20] p-6 transition-all duration-300 hover:-translate-y-1 hover:border-[#a8d96c]">
    <div className="flex items-center justify-between">
     <div>
       <p className="text-4xl font-bold text-yellow-400"> {pendingLeaves} </p>
@@ -92,7 +87,7 @@ return (
   </div>
 
 
-  <div className="rounded-2xl bg-[#263423] p-6 transition-all duration-300 hover:-translate-y-1">
+  <div className="rounded-2xl bg-[#263423] p-6 border border-[#3a5035] bg-[#232f20] p-6 transition-all duration-300 hover:-translate-y-1 hover:border-[#a8d96c]">
     <div className="flex items-center justify-between">
     <div>
       <p className="text-4xl font-bold text-green-400"> {approvedLeaves} </p>
@@ -104,7 +99,7 @@ return (
     </div>
   </div>
 
-  <div className="rounded-2xl bg-[#263423] p-6 transition-all duration-300 hover:-translate-y-1">
+  <div className="rounded-2xl bg-[#263423] p-6 border border-[#3a5035] bg-[#232f20] p-6 transition-all duration-300 hover:-translate-y-1 hover:border-[#a8d96c]">
    <div className="flex items-center justify-between">
     <div>
       <p className="text-4xl font-bold text-red-400"> {rejectedLeaves} </p>

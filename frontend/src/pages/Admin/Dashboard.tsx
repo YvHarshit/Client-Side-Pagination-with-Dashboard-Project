@@ -3,7 +3,7 @@ import ZodUserForm from '../../components/forms/ZodUserForm.js'
 import SearchBar from '../../components/users/SearchBar.js'
 import { fetchUsers, addUser, deleteEmployee, updateEmployee } from '../../services/userService.js'
 import type { Employee } from '../../types/user.types.js'
-import { getMostCommonDomain, countByDomain } from '../../utils/filterEmp.js'
+import { getMostCommonDomain } from '../../utils/filterEmp.js'
 import { sortData } from '../../utils/sortUsers.js'
 import UserCard from '../../components/users/UserCard.js'
 import { toast } from 'react-toastify'
@@ -41,7 +41,7 @@ useEffect(() => {
   const loadData = async () => {
     try {
       setError('')
-      const {users, totalUsers, totalPages, currentPage, filteredUsers} = await fetchUsers(currPage, 6, searchStr)
+      const {users, totalUsers, totalPages, currentPage, filteredUsers} = await fetchUsers(currPage, 8, searchStr)
 
       const sorted = sortData(users);
       const filtered = filterByEmailDomain(sorted, selectedDomain);
@@ -115,164 +115,84 @@ const handleEditClick = (employee: Employee) => {
   scrollToRegistration()
 };
   const topDomain = getMostCommonDomain(employees)
-  //const topDomainCount = countByDomain(employees,topDomain)
 return (
-<div>
-  <AdminNavbar/>
+<div >
+  <div className="sticky top-0 z-40">   <AdminNavbar/>    </div>
+   
 
-  <div className='my-3 mx-10 font-serif'>
-
-    <div className="grid grid-cols-1 gap-4 text-[#a8d96c] sm:grid-cols-3">
+<div className='my-3 mx-10 font-serif'>
+  
+<p className="text-sm text-gray-400 my-3">
+ Welcome back, <span className="text-lg text-[#a8d96c]">{userData?.name}</span>
+</p>
+         
+  <div className="grid grid-cols-1 gap-4 text-[#a8d96c] sm:grid-cols-3">
       
 
 <div className="relative overflow-hidden rounded-2xl border border-[#3a5035] bg-[#232f20] p-6 transition-all duration-300 hover:-translate-y-1 hover:border-[#a8d96c] hover:shadow-2xl">
-
-  {/* Glow */}
   <div className="absolute -right-8 -top-8 h-28 w-28 rounded-full bg-[#a8d96c] opacity-20 blur-3xl" />
-
   <div className="relative flex justify-between items-start">
-
     <div className="w-14 h-14 rounded-xl bg-[#31422b] flex items-center justify-center">
       <Groups2Icon sx={{ fontSize: 30, color: "#a8d96c" }} />
     </div>
-
-    <span className="px-3 py-1 rounded-full bg-lime-900/40 text-lime-300 text-xs font-semibold">
-      Active
-    </span>
-
+    <span className="px-3 py-1 rounded-full bg-lime-900/40 text-lime-300 text-xs font-semibold"> Active </span>
   </div>
 
   <div className="relative mt-6">
-
-    <p className="text-gray-400 text-sm">
-      Total Employees
-    </p>
-
-    <h2 className="text-5xl font-bold text-white mt-2">
-      {totalEmp}
-    </h2>
-
-    <p className="mt-4 text-sm text-gray-400">
-      Total registered employees in the company.
-    </p>
-
+    <p className="text-gray-400 text-sm"> Total Employees </p>
+    <h2 className="text-5xl font-bold text-white mt-2"> {totalEmp} </h2>
+    <p className="mt-4 text-sm text-gray-400"> Total registered employees in the company. </p>
   </div>
-
 </div>
 
       
 
 <div className="relative overflow-hidden rounded-2xl border border-[#3a5035] bg-[#232f20] p-6 transition-all duration-300 hover:-translate-y-1 hover:border-sky-400 hover:shadow-2xl">
-
-  {/* Glow */}
   <div className="absolute -right-8 -top-8 h-28 w-28 rounded-full bg-sky-400 opacity-20 blur-3xl" />
-
   <div className="relative flex justify-between items-start">
-
     <div className="w-14 h-14 rounded-xl bg-sky-900/20 flex items-center justify-center">
       <PersonSearchIcon sx={{ fontSize: 30, color: "#38bdf8" }} />
     </div>
-
-    <span className="px-3 py-1 rounded-full bg-sky-900/30 text-sky-300 text-xs font-semibold">
-      Filtered
-    </span>
-
+    <span className="px-3 py-1 rounded-full bg-sky-900/30 text-sky-300 text-xs font-semibold"> Filtered  </span>
   </div>
 
   <div className="relative mt-6">
-
-    <p className="text-gray-400 text-sm">
-      Search Results
-    </p>
-
-    <h2 className="text-5xl font-bold text-white mt-2">
-      {filteredData}
-    </h2>
-
-    <p className="mt-4 text-sm text-gray-400">
-      Employees matching the current search and filters.
-    </p>
-
+    <p className="text-gray-400 text-sm"> Search Results </p>
+    <h2 className="text-5xl font-bold text-white mt-2"> {filteredData} </h2>
+    <p className="mt-4 text-sm text-gray-400"> Employees matching the current search and filters. </p>
   </div>
-
 </div>
 
      
-<div
-  className={`relative overflow-hidden rounded-2xl border p-6 transition-all duration-300
-  hover:-translate-y-1 hover:shadow-2xl
-  ${
-    userData?.isAuthenticated
-      ? "bg-[#232f20] border-[#3a5035] hover:border-[#a8d96c]"
-      : "bg-[#2a1d1d] border-red-700 hover:border-red-500"
-  }`}
->
+<div className={`relative overflow-hidden rounded-2xl border p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl
+  ${userData?.isAuthenticated ? "bg-[#232f20] border-[#3a5035] hover:border-[#a8d96c]" : "bg-[#2a1d1d] border-red-700 hover:border-red-500"}`}>
 
-  {/* Background Glow */}
-  <div
-    className={`absolute -right-8 -top-8 h-28 w-28 rounded-full blur-3xl opacity-20
-    ${
-      userData?.isAuthenticated
-        ? "bg-[#a8d96c]"
-        : "bg-red-500"
-    }`}
-  />
+  <div className={`absolute -right-8 -top-8 h-28 w-28 rounded-full blur-3xl opacity-20
+    ${userData?.isAuthenticated ? "bg-[#a8d96c]" : "bg-red-500" }`} />
 
-  {/* Top */}
   <div className="relative flex items-start justify-between">
-
-    <div
-      className={`w-14 h-14 rounded-xl flex items-center justify-center
-      ${
-        userData?.isAuthenticated
-          ? "bg-[#31422b]"
-          : "bg-red-900/40"
-      }`}
-    >
-      <LockPersonIcon
-        sx={{
-          fontSize: 32,
-          color: userData?.isAuthenticated ? "#a8d96c" : "#ef4444",
-        }}
-      />
+    <div className={`w-14 h-14 rounded-xl flex items-center justify-center
+      ${userData?.isAuthenticated  ? "bg-[#31422b]" : "bg-red-900/40"}`}>
+      <LockPersonIcon sx={{fontSize: 32, color: userData?.isAuthenticated ? "#a8d96c" : "#ef4444"}}/>
     </div>
 
     <div
       className={`flex items-center gap-2 px-3 py-1 rounded-full text-sm font-semibold
-      ${
-        userData?.isAuthenticated
-          ? "bg-lime-900/40 text-lime-300"
-          : "bg-red-900/40 text-red-300"
-      }`}
-    >
-      {userData?.isAuthenticated ? (
-        <> <VerifiedIcon sx={{ fontSize: 18 }} /> Verified </>
-      ) : (
-        <>  <HourglassTopIcon sx={{ fontSize: 18 }} /> Pending </>
-      )}
+      ${userData?.isAuthenticated ? "bg-lime-900/40 text-lime-300" : "bg-red-900/40 text-red-300"}`}>
+      {userData?.isAuthenticated ? (  <> <VerifiedIcon sx={{ fontSize: 18 }} /> Verified </>
+      ) : (  <>  <HourglassTopIcon sx={{ fontSize: 18 }} /> Pending </> )}
     </div>
 
   </div>
 
-  {/* Title */}
   <div className="relative mt-6">
-
-    <h3 className="text-2xl font-bold text-white">
-      Administrator
-    </h3>
-
-    <p className="mt-1 text-[#a8d96c] font-medium">
-      Secure Access
-    </p>
-
+    <h3 className="text-2xl font-bold text-white"> Administrator </h3>
+    <p className="mt-1 text-[#a8d96c] font-medium"> Secure Access </p>
     <p className="mt-4 text-sm text-gray-400 leading-6">
       {userData?.isAuthenticated
         ? "Your account is verified and can register new employees."
         : "Verify your account to unlock employee registration."}
     </p>
-
-
-
   </div>
 
 </div>
@@ -288,116 +208,61 @@ return (
     <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 gap-5">
       <AdminDasboardChart num={filteredData} total={totalEmp} />
 
-      <div className="relative overflow-hidden rounded-2xl border border-[#3a5035] bg-[#232f20] p-7 transition-all duration-300 hover:border-[#a8d96c] hover:-translate-y-1 hover:shadow-[0_0_35px_rgba(168,217,108,0.12)]">
-
-    {/* Background Glow */}
+   <div className="relative overflow-hidden rounded-2xl border border-[#3a5035] bg-[#232f20] p-7 transition-all duration-300 hover:border-[#a8d96c] hover:-translate-y-1 hover:shadow-[0_0_35px_rgba(168,217,108,0.12)]">
     <div className="absolute -right-14 -top-14 h-40 w-40 rounded-full bg-[#a8d96c] opacity-10 blur-3xl" />
-
     <div className="relative">
 
-        {/* Header */}
+     <div className="flex items-center gap-4">
+      <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-[#31422b]">
+       <AnalyticsIcon sx={{ fontSize: 24, color: "#a8d96c" }}/>
+      </div>
+      <div> 
+       <h2 className="mt-2 text-2xl font-bold text-white">  Explore Analytics </h2>
+      </div>
+     </div>
+     <div className="my-3 h-px bg-[#3a5035]" />
+       <div className="grid grid-cols-2 gap-y-5 gap-x-8">
+         <div className="flex items-center gap-3">
+          <ApartmentIcon sx={{ color: "#a8d96c" }} />
+          <span className="text-gray-200">  Department Analysis </span>
+         </div>
+        <div className="flex items-center gap-3">
+        <PaymentsIcon sx={{ color: "#a8d96c" }} />
+        <span className="text-gray-200">    Salary Statistics   </span>
+       </div>
 
-        <div className="flex items-center gap-4">
-           <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-[#31422b]">
-
-                <AnalyticsIcon
-                    sx={{
-                        fontSize: 24,
-                        color: "#a8d96c",
-                    }}
-                />
-
-            </div>
-
-            <div>
-
-                <h2 className="mt-2 text-2xl font-bold text-white">
-                    Explore Analytics
-                </h2>
-
-                
-            </div>
-
-           
-
+        <div className="flex items-center gap-3">
+         <PsychologyIcon sx={{ color: "#a8d96c" }} />
+         <span className="text-gray-200">    Skill Distribution  </span>
         </div>
 
-        {/* Divider */}
-
-        <div className="my-3 h-px bg-[#3a5035]" />
-
-        {/* Features */}
-
-        <div className="grid grid-cols-2 gap-y-5 gap-x-8">
-
-            <div className="flex items-center gap-3">
-                <ApartmentIcon sx={{ color: "#a8d96c" }} />
-                <span className="text-gray-200">
-                    Department Analysis
-                </span>
-            </div>
-
-            <div className="flex items-center gap-3">
-                <PaymentsIcon sx={{ color: "#a8d96c" }} />
-                <span className="text-gray-200">
-                    Salary Statistics
-                </span>
-            </div>
-
-            <div className="flex items-center gap-3">
-                <PsychologyIcon sx={{ color: "#a8d96c" }} />
-                <span className="text-gray-200">
-                    Skill Distribution
-                </span>
-            </div>
-
-            <div className="flex items-center gap-3">
-                <AlternateEmailIcon sx={{ color: "#a8d96c" }} />
-                <span className="text-gray-200">
-                    Email Domains
-                </span>
-            </div>
-
-            <div className="flex items-center gap-3">
-                <CakeIcon sx={{ color: "#a8d96c" }} />
-                <span className="text-gray-200">
-                    Age Analysis
-                </span>
-            </div>
-
+        <div className="flex items-center gap-3">
+         <AlternateEmailIcon sx={{ color: "#a8d96c" }} />
+         <span className="text-gray-200">    Email Domains </span>
         </div>
 
-        {/* Footer */}
-
-        <div className="mt-8 rounded-xl border border-[#3a5035] bg-[#1b2418] p-4">
-
-            <p className="text-sm text-gray-400">
-                View detailed charts, trends, and company-wide insights based on
-                all employee records.
-            </p>
-
+        <div className="flex items-center gap-3">
+         <CakeIcon sx={{ color: "#a8d96c" }} />
+         <span className="text-gray-200">   Age Analysis  </span>
+        </div>
         </div>
 
-        <button
-            onClick={() => navigate("/company/analytics")}
-            className="group mt-7 flex  items-center justify-center gap-3 rounded-xl bg-[#a8d96c] py-2 px-5 text-[#171f11] transition-all duration-300 hover:scale-[1.02] hover:shadow-lg"
-        >
-            View Full Analytics
+      <div className="mt-8 rounded-xl border border-[#3a5035] bg-[#1b2418] p-4">
+       <p className="text-sm text-gray-400">
+        View detailed charts, trends, and company-wide insights based on all employee records.
+        </p>
+      </div>
 
-            <EastIcon className="transition-transform duration-300 group-hover:translate-x-1" />
-        </button>
-
+      <button onClick={() => navigate("/company/analytics")}
+      className="group mt-7 flex  items-center justify-center gap-3 rounded-xl bg-[#a8d96c] py-2 px-5 text-[#171f11] transition-all duration-300 hover:scale-[1.02] hover:shadow-lg">
+      View Full Analytics
+       <EastIcon className="transition-transform duration-300 group-hover:translate-x-1" />
+      </button>
     </div>
+   </div>
+   </div>
 
-</div>
-
-
-
-
-    </div>
-  
-
-    <h2 className="text-2xl mt-6"> Employees List </h2>
+    <h2 className="text-3xl font-bold text-white mt-10"> Employees List </h2>
 
     <div className="flex gap-3 mt-4 mb-1">
       <div className="flex-grow"> <SearchBar/> </div>
@@ -426,12 +291,11 @@ return (
             )}
           </div>
         </div>
-      )
+      )                        
     }
 
     <Pagination/>
-
-    <h2 className="text-2xl mt-12 mb-4"> {editingEmployee ? "Edit Employee" : "Registration"} </h2>
+ 
 
     { !userData?.isAuthenticated
     ? (
@@ -487,7 +351,7 @@ return (
               <p className="text-gray-400 mt-1">
                 {editingEmployee
                   ? "Update this employee's information below."
-                  : "Enter employee information to create a new account."}
+                  : "Enter employee informations."}
               </p>
             </div>
           </div>

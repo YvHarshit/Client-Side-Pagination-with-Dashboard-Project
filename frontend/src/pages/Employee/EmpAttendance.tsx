@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
-import { ArrowBack, FactCheck } from "@mui/icons-material";
+import { FactCheck } from "@mui/icons-material";
 import { useAppContext } from "../../context/AppContext";
 import type {Attendance} from "../../types/user.types"
 import { checkIn, checkOut, getAttendanceHistory } from "../../services/attendanceServices";
@@ -10,7 +9,6 @@ import EmpNavbar from "./EmpNavbar";
 
 
 const EmpAttendance = () => {
-  const navigate = useNavigate() ;
   const { backendUrl } = useAppContext() ;
 
   const [todayAttendance, setTodayAttendance] = useState<Attendance | null>(null);
@@ -31,6 +29,11 @@ const EmpAttendance = () => {
 
       const todayRecord = data.attendance.find((item: Attendance) => item.date === today );
       setTodayAttendance(todayRecord ?? null);
+
+      console.log("todayRecord : ",todayRecord)
+      console.log(data);
+
+      console.log("data.todayAttendance : ",data.todayAttendance);
       } 
     else {
       setHistory([]);
@@ -50,7 +53,7 @@ const EmpAttendance = () => {
     try {
       const data = await checkIn(backendUrl);
       toast(data.message);
-      fetchAttendance();
+      await fetchAttendance();
     } 
     catch (error) {
       console.log(error);
@@ -105,13 +108,8 @@ const EmpAttendance = () => {
   return (
     <div>
     <EmpNavbar/>
-    <div className="max-w-6xl mx-auto py-10 px-6 font-serif">
+    <div className="mx-10 py-10 px-6 font-serif">
 
-      <button onClick={() => navigate(-1)}
-       className="absolute top-4 left-4 flex items-center gap-2 px-4 py-2 text-white transition">
-        <ArrowBack />
-        <span className="font-semibold">Back to Dashboard</span>
-     </button>
 
 
     <h1 className="mb-8 flex items-center gap-3 text-4xl font-semibold text-white">
@@ -133,21 +131,25 @@ const EmpAttendance = () => {
       </div>
 
 
-   {todayAttendance?.checkOut 
-   ? (
-    <div className="text-lime-400 text-xl font-semibold"> Today's Shift Completed </div>
-     ) 
-    : (
-      !todayAttendance || todayAttendance.status === "Absent" ? (
-        <button onClick={handleCheckIn} className="bg-green-500 px-6 py-2 rounded">
-         Check In
-        </button>
-     ) : (
-        <button onClick={handleCheckOut} className="bg-yellow-500 px-6 py-2 rounded">
-          Check Out
-        </button>
-     )
-    )}
+   {todayAttendance?.checkOut ? (
+  <div className="text-lime-400 text-xl font-semibold">
+    Today's Shift Completed
+  </div>
+) : todayAttendance?.clockIn ? (
+  <button
+    onClick={handleCheckOut}
+    className="bg-indigo-600 px-6 py-2 rounded"
+  >
+    Check Out
+  </button>
+) : (
+  <button
+    onClick={handleCheckIn}
+    className="bg-green-500 px-6 py-2 rounded"
+  >
+    Check In
+  </button>
+)}
       </div>
 
       <div className="mt-10 bg-[#232f20] rounded-lg border border-[#3a5035] overflow-hidden">
@@ -201,11 +203,26 @@ const EmpAttendance = () => {
                 </td>
 
                 <td className="text-center">
-                  {calculateWorkHours(item.clockIn, item.checkOut)}
+                 {calculateWorkHours(item.clockIn, item.checkOut)} 
                 </td>
 
                 <td className="text-center">
-                  {(item.status)}
+                 <span
+                   className={`px-4 py-1 rounded-full text-white
+                     ${
+                       item.status === "Present"
+                         ? "bg-green-500"
+                         : item.status === "Absent"
+                         ? "bg-red-500"
+                         : item.status === "Late"
+                         ? "bg-yellow-500"
+                         : item.status === "Half Day"
+                         ? "bg-blue-500"
+                         : "bg-indigo-500"
+                     }`}
+                 >
+                   {item.status || "Updated at checkout"}
+                 </span>
                 </td>
 
               </tr>

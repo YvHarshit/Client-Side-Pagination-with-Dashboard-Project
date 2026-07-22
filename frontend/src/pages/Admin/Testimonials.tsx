@@ -1,8 +1,6 @@
 import FormatQuoteRoundedIcon from "@mui/icons-material/FormatQuoteRounded";
 import StarRoundedIcon from "@mui/icons-material/StarRounded";
 import PersonIcon from "@mui/icons-material/Person";
-import { ArrowBack } from "@mui/icons-material";
-import { useNavigate } from "react-router-dom";
 import AdminNavbar from "./AdminNavbar";
 
 const testimonials = [
@@ -33,21 +31,18 @@ const testimonials = [
 ];
 
 const Testimonials = () => {
-  const navigate = useNavigate();
 
   return (
   <div>
-    <AdminNavbar/>  
-   <div className="min-h-screen bg-[#171f11] py-10 px-6 text-white">
+    <div  className="sticky top-0 z-40 ">      
+      <AdminNavbar/> 
+    </div>
+   <div className="bg-[#171f11] py-10 px-6 text-white font-serif">
     <div className="mx-10">
 
-    <button onClick={() => navigate(-1)}
-     className="flex items-center gap-2 text-[#a8d96c] hover:text-white transition mb-8">
-     <ArrowBack />  Back
-     </button>
 
    <div className="mb-10">
-    <h1 className="text-5xl font-bold">  Employee Testimonials  </h1>
+    <h1 className="text-3xl font-bold">  Employee Testimonials  </h1>
     <p className="text-gray-400 mt-3 text-lg">  Hear what our employees say about working with our company. </p>
    </div>
 

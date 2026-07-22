@@ -33,10 +33,10 @@ const AdminNavbar = ({ onAddEmployeeClick }: NavbarProps) => {
   };
 
   return (
-<div>
+<div className="font-serif">
 
     <header className="sticky top-0 z-40 bg-[#171f11] border-b border-[#3a5035] font-serif w-full">
-     <div className="w-full px-6 py-4 flex justify-between items-center">
+     <div className="w-full px-10 py-6 flex justify-between items-center">
 
       <div className="flex items-center gap-4">
        <button onClick={() => setOpenSidebar(true)}
@@ -44,12 +44,9 @@ const AdminNavbar = ({ onAddEmployeeClick }: NavbarProps) => {
         <MenuIcon className="text-[#a8d96c]" />
        </button>
 
-       <div>
-        <h1 className="text-3xl font-bold text-white"> Admin Dashboard </h1>
-          <p className="text-sm text-gray-400 mt-1">
-          Welcome back, <span className="text-lg text-[#a8d96c]">{userData?.name}</span>
-          </p>
-          </div>
+       {/* <div>
+        <h1 className="text-4xl font-bold text-white"> Admin Dashboard </h1>
+        </div> */}
       </div>
 
      <div className="relative group">
@@ -63,7 +60,7 @@ const AdminNavbar = ({ onAddEmployeeClick }: NavbarProps) => {
        </div>
       </div>
 
-     <div className="absolute right-0 top-14 hidden group-hover:block bg-[#232f20] border border-[#3a5035] rounded-md shadow-lg w-56 overflow-hidden z-20">
+     <div className="absolute right-0 top-12 hidden group-hover:block bg-[#232f20] border border-[#3a5035] rounded-md shadow-lg w-56 overflow-hidden z-20">
       <button onClick={() => userData?.isAuthenticated ? toast("User Already Authenticated") : navigate("/auth-account")}
        className="w-full flex items-center gap-2 px-4 py-3 hover:bg-[#3a5035] transition">
        <AddModeratorIcon fontSize="small" /> Authenticate Email

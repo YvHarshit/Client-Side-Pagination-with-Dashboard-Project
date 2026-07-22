@@ -162,7 +162,9 @@ console.log("Experience:", empDetails?.experience);
 
   return (
     <div>
-    <EmpNavbar/>
+      <div  className="sticky top-0 z-40 ">      
+      <EmpNavbar/> 
+    </div>
     <div className="min-h-screen bg-[#232f20] font-serif">
       
     <div className="overflow-hidden rounded-md ">

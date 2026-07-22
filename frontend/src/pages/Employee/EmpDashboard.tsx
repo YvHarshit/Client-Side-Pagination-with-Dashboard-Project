@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useAppContext } from "../../context/AppContext";
-import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
 import type {Leave, Attendance} from "../../types/user.types"
 import { getAttendanceHistory } from "../../services/attendanceServices";
@@ -88,67 +87,35 @@ const MainEmpDas = () => {
   console.log("Today's Record:", todayRecord);
 
   return (
-    <div className="min-h-screen  text-gray-200 font-serif">
+    <div>
+    <div className="sticky top-0 z-40 "> <EmpNavbar/> </div>
 
-      <EmpNavbar/>
+      <div className="max-full py-5 px-9 font-serif">
 
-      {/* <header className="sticky top-0 z-40 bg-[#171f11] border-b border-[#3a5035]">
-        <div className="max-w-[1300px] mx-auto px-6 py-4">
-          <h1 className="text-3xl font-bold text-white"> Employee Dashboard </h1>
-          <p className="text-sm text-gray-400 mt-1">
-            Welcome back
-          </p>
-        </div>
-      </header> */}
-
-      <div className="max-full py-5 px-9">
-        {/* <div className="flex justify-between items-center mb-8">
-          <div className="flex items-center gap-4">
-
-            <button onClick={() => setOpenSidebar(true)}
-              className="p-2 rounded-md hover:bg-[#232f20] transition">
-              <MenuIcon className="text-[#a8d96c]" />
-            </button>
-
-            <div>
-              <p className="text-lime-400 text-2xl"> Welcome, {empDetails?.name || "Employee"} </p>
-              <p className="text-gray-400 text-sm mt-1"> Here's what's happening with your account today. </p>
-            </div>
-
-          </div>
-
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-[#171f11] flex items-center justify-center text-[#a8d96c] font-bold">
-              {empDetails?.name?.[0]?.toUpperCase()}
-            </div>
-
-            <div>
-              <p className="text-sm font-semibold text-white"> {empDetails?.name || "Employee"} </p>
-              <p className="text-xs text-gray-400"> Employee </p>
-            </div>
-          </div>
-        </div>
- */}
+        <div className="mb-5">
+        <p className="text-lime-400 text-lg mt-1"> Welcome, {empDetails?.name || "Employee"} </p>
+        <p className="text-gray-400 text-xs mt-1"> Here's what's happening with your account today. </p>
+       </div>
 
         
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
 
-          <div className="bg-[#232f20] border border-[#1f3626] rounded-lg p-5 hover:-translate-y-1  hover:shadow-[0_0_35px_rgba(168,217,108,0.12)]">
+          <div className="bg-[#232f20] border border-[#1f3626] rounded-lg p-5 hover:-translate-y-1 duration-300 hover:border-[#a8d96c] hover:shadow-[0_0_35px_rgba(168,217,108,0.2)]">
             <p className="text-3xl font-bold text-white"> {loading ? "-" : `${attendancePercent}%`} </p>
             <p className="text-lime-500 text-xs uppercase tracking-wider mt-1"> Attendance </p>
           </div>
 
-          <div className="bg-[#232f20] border border-[#1f3626] rounded-lg p-5 hover:-translate-y-1  hover:shadow-[0_0_35px_rgba(168,217,108,0.12)]">
+          <div className="bg-[#232f20] border border-[#1f3626] rounded-lg p-5 hover:-translate-y-1 duration-300 hover:border-[#a8d96c] hover:shadow-[0_0_35px_rgba(168,217,108,0.12)]">
             <p className="text-3xl font-bold text-white"> {loading ? "-" : leaves.length} </p>
             <p className="text-lime-500 text-xs uppercase tracking-wider mt-1"> Leaves </p>
           </div>
 
-          <div className="bg-[#232f20] border border-[#1f3626] rounded-lg p-5 hover:-translate-y-1  hover:shadow-[0_0_35px_rgba(168,217,108,0.12)]">
+          <div className="bg-[#232f20] border border-[#1f3626] rounded-lg p-5 hover:-translate-y-1 duration-300 hover:border-[#a8d96c] hover:shadow-[0_0_35px_rgba(168,217,108,0.12)]">
             <p className="text-3xl font-bold text-white"> {loading ? "-" : pendingLeaves} </p>
             <p className="text-lime-500 text-xs uppercase tracking-wider mt-1"> Pending </p>
           </div>
 
-          <div className="bg-[#232f20] border border-[#1f3626] rounded-lg p-5 hover:-translate-y-1  hover:shadow-[0_0_35px_rgba(168,217,108,0.12)]">
+          <div className="bg-[#232f20] border border-[#1f3626] rounded-lg p-5 hover:-translate-y-1 duration-300 hover:border-[#a8d96c] hover:shadow-[0_0_35px_rgba(168,217,108,0.12)]">
             <p className="text-3xl font-bold text-white"> {loading ? "-" : remainingLeaveDays} </p>
             <p className="text-lime-500 text-xs uppercase tracking-wider mt-1"> Balance </p>
           </div>
@@ -166,7 +133,19 @@ const MainEmpDas = () => {
               <div className="space-y-2 text-sm">
                 <div className="flex justify-between">
                   <span className="text-gray-400"> Status </span>
-                  <span className="text-white"> {todayRecord.status} </span>
+                  <span className={`px-3 py-1 rounded-full text-white ${
+                    todayRecord.status === "Present"
+                      ? "bg-green-500"
+                      : todayRecord.status === "Absent"
+                      ? "bg-red-500"
+                      : todayRecord.status === "Late"
+                      ? "bg-yellow-500"
+                      : todayRecord.status === "Half Day"
+                      ? "bg-blue-500"
+                      : "bg-indigo-500"
+                    }`}>
+                    {todayRecord.status || "Updated at checkout"}
+                  </span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-400"> Clock In </span>
@@ -203,7 +182,6 @@ const MainEmpDas = () => {
         </div>
 
 
-        {/* Recent leaves + holidays */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
 
           <div className="bg-[#232f20] border border-[#1f3626] rounded-lg p-5">

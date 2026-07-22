@@ -16,10 +16,10 @@ const EmpNavbar = () => {
   };
 
   return (
- <div>
+ <div className = "font-serif">
 
-    <header className="sticky top-0 z-40 bg-[#171f11] border-b border-[#3a5035] font-serif w-full">
-     <div className="w-full px-6 py-4 flex justify-between items-center">
+    <header className="bg-[#171f11] border-b border-[#3a5035]  w-full">
+     <div className="w-full px-6 py-6 flex justify-between items-center">
 
       <div className="flex items-center gap-4">
        <button onClick={() => setOpenSidebar(true)}
@@ -29,8 +29,6 @@ const EmpNavbar = () => {
 
        <div>
         <h1 className="text-3xl font-bold text-white"> Employee Dashboard </h1>
-        <p className="text-lime-400 text-lg mt-1"> Welcome, {empDetails?.name || "Employee"} </p>
-        <p className="text-gray-400 text-xs mt-1"> Here's what's happening with your account today. </p>
        </div>
       </div>
 

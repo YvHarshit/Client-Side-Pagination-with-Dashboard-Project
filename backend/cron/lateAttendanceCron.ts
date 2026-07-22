@@ -5,11 +5,11 @@ import { AttendenceModel } from "../models/attendace.model.js";
 
 //console.log("Mark Late Attendance Cron Loaded");
 
-cron.schedule(`${ATTENDANCE_CONFIG.absentCheckMinute} ${ATTENDANCE_CONFIG.absentCheckHour}  * * *`, async () => {
+cron.schedule(`${ATTENDANCE_CONFIG.lateMinute} ${ATTENDANCE_CONFIG.lateHour}  * * *`, async () => {
 
     try {
 
-        console.log("Attendance Cron Started");
+        console.log("Late Attendance Marking Cron Started");
         const today = new Date().toISOString().split("T")[0];
         const employees = await Employee.find();
 
@@ -29,7 +29,7 @@ cron.schedule(`${ATTENDANCE_CONFIG.absentCheckMinute} ${ATTENDANCE_CONFIG.absent
                 OwnerId: emp.userId,
                 email: emp.email,
                 date: today,
-                status: "Absent",
+                status: "Late",
             });
         }
         console.log("Attendance Cron Completed");
@@ -48,3 +48,7 @@ cron.schedule(`${ATTENDANCE_CONFIG.absentCheckMinute} ${ATTENDANCE_CONFIG.absent
     }
 
 });
+
+
+
+// it only update the status to "Late" [Don't add clock-in field in DB]and another cron job I schedule at 2 o'clock which mark absent to those who have not check-in yet 

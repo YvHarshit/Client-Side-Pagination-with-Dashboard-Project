@@ -3,9 +3,7 @@ import { allEmployee } from "../../services/analyticsService.js";
 import type { Employee } from "../../types/user.types.js";
 import { ageInfo, avgAge, countByGender, departDistribution, getMostCommonDomain, mailSummary, salaryInfo, skillsSummary } from "../../utils/filterEmp.js";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, Legend } from "recharts";
-// import { ArrowBack } from "@mui/icons-material";
-import { ArrowBack, PeopleAltOutlined, ApartmentOutlined, AlternateEmailOutlined, CalendarMonthOutlined, PaidOutlined, TrendingUpOutlined } from "@mui/icons-material";
-import { useNavigate } from "react-router-dom";
+import { PeopleAltOutlined, ApartmentOutlined, AlternateEmailOutlined, CalendarMonthOutlined, PaidOutlined, TrendingUpOutlined } from "@mui/icons-material";
 import {SKILL_COLORS} from "../../utils/constants.js"
 import { useAppContext } from "../../context/AppContext.js";
 import AdminNavbar from "./AdminNavbar.js";
@@ -15,7 +13,6 @@ interface ChartData { name: string; count: number;}
 
 const CompanyAnalytics = () => {
   const {backendUrl} = useAppContext()
-  const navigate = useNavigate()
   const [allEmployees, setAllEmployees] = useState<Employee[]>([]);
 
   useEffect(() => {
@@ -54,18 +51,12 @@ const CompanyAnalytics = () => {
 
   return (
     <div>
-    <AdminNavbar/> 
+    <div className="sticky top-0 z-40">   <AdminNavbar/>    </div>
 
-    <div className=" mx-auto py-10 px-6 bg-[#0A0F0A] min-h-screen text-gray-200">
-
-      <button onClick={() => navigate(-1)}
-        className="flex items-center gap-2 text-[#a8d96c] hover:text-white transition mb-2">
-        <ArrowBack />
-        <span className="font-semibold"> Back to Dashboard </span>
-      </button>
+    <div className="mx-4 py-10 px-6 bg-[#0A0F0A] min-h-screen text-gray-200">     
 
        <div className="text-center mb-8">
-        <h1 className="text-4xl font-serif font-bold text-white">Company Analytics</h1>
+        <h1 className="text-3xl font-serif font-bold text-white">Company Analytics</h1>
         <p className="text-sm text-gray-500 mt-2"> Insights into your workforce</p>
       </div>
 

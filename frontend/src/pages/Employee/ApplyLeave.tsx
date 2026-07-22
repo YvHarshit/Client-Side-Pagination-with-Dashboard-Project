@@ -35,7 +35,9 @@ const ApplyLeave = () => {
 
 return (
   <div>
-    <EmpNavbar/>
+    <div  className="sticky top-0 z-40 ">      
+      <EmpNavbar/> 
+    </div>
     <div className="min-h-screen flex justify-center pt-10 font-serif ">
 
     <button onClick={() => navigate(-1)}

@@ -104,10 +104,11 @@ export const checkOut = async (req:Request, res: Response) => {
 
     const start = new Date(attendance.clockIn!);
     const end = new Date(attendance.checkOut);
+const workedHours = (end.getTime() - start.getTime()) / (1000 * 60 * 60);
 
-    const workedHours = (end.getTime() - start.getTime()) / (1000 * 60 * 60);
     if (workedHours < 4) attendance.status = "Absent";
-    else if (workedHours < 7)  attendance.status = "Half Day";
+    else if (workedHours <= 6)  attendance.status = "Half Day";
+    else if(attendance.status === "Late") attendance.status = "Late" ;
     else attendance.status = "Present"
 
     await attendance.save();

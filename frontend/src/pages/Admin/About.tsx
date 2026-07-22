@@ -1,11 +1,9 @@
-import { ArrowBack } from "@mui/icons-material";
 import GroupsIcon from "@mui/icons-material/Groups";
 import ShieldIcon from "@mui/icons-material/Shield";
 import InsightsIcon from "@mui/icons-material/Insights";
 import DevicesIcon from "@mui/icons-material/Devices";
 import ApartmentIcon from "@mui/icons-material/Apartment";
 import VerifiedUserIcon from "@mui/icons-material/VerifiedUser";
-import { useNavigate } from "react-router-dom";
 import AdminNavbar from "./AdminNavbar";
 
 const features = [
@@ -54,21 +52,17 @@ const tech = [
 ];
 
 const About = () => {
-  const navigate = useNavigate();
 
   return (
   <div>
-    <AdminNavbar/> 
+    <div className="sticky top-0 z-40">   <AdminNavbar/>    </div>
     <div className="min-h-screen bg-[#171f11] text-white px-6 py-10 font-serif">
       <div className="mx-9">
-        <button onClick={() => navigate(-1)}
-          className="flex items-center gap-2 text-[#a8d96c] hover:text-white transition mb-8">
-          <ArrowBack /> Back  </button>
 
         <section className="text-center mb-20">
           <p className="uppercase tracking-[5px] text-[#a8d96c] font-semibold"> About </p>
 
-          <h1 className="text-5xl font-bold mt-4"> Employee Management System  </h1>
+          <h1 className="text-4xl font-bold mt-4"> Employee Management System  </h1>
 
           <p className="text-gray-400 text-lg max-w-3xl mx-auto mt-6">
             A modern web application designed to simplify employee
@@ -85,7 +79,7 @@ const About = () => {
           </div>
 
           <div>
-            <h2 className="text-4xl font-bold mb-5"> Our Mission </h2>
+            <h2 className="text-3xl font-bold mb-5"> Our Mission </h2>
             <p className="text-gray-300 leading-8">
               We aim to provide organizations with a secure, scalable,
               and easy-to-use employee management platform that helps
@@ -124,7 +118,7 @@ const About = () => {
         </section>
 
         <section className="mb-20">
-          <h2 className="text-4xl font-bold text-center mb-10"> Built With </h2>
+          <h2 className="text-3xl font-bold text-center mb-10"> Built With </h2>
           <div className="flex flex-wrap justify-center gap-5">
 
             {tech.map((item) => (

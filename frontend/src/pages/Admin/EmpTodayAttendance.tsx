@@ -27,7 +27,7 @@ return (
     <AdminNavbar/> 
   <div className="mx-10 px-6 py-10 font-serif">
     <div className="mb-8">
-     <h1 className="text-4xl font-bold text-white"> Today's Employee Attendance </h1>
+     <h1 className="text-3xl font-bold text-white"> Today's Employee Attendance </h1>
      <p className="text-[#9fb396] mt-2"> View today's attendance records of all employees. </p>
     </div>
 
@@ -74,16 +74,19 @@ return (
             {item.checkOut? new Date(item.checkOut).toLocaleTimeString([], {hour: "2-digit",minute: "2-digit"}): "--"}
          </td>
          <td className="px-5 py-4 text-center">
-          <span className={`px-4 py-2 rounded-full text-sm font-semibold
-            ${item.status === "Present"
-                ? "bg-green-700 text-green-100"
-                : item.status === "Late"
-                ? "bg-yellow-600 text-black"
-                : item.status === "Half Day"
-                ? "bg-orange-600 text-white"
-                : "bg-red-700 text-red-100"}`}>
-            {item.status}
-           </span>
+          <span className={`px-4 py-1 rounded-full text-white ${
+               item.status === "Present"
+                 ? "bg-green-500"
+                 : item.status === "Absent"
+                 ? "bg-red-500"
+                 : item.status === "Late"
+                 ? "bg-yellow-500"
+                 : item.status === "Half Day"
+                 ? "bg-blue-500"
+                 : "bg-indigo-500"
+             }`}>
+           {item.status || "Updated at checkout"}
+         </span>
          </td>
      </tr>
       ))
