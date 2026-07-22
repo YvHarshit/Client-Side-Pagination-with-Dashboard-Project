@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import type { Leave } from "../../types/user.types";
 import { getMyLeaves } from "../../services/leaveServices";
 import { useAppContext } from "../../context/AppContext";
+import EmpNavbar from "./EmpNavbar";
 
 const MyLeaves = () => {
   const navigate = useNavigate()
@@ -46,7 +47,9 @@ const MyLeaves = () => {
   const rejectedLeaves = leaves.filter( (leave) => leave.status === "Rejected").length;
 
 return (
-    <div className="max-w-[1300px] mx-auto py-10 px-6 font-serif">
+  <div className="font-serif">
+    <EmpNavbar/>
+    <div className="max-w-[1300px] mx-auto py-10 px-6">
 
       <button onClick={() => navigate(-1)}
       className="flex items-center gap-2 text-[#a8d96c] hover:text-white transition mb-8">
@@ -180,6 +183,7 @@ return (
           </table>
         </div>
       </div>
+    </div>
     </div>
   );
 };

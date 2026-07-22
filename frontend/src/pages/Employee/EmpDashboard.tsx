@@ -7,6 +7,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import type {Leave, Attendance} from "../../types/user.types"
 import { getAttendanceHistory } from "../../services/attendanceServices";
 import { getMyLeaves } from "../../services/leaveServices";
+import EmpNavbar from "./EmpNavbar";
 
 const TOTAL_LEAVE_ALLOWANCE = 24;
 const UPCOMING_HOLIDAYS = [
@@ -89,17 +90,19 @@ const MainEmpDas = () => {
   return (
     <div className="min-h-screen  text-gray-200 font-serif">
 
-      <header className="sticky top-0 z-40 bg-[#171f11] border-b border-[#3a5035]">
+      <EmpNavbar/>
+
+      {/* <header className="sticky top-0 z-40 bg-[#171f11] border-b border-[#3a5035]">
         <div className="max-w-[1300px] mx-auto px-6 py-4">
           <h1 className="text-3xl font-bold text-white"> Employee Dashboard </h1>
           <p className="text-sm text-gray-400 mt-1">
             Welcome back
           </p>
         </div>
-      </header>
+      </header> */}
 
-      <div className="max-w-[1300px] mx-auto py-5 px-6">
-        <div className="flex justify-between items-center mb-8">
+      <div className="max-full py-5 px-9">
+        {/* <div className="flex justify-between items-center mb-8">
           <div className="flex items-center gap-4">
 
             <button onClick={() => setOpenSidebar(true)}
@@ -125,27 +128,27 @@ const MainEmpDas = () => {
             </div>
           </div>
         </div>
-
+ */}
 
         
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
 
-          <div className="bg-[#232f20] border border-[#1f3626] rounded-lg p-5">
+          <div className="bg-[#232f20] border border-[#1f3626] rounded-lg p-5 hover:-translate-y-1  hover:shadow-[0_0_35px_rgba(168,217,108,0.12)]">
             <p className="text-3xl font-bold text-white"> {loading ? "-" : `${attendancePercent}%`} </p>
             <p className="text-lime-500 text-xs uppercase tracking-wider mt-1"> Attendance </p>
           </div>
 
-          <div className="bg-[#232f20] border border-[#1f3626] rounded-lg p-5">
+          <div className="bg-[#232f20] border border-[#1f3626] rounded-lg p-5 hover:-translate-y-1  hover:shadow-[0_0_35px_rgba(168,217,108,0.12)]">
             <p className="text-3xl font-bold text-white"> {loading ? "-" : leaves.length} </p>
             <p className="text-lime-500 text-xs uppercase tracking-wider mt-1"> Leaves </p>
           </div>
 
-          <div className="bg-[#232f20] border border-[#1f3626] rounded-lg p-5">
+          <div className="bg-[#232f20] border border-[#1f3626] rounded-lg p-5 hover:-translate-y-1  hover:shadow-[0_0_35px_rgba(168,217,108,0.12)]">
             <p className="text-3xl font-bold text-white"> {loading ? "-" : pendingLeaves} </p>
             <p className="text-lime-500 text-xs uppercase tracking-wider mt-1"> Pending </p>
           </div>
 
-          <div className="bg-[#232f20] border border-[#1f3626] rounded-lg p-5">
+          <div className="bg-[#232f20] border border-[#1f3626] rounded-lg p-5 hover:-translate-y-1  hover:shadow-[0_0_35px_rgba(168,217,108,0.12)]">
             <p className="text-3xl font-bold text-white"> {loading ? "-" : remainingLeaveDays} </p>
             <p className="text-lime-500 text-xs uppercase tracking-wider mt-1"> Balance </p>
           </div>

@@ -3,6 +3,7 @@ import StarRoundedIcon from "@mui/icons-material/StarRounded";
 import PersonIcon from "@mui/icons-material/Person";
 import { ArrowBack } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
+import AdminNavbar from "./AdminNavbar";
 
 const testimonials = [
   {
@@ -35,8 +36,10 @@ const Testimonials = () => {
   const navigate = useNavigate();
 
   return (
+  <div>
+    <AdminNavbar/>  
    <div className="min-h-screen bg-[#171f11] py-10 px-6 text-white">
-    <div className="max-w-7xl mx-auto">
+    <div className="mx-10">
 
     <button onClick={() => navigate(-1)}
      className="flex items-center gap-2 text-[#a8d96c] hover:text-white transition mb-8">
@@ -75,6 +78,7 @@ const Testimonials = () => {
   </div>
   </div>
 </div>
+</div> 
   );
 };
 

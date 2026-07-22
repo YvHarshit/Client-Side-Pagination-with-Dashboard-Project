@@ -6,6 +6,7 @@ import { ArrowBack, FactCheck } from "@mui/icons-material";
 import { useAppContext } from "../../context/AppContext";
 import type {Attendance} from "../../types/user.types"
 import { checkIn, checkOut, getAttendanceHistory } from "../../services/attendanceServices";
+import EmpNavbar from "./EmpNavbar";
 
 
 const EmpAttendance = () => {
@@ -102,6 +103,8 @@ const EmpAttendance = () => {
   };
 
   return (
+    <div>
+    <EmpNavbar/>
     <div className="max-w-6xl mx-auto py-10 px-6 font-serif">
 
       <button onClick={() => navigate(-1)}
@@ -211,6 +214,7 @@ const EmpAttendance = () => {
           </tbody>
         </table>
       </div>
+    </div>
     </div>
   );
 };

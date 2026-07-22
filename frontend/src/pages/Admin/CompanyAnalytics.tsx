@@ -8,6 +8,7 @@ import { ArrowBack, PeopleAltOutlined, ApartmentOutlined, AlternateEmailOutlined
 import { useNavigate } from "react-router-dom";
 import {SKILL_COLORS} from "../../utils/constants.js"
 import { useAppContext } from "../../context/AppContext.js";
+import AdminNavbar from "./AdminNavbar.js";
 
 
 interface ChartData { name: string; count: number;}
@@ -52,6 +53,8 @@ const CompanyAnalytics = () => {
   const totalMail = Object.values(mailAnalytics).reduce((sum, n) => sum + n, 0);
 
   return (
+    <div>
+    <AdminNavbar/> 
 
     <div className=" mx-auto py-10 px-6 bg-[#0A0F0A] min-h-screen text-gray-200">
 
@@ -327,6 +330,7 @@ const CompanyAnalytics = () => {
           </div>
         </div>
       </div>
+    </div>
     </div>
   );
 }

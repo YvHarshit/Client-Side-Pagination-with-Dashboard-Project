@@ -6,6 +6,7 @@ import DevicesIcon from "@mui/icons-material/Devices";
 import ApartmentIcon from "@mui/icons-material/Apartment";
 import VerifiedUserIcon from "@mui/icons-material/VerifiedUser";
 import { useNavigate } from "react-router-dom";
+import AdminNavbar from "./AdminNavbar";
 
 const features = [
   {
@@ -56,8 +57,10 @@ const About = () => {
   const navigate = useNavigate();
 
   return (
+  <div>
+    <AdminNavbar/> 
     <div className="min-h-screen bg-[#171f11] text-white px-6 py-10 font-serif">
-      <div className="max-w-7xl mx-auto">
+      <div className="mx-9">
         <button onClick={() => navigate(-1)}
           className="flex items-center gap-2 text-[#a8d96c] hover:text-white transition mb-8">
           <ArrowBack /> Back  </button>
@@ -142,6 +145,7 @@ const About = () => {
         </section>
       </div>
     </div>
+   </div>  
   );
 };
 

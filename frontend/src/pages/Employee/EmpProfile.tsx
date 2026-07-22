@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { employeeSchema } from "../../utils/zodValidation";
 import { DEPARTMENT, EXPERIENCE } from "../../utils/constants";
 import { ArrowBack } from "@mui/icons-material";
+import EmpNavbar from "./EmpNavbar";
 
 
 const EmpDashboard = () => {
@@ -160,11 +161,13 @@ console.log("Experience:", empDetails?.experience);
 
 
   return (
+    <div>
+    <EmpNavbar/>
     <div className="min-h-screen bg-[#232f20] font-serif">
       
     <div className="overflow-hidden rounded-md ">
 
-      <div className="relative h-52 md:h-74">
+      <div className="relative h-52 md:h-50">
         <img src={cover} alt="Cover" className="h-full w-full object-cover "/>
       </div>
 
@@ -174,7 +177,7 @@ console.log("Experience:", empDetails?.experience);
         <span className="font-semibold text-lime-400">Back to Dashboard</span>
       </button>
  
-      <div className="absolute left-8 top-32 md:left-14 md:top-36">
+      <div className="absolute left-8 top-32 md:left-14 md:top-40">
         <div className="h-32 w-32 overflow-hidden rounded-full border-2 md:h-60 md:w-60 ">
           <img src={profile} alt="Employee Avatar" className="object-cover"/>
         </div>
@@ -237,7 +240,7 @@ console.log("Experience:", empDetails?.experience);
               </div>
              )
              :
-            <ProfileField label = "Age" value = {employee.age}   /> }
+          <ProfileField label = "Age" value = {employee.age}   /> }
 
           <ProfileField label="Eid" value={employee.Eid ? `EMP - ${employee.Eid}` : "-"}/>
           <ProfileField label="Email" value={employee.email}/>
@@ -295,6 +298,7 @@ console.log("Experience:", empDetails?.experience);
       
         </div>
       </div>
+    </div>
     </div>
   );
 };

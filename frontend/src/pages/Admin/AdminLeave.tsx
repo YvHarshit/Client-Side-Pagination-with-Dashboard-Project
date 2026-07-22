@@ -6,6 +6,7 @@ import { ArrowBack, EventNoteOutlined, PendingActionsOutlined, CancelOutlined } 
 import TaskAltIcon from "@mui/icons-material/TaskAlt";
 import type { Leave } from "../../types/user.types";
 import { leaveToAdmin, updateLeaveStatus } from "../../services/leaveServices";
+import AdminNavbar from "./AdminNavbar";
 
 
 
@@ -30,6 +31,7 @@ const AdminLeave = () => {
   };
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     fetchLeaves();
   }, []);
 
@@ -61,8 +63,10 @@ const AdminLeave = () => {
   const rejectedCount = leaves.filter((l) => l.status === "Rejected").length;
 
   return (
+   <div>
+    <AdminNavbar/>  
     <div className="bg-[#0A0F0A] min-h-screen text-gray-200">
-    <div className="max-w-6xl mx-auto px-10 py-10">
+    <div className="mx-9 px-10 py-10">
 
       <button onClick={() => navigate(-1)}
         className="flex items-center gap-2 text-[#a8d96c] hover:text-white transition mb-6">
@@ -177,6 +181,7 @@ const AdminLeave = () => {
         ))}
       </div>
     </div>
+   </div> 
    </div> 
   );
 };

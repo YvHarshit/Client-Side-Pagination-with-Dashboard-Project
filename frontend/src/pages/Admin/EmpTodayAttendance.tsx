@@ -2,11 +2,13 @@ import { useEffect, useState } from "react";
 import type {Attendance} from "../../types/user.types"
 import { useAppContext } from "../../context/AppContext";
 import { myEmpTodayAttendance } from "../../services/attendanceServices";
+import AdminNavbar from "./AdminNavbar";
 
 const EmpTodayAttendance = () => {
   const {backendUrl} = useAppContext()
   const [attendance, setAttendance] = useState<Attendance[]>([]);
 
+  // eslint-disable-next-line react-hooks/immutability
   useEffect(() => { fetchAttendance() }, []);
 
   const fetchAttendance = async () => {
@@ -21,7 +23,9 @@ const EmpTodayAttendance = () => {
 
   
 return (
-  <div className="max-w-7xl mx-auto px-6 py-10 font-serif">
+  <div>
+    <AdminNavbar/> 
+  <div className="mx-10 px-6 py-10 font-serif">
     <div className="mb-8">
      <h1 className="text-4xl font-bold text-white"> Today's Employee Attendance </h1>
      <p className="text-[#9fb396] mt-2"> View today's attendance records of all employees. </p>
@@ -88,6 +92,7 @@ return (
    </table>
    </div>
   </div>
+ </div>
  </div>
 );
  

@@ -7,6 +7,7 @@ import { leaveSchema, type LeaveFormData } from "../../utils/zodValidation";
 import { createLeave } from "../../services/leaveServices";
 import { LEAVE_TYPE } from "../../utils/constants";
 import { useAppContext } from "../../context/AppContext";
+import EmpNavbar from "./EmpNavbar";
 
 const ApplyLeave = () => {
     const navigate = useNavigate() ;
@@ -33,6 +34,8 @@ const ApplyLeave = () => {
   };
 
 return (
+  <div>
+    <EmpNavbar/>
     <div className="min-h-screen flex justify-center pt-10 font-serif ">
 
     <button onClick={() => navigate(-1)}
@@ -83,6 +86,7 @@ return (
        <button className="bg-lime-500 text-black px-8 py-3 rounded hover:scale-105 transition " > Submit Request </button>
       </form>
        </div>
+    </div>
     </div>
     );
 
