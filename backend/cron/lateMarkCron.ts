@@ -3,13 +3,13 @@ import { ATTENDANCE_CONFIG } from "../config/attendance.config.js";
 import Employee from "../models/user.model.js";
 import { AttendenceModel } from "../models/attendace.model.js";
 
-//console.log("Mark Late Attendance Cron Loaded");
+//console.log("Mark Absent after 2'oclock Attendance Cron Loaded");
 
-cron.schedule(`${ATTENDANCE_CONFIG.lateMinute} ${ATTENDANCE_CONFIG.lateHour}  * * *`, async () => {
+cron.schedule(`${ATTENDANCE_CONFIG.absentCheckMinute} ${ATTENDANCE_CONFIG.absentCheckHour}  * * *`, async () => {
 
     try {
 
-        console.log("Late Attendance Marking Cron Started");
+        console.log("Auto Absent Attendance After 2'oclock Marking Cron Started");
         const today = new Date().toISOString().split("T")[0];
         const employees = await Employee.find();
 
@@ -29,7 +29,7 @@ cron.schedule(`${ATTENDANCE_CONFIG.lateMinute} ${ATTENDANCE_CONFIG.lateHour}  * 
                 OwnerId: emp.userId,
                 email: emp.email,
                 date: today,
-                status: "Late",
+                status: "Absent",
             });
         }
         console.log("Attendance Cron Completed");

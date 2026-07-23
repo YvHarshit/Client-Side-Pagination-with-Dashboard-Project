@@ -7,6 +7,7 @@ import type {Leave, Attendance} from "../../types/user.types"
 import { getAttendanceHistory } from "../../services/attendanceServices";
 import { getMyLeaves } from "../../services/leaveServices";
 import EmpNavbar from "./EmpNavbar";
+import {EventAvailableRounded, FactCheckRounded, Inventory2Rounded, PendingActionsRounded} from "@mui/icons-material";
 
 const TOTAL_LEAVE_ALLOWANCE = 24;
 const UPCOMING_HOLIDAYS = [
@@ -93,99 +94,115 @@ const MainEmpDas = () => {
       <div className="max-full py-5 px-9 font-serif">
 
         <div className="mb-5">
-        <p className="text-lime-400 text-lg mt-1"> Welcome, {empDetails?.name || "Employee"} </p>
-        <p className="text-gray-400 text-xs mt-1"> Here's what's happening with your account today. </p>
+        <p className="text-lg mt-1"> Welcome, <span className="text-lime-500 text-xl mt-1">{empDetails?.name || "Employee"} </span></p>
+        <p className="text-gray-400 text-sm mt-1"> Here's what's happening with your account today. </p>
        </div>
 
         
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
 
-          <div className="bg-[#232f20] border border-[#1f3626] rounded-lg p-5 hover:-translate-y-1 duration-300 hover:border-[#a8d96c] hover:shadow-[0_0_35px_rgba(168,217,108,0.2)]">
-            <p className="text-3xl font-bold text-white"> {loading ? "-" : `${attendancePercent}%`} </p>
-            <p className="text-lime-500 text-xs uppercase tracking-wider mt-1"> Attendance </p>
-          </div>
-
-          <div className="bg-[#232f20] border border-[#1f3626] rounded-lg p-5 hover:-translate-y-1 duration-300 hover:border-[#a8d96c] hover:shadow-[0_0_35px_rgba(168,217,108,0.12)]">
-            <p className="text-3xl font-bold text-white"> {loading ? "-" : leaves.length} </p>
-            <p className="text-lime-500 text-xs uppercase tracking-wider mt-1"> Leaves </p>
-          </div>
-
-          <div className="bg-[#232f20] border border-[#1f3626] rounded-lg p-5 hover:-translate-y-1 duration-300 hover:border-[#a8d96c] hover:shadow-[0_0_35px_rgba(168,217,108,0.12)]">
-            <p className="text-3xl font-bold text-white"> {loading ? "-" : pendingLeaves} </p>
-            <p className="text-lime-500 text-xs uppercase tracking-wider mt-1"> Pending </p>
-          </div>
-
-          <div className="bg-[#232f20] border border-[#1f3626] rounded-lg p-5 hover:-translate-y-1 duration-300 hover:border-[#a8d96c] hover:shadow-[0_0_35px_rgba(168,217,108,0.12)]">
-            <p className="text-3xl font-bold text-white"> {loading ? "-" : remainingLeaveDays} </p>
-            <p className="text-lime-500 text-xs uppercase tracking-wider mt-1"> Balance </p>
-          </div>
-
-        </div>
-
-
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-
-          <div className="bg-[#232f20] border border-[#1f3626] rounded-lg p-5">
-            <h2 className="text-lime-500 font-serif text-lg mb-4"> Today's Status </h2>
-
-            {todayRecord ? (
-              <div className="space-y-2 text-sm">
-                <div className="flex justify-between">
-                  <span className="text-gray-400"> Status </span>
-                  <span className={`px-3 py-1 rounded-full text-white ${
-                    todayRecord.status === "Present"
-                      ? "bg-green-500"
-                      : todayRecord.status === "Absent"
-                      ? "bg-red-500"
-                      : todayRecord.status === "Late"
-                      ? "bg-yellow-500"
-                      : todayRecord.status === "Half Day"
-                      ? "bg-blue-500"
-                      : "bg-indigo-500"
-                    }`}>
-                    {todayRecord.status || "Updated at checkout"}
-                  </span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-gray-400"> Clock In </span>
-                  <span className="text-white"> {formatTime(todayRecord.clockIn) || "-"} </span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-gray-400"> Clock Out </span>
-                  <span className="text-white"> {formatTime(todayRecord.checkOut) || "-"} </span>
-                </div>
-              </div>
-            ) : (
-              <p className="text-gray-300 text-sm"> No attendance marked for today yet. </p>
-            )}
-          </div>
-
-          <div className="bg-[#232f20] border border-[#1f3626] rounded-lg p-5">
-            <h2 className="text-lime-500 font-serif text-lg mb-4"> Leave Balance </h2>
-            <div className="space-y-2 text-sm">
-              <div className="flex justify-between">
-                <span className="text-gray-200"> Total Allotted </span>
-                <span className="text-white"> {TOTAL_LEAVE_ALLOWANCE} days </span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-gray-200"> Used </span>
-                <span className="text-white"> {usedLeaveDays} days </span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-gray-200"> Remaining </span>
-                <span className="text-white"> {remainingLeaveDays} days </span>
-              </div>
+          <div className="flex gap-5 bg-[#232f20] border border-[#1f3626] rounded-lg p-5 hover:-translate-y-1 duration-300 hover:border-[#a8d96c] hover:shadow-[0_0_35px_rgba(168,217,108,0.2)]">
+            <div className="bg-lime-400/10 p-2 rounded text-center">
+              <FactCheckRounded className="text-lime-500" style={{fontSize : 40}}/>
+            </div>
+            <div>
+              <p className="text-3xl font-bold text-white"> {loading ? "-" : `${attendancePercent}%`} </p>
+              <p className="text-lime-500 text-md uppercase tracking-wider mt-1"> Attendance </p>
             </div>
           </div>
 
+          <div className="flex gap-5 bg-[#232f20] border border-[#1f3626] rounded-lg p-5 hover:-translate-y-1 duration-300 hover:border-[#a8d96c] hover:shadow-[0_0_35px_rgba(168,217,108,0.12)]">
+            <div className="bg-lime-400/10 p-2 rounded text-center">
+              <EventAvailableRounded className="text-lime-500" style={{fontSize : 40}}/>
+            </div>
+            <div>
+            <p className="text-3xl font-bold text-white"> {loading ? "-" : leaves.length} </p>
+            <p className="text-lime-500 text-md uppercase tracking-wider mt-1"> Leaves </p>
+            </div>     
+          </div>
+
+          <div className="flex gap-5 bg-[#232f20] border border-[#1f3626] rounded-lg p-5 hover:-translate-y-1 duration-300 hover:border-[#a8d96c] hover:shadow-[0_0_35px_rgba(168,217,108,0.12)]">
+            <div className="bg-lime-400/10 p-2 rounded text-center">
+              <PendingActionsRounded className="text-lime-500" style={{fontSize : 40}}/>
+            </div>
+            <div>
+            <p className="text-3xl font-bold text-white"> {loading ? "-" : pendingLeaves} </p>
+            <p className="text-lime-500 text-md uppercase tracking-wider mt-1"> Pending </p>
+            </div>
+          </div>
+
+          <div className="flex gap-5 bg-[#232f20] border border-[#1f3626] rounded-lg p-5 hover:-translate-y-1 duration-300 hover:border-[#a8d96c] hover:shadow-[0_0_35px_rgba(168,217,108,0.12)]">
+            <div className="bg-lime-400/10 p-2 rounded text-center">
+              <Inventory2Rounded className="text-lime-500" style={{fontSize : 40}}/>
+            </div>
+            <div>            <p className="text-3xl font-bold text-white"> {loading ? "-" : remainingLeaveDays} </p>
+            <p className="text-lime-500 text-md uppercase tracking-wider mt-1"> Balance </p>
+            </div>
+
+          </div>
+
         </div>
+
+  <h2 className="text-3xl mt-7 mb-3"> Attendance & Leaves </h2>
+        
+  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+    <div className="bg-[#232f20] border border-[#1f3626] rounded-lg p-5">
+      <h2 className="text-lime-500 text-2xl mb-4 border-b pb-2"> Today's Status </h2>
+      {todayRecord ? (
+      <div className="space-y-2 text-md">
+        <div className="flex justify-between">
+          <span className="text-gray-200"> Status </span>
+          <span className={`px-3 py-1 rounded-full text-white ${
+            todayRecord.status === "Present"
+              ? "bg-green-500"
+              : todayRecord.status === "Absent"
+              ? "bg-red-500"
+              : todayRecord.status === "Late"
+              ? "bg-yellow-500"
+              : todayRecord.status === "Half Day"
+              ? "bg-blue-500"
+              : "bg-indigo-500"
+            }`}>
+            {todayRecord.status || "Updated at checkout"}
+          </span>
+     </div>
+     <div className="flex justify-between ">
+       <span className="text-gray-200"> Clock In </span>
+       <span className="text-white"> {formatTime(todayRecord.clockIn) || "-"} </span>
+       </div>
+       <div className="flex justify-between">
+         <span className="text-gray-200"> Clock Out </span>
+         <span className="text-white"> {formatTime(todayRecord.checkOut) || "-"} </span>
+       </div>
+           </div>
+         ) : (
+           <p className="text-gray-300 text-md"> No attendance marked for today yet. </p>
+         )}
+       </div>
+       <div className="bg-[#232f20] border border-[#1f3626] rounded-lg p-5">
+         <h2 className="text-lime-500 text-2xl mb-4 border-b pb-2"> Leave Balance </h2>
+      <div className="space-y-2 text-md">
+           <div className="flex justify-between">
+             <span className="text-gray-300"> Total Allotted </span>
+             <span className="text-white"> {TOTAL_LEAVE_ALLOWANCE} days </span>
+           </div>
+           <div className="flex justify-between">
+             <span className="text-gray-300"> Used </span>
+             <span className="text-white"> {usedLeaveDays} days </span>
+           </div>
+           <div className="flex justify-between">
+             <span className="text-gray-300"> Remaining </span>
+             <span className="text-white"> {remainingLeaveDays} days </span>
+           </div>
+         </div>
+       </div>
+   </div>
 
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
 
           <div className="bg-[#232f20] border border-[#1f3626] rounded-lg p-5">
-            <h2 className="text-lime-500 font-serif text-lg mb-4"> Recent Leaves </h2>
+            <h2 className="text-lime-500 text-2xl mb-4 border-b pb-2"> Recent Leaves </h2>
 
             {recentLeaves.length === 0 ? (
               <p className="text-gray-300 text-sm"> No leave requests found. </p>
@@ -210,12 +227,12 @@ const MainEmpDas = () => {
           </div>
 
           <div className="bg-[#232f20] border border-[#1f3626] rounded-lg p-5">
-            <h2 className="text-lime-500 font-serif text-lg mb-4"> Upcoming Holidays </h2>
+            <h2 className="text-lime-500 text-2xl mb-4 border-b pb-2"> Upcoming Holidays </h2>
             <div className="space-y-3">
               {UPCOMING_HOLIDAYS.map((holiday) => (
-                <div key={holiday.name} className="flex justify-between items-center text-sm border-t border-[#1f3626] pt-3 first:border-t-0 first:pt-0">
-                  <span className="text-white"> {holiday.name} </span>
-                  <span className="text-gray-500 text-xs"> {formatDate(holiday.date)} </span>
+                <div key={holiday.name} className="flex justify-between items-center text-md">
+                  <span className="text-gray-300"> {holiday.name} </span>
+                  <span className="text-gray-200 text-md"> {formatDate(holiday.date)} </span>
                 </div>
               ))}
             </div>
@@ -223,9 +240,9 @@ const MainEmpDas = () => {
 
         </div>
 
-
+    <h2 className="text-3xl mt-7 mb-3"> Attendance & Leaves </h2>
         <div className="bg-[#232f20] border border-[#1f3626] rounded-lg p-5 mb-8">
-          <h2 className="text-lime-500 font-serif text-lg mb-4"> Company Announcements </h2>
+          <h2 className="text-lime-500  text-2xl mb-4"> Company Announcements </h2>
           <div className="space-y-4">
             {ANNOUNCEMENTS.map((note) => (
               <div key={note.title} className="border-t border-gray-500 pt-4 first:border-t-0 first:pt-0">
@@ -241,21 +258,21 @@ const MainEmpDas = () => {
 
 
         <div className="bg-[#232f20] border border-[#1f3626] rounded-lg p-5">
-          <h2 className="text-lime-500 font-serif text-lg mb-4"> Quick Actions </h2>
+          <h2 className="text-lime-500 text-2xl mb-4"> Quick Actions </h2>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
 
             <button onClick={() => navigate("/emp/apply-leave")}
-              className="rounded-lg border border-[#3a5035] py-3 px-4 hover:border-green-500 hover:bg-[#2b3728] transition-all duration-300">
+              className="rounded-lg text-xl border border-[#3a5035] py-3 px-4 hover:border-green-500 hover:bg-[#2b3728] transition-all duration-300">
               Apply Leave
             </button>
 
             <button onClick={() => navigate("/emp/attendance")}
-              className="rounded-lg bg-[#232f20] border border-[#3a5035] py-3 px-4 hover:border-green-500 hover:bg-[#2b3728] transition-all duration-30">
+              className="rounded-lg text-xl  bg-[#232f20] border border-[#3a5035] py-3 px-4 hover:border-green-500 hover:bg-[#2b3728] transition-all duration-30">
                 Attendance
             </button>
 
             <button onClick={() => navigate("/profile")}
-              className="rounded-lg bg-[#232f20] border border-[#3a5035] py-3 px-4 hover:border-green-500 hover:bg-[#2b3728] transition-all duration-300">
+              className="rounded-lg text-xl bg-[#232f20] border border-[#3a5035] py-3 px-4 hover:border-green-500 hover:bg-[#2b3728] transition-all duration-300">
               Edit Profile
             </button>
 

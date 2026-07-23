@@ -24,22 +24,22 @@ const EmpNavbar = () => {
       <div className="flex items-center gap-4">
        <button onClick={() => setOpenSidebar(true)}
         className="p-2 rounded-md hover:bg-[#232f20] transition">
-        <MenuIcon className="text-[#a8d96c]" />
+        <MenuIcon className="text-lime-500" style={{fontSize : 30}}/>
        </button>
 
-       <div>
+       {/* <div>
         <h1 className="text-3xl font-bold text-white"> Employee Dashboard </h1>
-       </div>
+       </div> */}
       </div>
 
       <div className="flex items-center gap-3">
-       <div className="w-10 h-10 rounded-full bg-[#171f11] border border-[#3a5035] flex items-center justify-center text-[#a8d96c] font-bold">
+       <div className="w-12 h-12 rounded-full bg-[#171f11] border border-[#3a5035] flex items-center justify-center text-[#a8d96c] font-bold">
         {empDetails?.name?.[0]?.toUpperCase()}
        </div>
 
        <div>
-        <p className="text-sm font-semibold text-white"> {empDetails?.name || "Employee"} </p>
-        <p className="text-xs text-gray-400"> Employee </p>
+        <p className="text-md font-semibold text-white"> {empDetails?.name || "Employee"} </p>
+        <p className="text-xs text-gray-300"> Employee </p>
        </div>
       </div>
 

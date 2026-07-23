@@ -41,12 +41,8 @@ const AdminNavbar = ({ onAddEmployeeClick }: NavbarProps) => {
       <div className="flex items-center gap-4">
        <button onClick={() => setOpenSidebar(true)}
         className="p-2 rounded-md hover:bg-[#232f20] transition">
-        <MenuIcon className="text-[#a8d96c]" />
+        <MenuIcon className="text-lime-500" style={{fontSize : 30}}/>
        </button>
-
-       {/* <div>
-        <h1 className="text-4xl font-bold text-white"> Admin Dashboard </h1>
-        </div> */}
       </div>
 
      <div className="relative group">
@@ -55,7 +51,7 @@ const AdminNavbar = ({ onAddEmployeeClick }: NavbarProps) => {
          {userData?.name?.[0]?.toUpperCase()}
        </div>
        <div>
-        <p className="text-white font-semibold"> {userData?.name} </p>
+        <p className="font-md text-white font-semibold"> {userData?.name} </p>
         <p className="text-xs text-gray-400"> Administrator </p>
        </div>
       </div>

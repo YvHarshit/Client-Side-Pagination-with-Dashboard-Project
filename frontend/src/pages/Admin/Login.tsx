@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import { useAppContext } from "../../context/AppContext";
 import { auth } from "../../firebase.js";
 import { GoogleAuthProvider, signInWithPopup} from "firebase/auth";
+import { PersonRounded } from "@mui/icons-material";
 
 export default function Login() 
 {
@@ -35,7 +36,6 @@ export default function Login()
       toast.success(data.message);
       navigate("/");
     }
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     toast.error(error.response?.data?.message || "Google Login Failed");
   }
@@ -75,7 +75,7 @@ const validateForm = () => {
       axios.defaults.withCredentials = true;
       if (state === "Sign Up") {
           const { data } = await axios.post(`${backendUrl}/auth/register`, { name, email, password });
-          setState("Login"); //Show Login form
+          setState("Login"); 
           if (data.success) {
               toast.success("Account created successfully! Please login.");
               setEmail(email);
@@ -102,10 +102,9 @@ const validateForm = () => {
   };
 
 return (
-  <div className="flex items-center justify-center min-h-screen px-6 sm:px-0 relative">
+  <div className="flex items-center justify-center min-h-screen px-6 sm:px-0 relative font-serif">
 
-  {/* Top Right Button */}
-  <div className="absolute top-8 right-8 flex rounded-lg overflow-hidden border border-slate-500">
+  <div className="absolute top-8 right-8 flex rounded-full overflow-hidden border border-slate-500">
 
   <button
     onClick={() => navigate("/login")}
@@ -113,8 +112,7 @@ return (
       location.pathname === "/login"
         ? "bg-lime-400 text-black font-semibold"
         : "bg-slate-700 text-white hover:bg-slate-600"
-    }`}
-  >
+    }`}>
     As Admin
   </button>
 
@@ -124,17 +122,21 @@ return (
       location.pathname === "/emp-login"
         ? "bg-lime-400 text-black font-semibold"
         : "bg-slate-700 text-white hover:bg-slate-600"
-    }`}
-  >
+    }`}>
     As Employee
   </button>
 
 </div>
    
 
-    <div className="border border-white p-12 rounded-lg w-full max-w-md bg-[#232f20]">
-      <h2 className="text-4xl font-semibold mb-8 text-center text-lime-300"> {state === 'Sign Up' ? "Create Admin Account" : "Login to Admin Account"} </h2>
-            
+  <div className="border border-white p-12 rounded-lg w-full max-w-lg bg-[#232f20]">
+   <div className="flex gap-3 items-center justify-center ">
+    <div className="bg-lime-400/10 p-2 h-max rounded-full">
+     <PersonRounded className="text-lime-500" style={{fontSize : 38}}/>
+    </div>          
+    <h2 className="text-4xl font-semibold text-lime-300"> {state === 'Sign Up' ? "Create Account" : "Admin Login"} </h2>
+   </div>      
+   <p className="text-md mb-8 text-center text-lime-500"> Access to your account</p>
         <form onSubmit={onSubmitHandler}>
             {state === "Sign Up"
           &&

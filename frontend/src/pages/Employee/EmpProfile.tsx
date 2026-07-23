@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/set-state-in-effect */
 import { useEffect, useState } from "react";
 import cover from "../../assests/cover2.jpg";
 import profile from "../../assests/profile.jpg";
@@ -9,7 +8,6 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { employeeSchema } from "../../utils/zodValidation";
 import { DEPARTMENT, EXPERIENCE } from "../../utils/constants";
-import { ArrowBack } from "@mui/icons-material";
 import EmpNavbar from "./EmpNavbar";
 
 
@@ -173,12 +171,7 @@ console.log("Experience:", empDetails?.experience);
         <img src={cover} alt="Cover" className="h-full w-full object-cover "/>
       </div>
 
-      <button onClick={() => navigate(-1)}
-        className="absolute top-4 left-4 flex items-center gap-2 px-4 py-2 text-white transition hover:scale-102">
-        <ArrowBack />
-        <span className="font-semibold text-lime-400">Back to Dashboard</span>
-      </button>
- 
+       
       <div className="absolute left-8 top-32 md:left-14 md:top-40">
         <div className="h-32 w-32 overflow-hidden rounded-full border-2 md:h-60 md:w-60 ">
           <img src={profile} alt="Employee Avatar" className="object-cover"/>
@@ -203,10 +196,10 @@ console.log("Experience:", empDetails?.experience);
       : (
         <div>
           <button onClick={handleUpdate}
-            className="rounded-lg bg-green-600 px-6 py-2 text-white hover:bg-green-700">
+            className="rounded-lg bg-green-600 px-6 py-2 text-white hover:bg-green-500 mx-3">
             Save </button>
           <button onClick={handleCancel}
-            className="rounded-lg bg-red-800 px-6 py-2 text-white hover:bg-red-700">
+            className="rounded-lg bg-red-800 px-6 py-2 text-white hover:bg-red-700 mx-3">
             Cancel </button>
         </div> )}
       </div>

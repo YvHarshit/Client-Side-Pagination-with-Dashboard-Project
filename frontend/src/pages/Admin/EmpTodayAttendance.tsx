@@ -1,15 +1,16 @@
 import { useEffect, useState } from "react";
-import type {Attendance} from "../../types/user.types"
+import {type Employee, type Attendance} from "../../types/user.types"
 import { useAppContext } from "../../context/AppContext";
 import { myEmpTodayAttendance } from "../../services/attendanceServices";
 import AdminNavbar from "./AdminNavbar";
+import { myEmp } from "../../services/empService";
 
 const EmpTodayAttendance = () => {
   const {backendUrl} = useAppContext()
   const [attendance, setAttendance] = useState<Attendance[]>([]);
+  const [allMyEmp, setAllMyEmployee] = useState<Employee[]>([]) ;
 
-  // eslint-disable-next-line react-hooks/immutability
-  useEffect(() => { fetchAttendance() }, []);
+  useEffect(() => { fetchAttendance() , getMyEmp()}, []);
 
   const fetchAttendance = async () => {
     try {
@@ -20,7 +21,19 @@ const EmpTodayAttendance = () => {
       console.log(error);
     } 
   };
-
+  const getMyEmp =  async() => {
+    try {
+      const data = await myEmp(backendUrl)
+      if(data.success) setAllMyEmployee(data.myEmployees)
+        console.log(data.myEmployees)
+      
+    } catch (error) {
+      console.log(error)      
+    }
+  }
+  const employeesWithoutAttendance = allMyEmp.filter((emp) =>
+  !attendance.some((att) => att.employeeId === emp.Eid)
+);
   
 return (
   <div>
@@ -35,8 +48,8 @@ return (
       <div className="flex items-center justify-between px-6 py-5 border-b border-[#3a5035]">
        <div>
         <h2 className="text-2xl font-semibold text-white"> Attendance Records </h2>
-        <p className="text-[#9fb396] text-sm mt-1"> Total Employees Marked Today:{" "}
-         <span className="font-bold text-lime-400"> {attendance.length} </span>
+        <p className="text-[#9fb396] text-sm mt-1"> Total Employees Marked Today:{" "} 
+          <span className="text-lg font-bold text-lime-400"> {attendance.length} </span>
         </p>
         </div>
       </div>
@@ -54,7 +67,7 @@ return (
        </thead>
        <tbody>
 
-   {attendance.length === 0 ? (
+   {allMyEmp.length === 0 ? (
      <tr>
       <td colSpan={5} className="py-20 text-center text-gray-400 text-lg">
         No Attendance Found 
@@ -91,8 +104,24 @@ return (
      </tr>
       ))
      )}
-    </tbody>
-   </table>
+   
+
+    {employeesWithoutAttendance.map((emp) => (
+    <tr key={emp._id} className="border-t border-[#3a5035] hover:bg-[#171f11] transition-all duration-300">
+      <td className="px-5 py-4 text-center font-semibold">{emp.Eid}</td>
+      <td className="px-5 py-4 text-center">{emp.email}</td>
+      <td className="px-5 py-4 text-center">--</td>
+      <td className="px-5 py-4 text-center">--</td>
+      <td className="px-5 py-4 text-center">
+        <span className="px-4 py-1 rounded-full bg-[#c169f0] text-white">
+          Not Marked Yet
+        </span>
+      </td>
+    </tr>
+  ))}
+</tbody>
+
+</table>
    </div>
   </div>
  </div>

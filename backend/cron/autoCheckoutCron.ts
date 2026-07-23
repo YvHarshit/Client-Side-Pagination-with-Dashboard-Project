@@ -17,30 +17,13 @@ cron.schedule(
         ATTENDANCE_CONFIG.officeOverHour,
         ATTENDANCE_CONFIG.officeOverMinute,
         0, 0 );
+      const records = await AttendenceModel.find({
+       date: today,
+       clockIn: { $exists: true },
+       checkOut: { $exists: false } });
 
-      //  await AttendenceModel.updateMany(
-      //   {
-      //     date: today,
-      //     clockIn: { $exists: true },
-      //     checkOut: { $exists: false },
-      //   },
-      //   {
-      //     $set: {
-      //       checkOut: checkoutTime,
-      //     },
-      //   }
-      // );
-      // //console.log(result);
-      // const records = await AttendenceModel.find({ date: today });
-      // console.log(records);
-    // console.log(`Auto Checkout Completed. ${result.modifiedCount} employees updated.`);
-    const records = await AttendenceModel.find({
-  date: today,
-  checkOut: { $exists: false },
-});
-
-for (const attendance of records) {
-  attendance.checkOut = checkoutTime;
+ for (const attendance of records) {
+   attendance.checkOut = checkoutTime;
 
   const workedHours = (checkoutTime.getTime() - attendance.clockIn!.getTime()) / (1000 * 60 * 60);
 
@@ -53,6 +36,7 @@ for (const attendance of records) {
   } else {
     attendance.status = "Present";
   }
+    // console.log(records);
 
   await attendance.save();
 }

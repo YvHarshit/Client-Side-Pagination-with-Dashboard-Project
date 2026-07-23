@@ -1,4 +1,4 @@
-import {type Request, type Response } from "express";
+import {request, type Request, type Response } from "express";
 import Employee from "../models/user.model.js";
 import { nextId } from "../utils/idAllocator.js";
 import bcrypt from "bcryptjs";
@@ -399,7 +399,7 @@ export const empChangePassword = async(req: Request, res: Response) => {
 }
 
 
-export const getAllEmployees =  async (req : Request, res : Response): Promise<void> => {
+export const getAllEmployees =  async (req : Request, res : Response) => {
  try {
     const userId = req.userId;
 
@@ -427,3 +427,43 @@ export const getAllEmployees =  async (req : Request, res : Response): Promise<v
   catch (err) {res.status(500).json({
     message: "500 - Failed to fetch users"});}
   };
+
+
+
+  
+export const myEmpOnly = async (req : Request, res: Response) => {
+    try {
+       const OwnerId = req.userId ;     
+     if (!OwnerId) {
+      return res.status(401).json({
+        success: false,
+        message: "Unauthorized",
+      });
+    }
+       const myEmployees = await Employee.find({userId : OwnerId}) ;
+
+       
+    if(myEmployees.length === 0) {
+        res.json({
+            success : true ,
+            message : "No employee"
+        })
+    }
+
+    res.json ({
+        success : true ,
+        message : "Employee Found" ,
+        totalEmployee : myEmployees.length ,
+        myEmployees
+    });
+
+
+        
+    } catch (error: unknown) {
+        if(error instanceof Error) {
+            console.log(error.message)
+            console.log(error.stack)
+        }
+        else   console.log("Un-expected Error", error)        
+    }
+}

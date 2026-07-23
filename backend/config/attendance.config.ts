@@ -2,13 +2,11 @@ export const ATTENDANCE_CONFIG = {
     officeStartHour: 9,
     officeStartMinute: 30,
 
-    lateHour: 11,
-    lateMinute: 0,
 
-    absentCheckHour: 11,
-    absentCheckMinute: 16,
+    absentCheckHour: 14,
+    absentCheckMinute: 10,
 
     officeOverHour : 18 ,
-    officeOverMinute : 46 ,
+    officeOverMinute : 10 ,
 
 };

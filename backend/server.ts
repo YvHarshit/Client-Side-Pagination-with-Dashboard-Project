@@ -5,8 +5,9 @@ import mongoose from "mongoose";
 import userRoutes from "./routes/user.routes.js";
 import authRouter from "./routes/auth.routes.js";
 import cookieParser from "cookie-parser";
-// import "./cron/lateAttendanceCron.js"
-import "./cron/autoCheckout.js"
+import "./cron/lateMarkCron.js"
+import "./cron/autoCheckoutCron.js"
+
 dotenv.config();
 const app: Application = express();
 
