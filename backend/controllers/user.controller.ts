@@ -231,7 +231,7 @@ export const empLogin = async (req: Request, res: Response) => {
 
 
 export const getEmpDetail = async (req: Request, res: Response) => {
-    console.log("This is getEmpDetails (user.constrollers) ")
+    //console.log("This is getEmpDetails (user.constrollers) ")
 
     const token = req.cookies.token ;
     if(!token) {
@@ -293,9 +293,9 @@ export const updateDetailsFromDashboard = async (req: Request, res: Response) =>
         message: "Employee not found",
       });
     }
-    console.log("Request Body:", req.body);
-    console.log("Age from request:", req.body.age, typeof req.body.age);
-    console.log("Before:", emp.age);
+    // console.log("Request Body:", req.body);
+    // console.log("Age from request:", req.body.age, typeof req.body.age);
+    // console.log("Before:", emp.age);
 
     const { name, phone, department, age, experience, gender, } = req.body;
     

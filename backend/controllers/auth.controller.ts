@@ -159,7 +159,7 @@ export const logout = async (req: Request, res: Response) => {
 
 
 export const getMe = async (req: Request, res: Response) => {
-  console.log("req.userId in getMe (auth.controller) =", (req.userId));
+  //console.log("req.userId in getMe (auth.controller) =", (req.userId));
 
   try {
     const user = await AuthUser.findOne({ userId: Number(req.userId),}).select("-password");

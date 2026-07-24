@@ -136,7 +136,7 @@ const MainEmpDas = () => {
               <Inventory2Rounded className="text-lime-500" style={{fontSize : 40}}/>
             </div>
             <div>            <p className="text-3xl font-bold text-white"> {loading ? "-" : remainingLeaveDays} </p>
-            <p className="text-lime-500 text-md uppercase tracking-wider mt-1"> Balance </p>
+            <p className="text-lime-500 text-md uppercase tracking-wider mt-1"> Leave Balance </p>
             </div>
 
           </div>
