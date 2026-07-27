@@ -76,8 +76,6 @@ if (!user) {
   }
 };
 
-
-
 export const register = async (req: Request, res: Response) => {
   const { name, email, password } = req.body;
    const userId = await authNextId ('userId'); 
