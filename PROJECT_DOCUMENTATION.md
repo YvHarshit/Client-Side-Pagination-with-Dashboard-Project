@@ -106,7 +106,7 @@ Client-Side-Pagination-with-Dashboard-Project/
     │   │       ├── UserCard.tsx    # Employee card display
     │   │       ├── Pagination.tsx  # Pagination controls
     │   │       ├── SearchBar.tsx   # Search functionality
-    │   │       └── FilterBar.tsx   # Filter by department
+    │   │       └── FilterBar.tsx   # Filter by email domain 
     │   ├── context/
     │   │   └── AppContext.tsx      # Global state management
     │   ├── pages/
@@ -998,6 +998,100 @@ npm run lint         # Run ESLint
 - Check currPage and totalPages in AppContext
 - Verify API returns correct page data
 - Check search/filter query strings
+
+---
+
+## 20. Scheduled Tasks (Cron Jobs)
+
+### Purpose
+
+- Run recurring background jobs such as nightly attendance summaries, periodic email notifications (leave status, reminders), automatic data cleanup, and report generation.
+
+### Typical Jobs for this Project
+
+- Nightly attendance summary aggregation
+- Daily/weekly leave reminder emails to pending approvers
+- Clean up soft-deleted records or expired OTP tokens
+- Generate scheduled analytics snapshots for reports
+
+### Implementation (Backend)
+
+- Recommended: implement scheduled jobs in the backend using a scheduler library such as `node-cron` or `cron`.
+- Create a dedicated folder for schedulers, e.g. `backend/utils/schedulers/` and register jobs from the main `server.ts` so they run when the server starts (in development or when managed by a process manager in production).
+
+Example (install):
+
+```bash
+cd backend
+npm install node-cron
+```
+
+Example scheduler file (suggested):
+
+```typescript
+// filepath: backend/utils/schedulers/leaveSummaryCron.ts
+import cron from 'node-cron';
+import { generateDailyAttendanceSummary } from '../../controllers/attendance.controller';
+
+// Runs every day at 01:00 AM
+cron.schedule('0 1 * * *', async () => {
+  try {
+    await generateDailyAttendanceSummary();
+    console.log('Daily attendance summary generated');
+  } catch (err) {
+    console.error('Error running attendance summary cron:', err);
+  }
+});
+```
+
+And import the scheduler from your `server.ts` so it's registered on startup:
+
+```typescript
+// server.ts (snippet)
+import './utils/schedulers/leaveSummaryCron';
+// ...existing server bootstrapping code
+```
+
+### Environment & Configuration
+
+- Use env variables to enable/disable jobs and to configure schedule expressions. Example variables:
+
+```
+ENABLE_SCHEDULERS=true
+ATTENDANCE_SUMMARY_CRON=0 1 * * *
+```
+
+- In `server.ts` check `process.env.ENABLE_SCHEDULERS` before importing/starting schedulers.
+
+### Running schedulers in Production
+
+- Prefer running schedulers within the same Node process managed by a process manager (PM2, systemd) or as a separate worker service depending on scale.
+- If using PM2, ensure the ecosystem file starts the Node app; schedulers will start when the app starts. Example:
+
+```bash
+# start backend with pm2
+pm2 start dist/server.js --name employee-backend
+```
+
+- For heavy workloads or to avoid duplicating scheduled runs across multiple instances, run schedulers only on a single dedicated instance or use a distributed job runner (BullMQ/Redis, Agenda) with leader election.
+
+### Testing and Safety
+
+- Log job runs and failures centrally.
+- Use dry-run flags for dangerous jobs (deletions) and require confirmations for production runs during initial deployment.
+- Add unit/integration tests for job logic (separate from scheduler triggers).
+
+### Add to Documentation Checklist
+
+- Document any new cron jobs here with: name, schedule (cron expression), purpose, and control env vars.
+
+---
+
+## 21. Changelog / Recent Additions
+
+- Added: Scheduled Tasks / Cron Job guidance (nightly aggregation, reminders, cleanup).
+- Note: If you added specific cron job files or configurations to your backend, paste the file paths and cron expressions here so this documentation can be updated with exact details.
+
 
 **Validation Errors**
 
