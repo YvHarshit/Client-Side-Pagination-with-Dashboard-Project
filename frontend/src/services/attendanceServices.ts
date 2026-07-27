@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const getAttendanceHistory = async (backendUrl: string) => {
-  const { data } = await axios.get(`${backendUrl}/emp/attendace/history`,
+  const { data } = await axios.get(`${backendUrl}/api/emp/attendace/history`,
     { withCredentials: true }
   );
 
@@ -11,7 +11,7 @@ export const getAttendanceHistory = async (backendUrl: string) => {
 
 export const checkIn = async (backendUrl: string) => {
   const now = new Date();
-  const { data } = await axios.post( `${backendUrl}/emp/checkin`,
+  const { data } = await axios.post( `${backendUrl}/api/emp/checkin`,
     {
       date: now.toISOString().split("T")[0],
       clockIn: now.toISOString()
@@ -24,7 +24,7 @@ export const checkIn = async (backendUrl: string) => {
 
 export const checkOut = async (backendUrl: string) => {
   const now = new Date();
-  const { data } = await axios.patch( `${backendUrl}/emp/checkout`,
+  const { data } = await axios.patch( `${backendUrl}/api/emp/checkout`,
     {
       date: now.toISOString().split("T")[0],
       checkOut: now.toISOString()

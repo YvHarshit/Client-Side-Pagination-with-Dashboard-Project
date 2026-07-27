@@ -26,7 +26,7 @@ const EmpPasswodChange = () => {
   }
 
   try {
-     await axios.post(`${backendUrl}/user/emp-change-password`, { newPassword }, { withCredentials: true } );
+     await axios.post(`${backendUrl}/api/user/emp-change-password`, { newPassword }, { withCredentials: true } );
 
     toast.success("Password changed successfully.");
     navigate("/emp-login")

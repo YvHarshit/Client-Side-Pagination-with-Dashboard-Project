@@ -18,7 +18,7 @@ const EmpLogin = () => {
   e.preventDefault();
 
   try {
-    const { data } = await axios.post(`${backendUrl}/user/emplogin`, { email, password }, { withCredentials: true } );
+    const { data } = await axios.post(`${backendUrl}/api/user/emplogin`, { email, password }, { withCredentials: true } );
 
     if (data.success) {
       toast.success("Employee Successfully Logged In");

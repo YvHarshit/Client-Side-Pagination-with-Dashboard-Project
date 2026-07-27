@@ -56,14 +56,14 @@ export const updateEmployee = async(employee : Employee) : Promise<Employee> => 
 
 
 export const sendOtp = async (backendUrl: string) => {
-  const { data } = await axios.post(`${backendUrl}/auth/send-otp`,
+  const { data } = await axios.post(`${backendUrl}/api/auth/send-otp`,
     {}, { withCredentials: true } );
   return data;
 };
 
 
 export const verifyOtp = async ( backendUrl: string, otp: string ) => {
-  const { data } = await axios.post( `${backendUrl}/auth/authenticate-account`,
+  const { data } = await axios.post( `${backendUrl}/api/auth/authenticate-account`,
     { otp }, { withCredentials: true } );
 
   return data;

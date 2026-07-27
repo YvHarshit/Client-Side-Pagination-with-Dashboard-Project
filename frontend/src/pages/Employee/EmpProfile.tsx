@@ -120,7 +120,7 @@ const EmpDashboard = () => {
     }
     
   try {    
-      const { data } = await axios.patch(`${backendUrl}/user/update-profile`, formData, { withCredentials: true });
+      const { data } = await axios.patch(`${backendUrl}/api/user/update-profile`, formData, { withCredentials: true });
 
       console.log(data);    
       console.log("Updated Data:", formData);
