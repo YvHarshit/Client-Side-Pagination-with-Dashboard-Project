@@ -8,6 +8,6 @@ export const getEmpDetails = async (backendUrl: string) => {
 
 export const myEmp = async(backendUrl : string) => {
   axios.defaults.withCredentials = true ;
-  const { data } = await axios(`${backendUrl}/auth/admin/my-emp`) ;
+  const { data } = await axios(`${backendUrl}/api/auth/admin/my-emp`) ;
   return data ;
 }

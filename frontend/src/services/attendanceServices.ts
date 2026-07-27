@@ -37,7 +37,7 @@ export const checkOut = async (backendUrl: string) => {
 
 
 export const myEmpTodayAttendance = async(backendUrl: string) => {
-  const {data} = await axios.get(`${backendUrl}/auth/myemp/today/attendance`, { withCredentials: true })
+  const {data} = await axios.get(`${backendUrl}/api/auth/myemp/today/attendance`, { withCredentials: true })
   return data ;
 
 }
