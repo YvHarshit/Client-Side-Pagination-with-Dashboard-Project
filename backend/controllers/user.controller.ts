@@ -205,9 +205,9 @@ export const empLogin = async (req: Request, res: Response) => {
             
         const token = jwt.sign({email:emp.email}, process.env.JWT_SECRET as string , {expiresIn : "7d"})   
         res.cookie("token", token, {
-            httpOnly : true ,
-            secure : false ,
-            sameSite : "lax",
+            httpOnly:true,
+           secure:true,
+           sameSite:"none"
         })
 
 
@@ -332,9 +332,9 @@ export const empLogout = async(req:Request, res: Response) => {
 
 try {
     res.clearCookie("token" , {
-        httpOnly: true, 
-        secure : false ,
-        sameSite : "lax"
+        httpOnly:true,
+        secure:true,
+        sameSite:"none"
     })
     return res.json({ success: true, message: "Logged out" });
 } 
