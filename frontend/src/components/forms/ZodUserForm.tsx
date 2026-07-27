@@ -10,7 +10,7 @@ import { DEPARTMENT, SKILLS, EXPERIENCE, GENDER} from "../../utils/constants";
 
 
 const UserForm = ({onAdd, onUpdate, editingEmployee}: UserFormProps) => {
-  const [success, setSuccess] = useState(false);
+  const [_ , setSuccess] = useState(false);
 
   const skillOptions = Object.values(SKILLS) ;
   const departmentOptions = Object.values(DEPARTMENT) ;
