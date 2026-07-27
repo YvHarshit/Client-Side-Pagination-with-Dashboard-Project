@@ -1,34 +1,49 @@
-import cors from "cors";
-import dotenv from "dotenv";
-import express, { type Application } from "express";
-import mongoose from "mongoose";
-import userRoutes from "./routes/user.routes.js";
-import authRouter from "./routes/auth.routes.js";
-import cookieParser from "cookie-parser";
-import "./cron/lateMarkCron.js"
-import "./cron/autoCheckoutCron.js"
+// import cors from "cors";
+// import dotenv from "dotenv";
+// import express, { type Application } from "express";
+// import mongoose from "mongoose";
+// import userRoutes from "./routes/user.routes.js";
+// import authRouter from "./routes/auth.routes.js";
+// import cookieParser from "cookie-parser";
+// import "./cron/lateMarkCron.js"
+// import "./cron/autoCheckoutCron.js"
 
-dotenv.config();
-const app: Application = express();
+// dotenv.config();
+// const app: Application = express();
 
-app.use(express.json());
-app.use(cookieParser());
-app.use(
-  cors({
-    origin:"http://localhost:5173",
-    credentials: true,
-  })
-);
+// app.use(express.json());
+// app.use(cookieParser());
+// app.use(
+//   cors({
+//     origin:"http://localhost:5173",
+//     credentials: true,
+//   })
+// );
 
-app.use("/api", userRoutes);
-app.use("/api/auth", authRouter);
+// app.use("/api", userRoutes);
+// app.use("/api/auth", authRouter);
 
-mongoose.connect(process.env.MONGO_URL as string)
-  .then(() => console.log("MongoDB Connected"))
-  .catch((err: Error) => console.error(err));
+// mongoose.connect(process.env.MONGO_URL as string)
+//   .then(() => console.log("MongoDB Connected"))
+//   .catch((err: Error) => console.error(err));
 
-const PORT = process.env.PORT || 3000;
+// const PORT = process.env.PORT || 3000;
+
+// app.listen(PORT, () => {
+//   console.log(`Server running on port ${PORT}`);
+// });;
+
+
+import express from "express";
+
+const app = express();
+
+const PORT = Number(process.env.PORT) || 3000;
+
+app.get("/", (_, res) => {
+  res.send("Backend is running!");
+});
 
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});;
+  console.log(`Listening on port ${PORT}`);
+});
