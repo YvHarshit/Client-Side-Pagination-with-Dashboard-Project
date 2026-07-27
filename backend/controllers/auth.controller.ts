@@ -218,11 +218,18 @@ export const sendAuthenticateOtp = async (req: Request, res: Response) => {
    console.log("Before sending mail");
 
 const info = await transporter.sendMail({
-  from: process.env.BREVO_EMAIL,
-  to: user.email,
-  subject: "User Account Authentication OTP",
-  text: `Your OTP is ${otp}. This OTP is valid for 15 minutes.`,
-});
+    from: `"App Admin" <${process.env.BREVO_EMAIL}>`, 
+    to: user.email,
+    subject: "User Account Authentication OTP",
+    text: `Your OTP is ${otp}. This OTP is valid for 15 minutes.`,
+    html: `
+      <div style="font-family: Arial, sans-serif; padding: 20px;">
+        <h2>Account Authentication</h2>
+        <p>Your OTP is: <strong style="font-size: 24px; color: #4CAF50;">${otp}</strong></p>
+        <p>This OTP is valid for 15 minutes.</p>
+      </div>
+    `,
+  });
 
 console.log("After sending mail");
 console.log(info);
