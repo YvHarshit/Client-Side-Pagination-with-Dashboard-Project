@@ -21,7 +21,6 @@ export const googleLogin = async ( req: Request, res: Response): Promise<void> =
       return;
     }
 
-    // Verify Firebase Token
     const decodedToken = await getAuth().verifyIdToken(idToken);
 
 
@@ -50,7 +49,6 @@ if (!user) {
   });
 }
 
-    // Create your own JWT
     const token = jwt.sign({id: user.userId,},process.env.JWT_SECRET as string, {expiresIn: "7d"} );
 
     res.cookie("token", token, {

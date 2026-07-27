@@ -95,7 +95,6 @@ const validateForm = () => {
           } else toast.error(data.message);
       }
   }
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       catch (error: any) {
           toast.error(error.response?.data?.message || "Something went wrong");
       }
