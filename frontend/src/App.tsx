@@ -20,6 +20,7 @@ import EmpTodayAttendance from "./pages/Admin/EmpTodayAttendance";
 
 function AppRoutes() {
   const { isLoggedin, userData,empDetails } = useAppContext();
+  console.log("LOGIN STATUS:", isLoggedin);
 
   return (
     <Routes>
