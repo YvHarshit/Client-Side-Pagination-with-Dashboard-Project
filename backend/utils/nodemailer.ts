@@ -37,6 +37,8 @@ const transporter = nodemailer.createTransport({
 
     secure: false,
 
+    family: 4,
+
     auth: {
         user: process.env.BREVO_EMAIL,
         pass: process.env.BREVO_PASSWORD
