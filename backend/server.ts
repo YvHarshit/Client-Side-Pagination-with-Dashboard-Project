@@ -2,8 +2,8 @@
 // import dotenv from "dotenv";
 // import express, { type Application } from "express";
 // import mongoose from "mongoose";
-// import userRoutes from "./routes/user.routes.js";
-// import authRouter from "./routes/auth.routes.js";
+import userRoutes from "./routes/user.routes.js";
+import authRouter from "./routes/auth.routes.js";
 // import cookieParser from "cookie-parser";
 // import "./cron/lateMarkCron.js"
 // import "./cron/autoCheckoutCron.js"
@@ -35,15 +35,27 @@
 
 
 import express from "express";
+import cors from "cors";
+import cookieParser from "cookie-parser";
 
 const app = express();
 
-const PORT = Number(process.env.PORT) || 3000;
+app.use(express.json());
+app.use(cookieParser());
 
-app.get("/", (_, res) => {
-  res.send("Backend is running!");
-});
+app.use(cors({
+  origin: [
+    "http://localhost:5173",
+    "https://your-frontend-domain.vercel.app",
+  ],
+  credentials: true,
+}));
+
+app.use("/api", userRoutes);
+app.use("/api/auth", authRouter);
+
+const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
-  console.log(`Listening on port ${PORT}`);
+  console.log(`Listening on ${PORT}`);
 });
