@@ -36,7 +36,6 @@ cron.schedule(
   } else {
     attendance.status = "Present";
   }
-    // console.log(records);
 
   await attendance.save();
 }
