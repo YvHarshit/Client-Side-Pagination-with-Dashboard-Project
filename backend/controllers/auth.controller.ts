@@ -212,13 +212,13 @@ export const sendAuthenticateOtp = async (req: Request, res: Response) => {
 
     await user.save();
 
-    console.log("Sender Mail : ",process.env.BREVO_EMAIL)
-    console.log("Received At : ",user.email)
+   //  console.log("Sender Mail : ",process.env.BREVO_EMAIL)
+   //  console.log("Received At : ",user.email)
 
-   console.log("Before sending mail");
+   // console.log("Before sending mail");
 
 const info = await transporter.sendMail({
-    from: `"App Admin" <${process.env.BREVO_EMAIL}>`, 
+    from: `"App Admin" <harshityadav22sept@gmail.com>`, 
     to: user.email,
     subject: "User Account Authentication OTP",
     text: `Your OTP is ${otp}. This OTP is valid for 15 minutes.`,
@@ -231,8 +231,8 @@ const info = await transporter.sendMail({
     `,
   });
 
-console.log("After sending mail");
-console.log(info);
+console.log(" mail sent ");
+// console.log(info);
 
     return res.status(200).json({
       success: true,
