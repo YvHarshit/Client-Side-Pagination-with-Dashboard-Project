@@ -7,8 +7,8 @@ dotenv.config();
 
 const transporter = nodemailer.createTransport({
   host: "smtp-relay.brevo.com",
-  port: 587,
-  secure: false, 
+  port: 465,
+  secure: true,
 //   connectionTimeout: 10000, // 10 seconds
 //   greetingTimeout: 10000,   // 10 seconds
 //   socketTimeout: 10000,     // 10 seconds
@@ -18,6 +18,9 @@ const transporter = nodemailer.createTransport({
   }
 });
 
+console.log("BREVO_EMAIL:", process.env.BREVO_EMAIL);
+console.log("BREVO_PASSWORD exists:", !!process.env.BREVO_PASSWORD);
+// console.log("BREVO_PASSWORD:", process.env.BREVO_PASSWORD);
 
 transporter.verify((error, success) => {
   if (error) {
