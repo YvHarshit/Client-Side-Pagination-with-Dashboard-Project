@@ -7,7 +7,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-      target: 'http://localhost:3000',
+      target: "https://client-side-pagination-with-dashboard.onrender.com",
       changeOrigin: true,
       },
     },
