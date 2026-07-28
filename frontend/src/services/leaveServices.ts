@@ -15,13 +15,13 @@ export const getMyLeaves = async (backendUrl: string) => {
 
 
 export const leaveToAdmin =async (backendUrl: string) => { 
-  const {data} = await axios.get(`${backendUrl}/api/auth/admin/get/leave`, { withCredentials: true, } );
+  const {data} = await axios.get(`${backendUrl}/auth/admin/get/leave`, { withCredentials: true, } );
   return data; 
 } 
 
 
 export const updateLeaveStatus = async (backendUrl: string,leaveId: string, status: "Approved" | "Rejected") => {
-  const { data } = await axios.patch(`${backendUrl}/api/auth/admin/update/leave/${leaveId}`,
+  const { data } = await axios.patch(`${backendUrl}/auth/admin/update/leave/${leaveId}`,
     {
       status,
       adminRemark: status === "Approved"

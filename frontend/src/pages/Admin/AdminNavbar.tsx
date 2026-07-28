@@ -20,7 +20,7 @@ const AdminNavbar = ({ onAddEmployeeClick }: NavbarProps) => {
   const handleLogout = async () => {
     try {
       axios.defaults.withCredentials = true;
-      await axios.post(`${backendUrl}/api/auth/logout`);
+      await axios.post(`${backendUrl}/auth/logout`);
       setIsLoggedin(false);
       setUserData(null);
       toast.success("Logout successful");

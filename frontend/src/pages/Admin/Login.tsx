@@ -27,7 +27,7 @@ export default function Login()
     const result = await signInWithPopup(auth, provider);
     const firebaseToken = await result.user.getIdToken();
 
-    const { data } = await axios.post(`${backendUrl}/api/auth/google`, { idToken: firebaseToken }, { withCredentials: true } );
+    const { data } = await axios.post(`${backendUrl}/auth/google`, { idToken: firebaseToken }, { withCredentials: true } );
 
     if (data.success) {
 
@@ -74,7 +74,7 @@ const validateForm = () => {
   try {
       axios.defaults.withCredentials = true;
       if (state === "Sign Up") {
-          const { data } = await axios.post(`${backendUrl}/api/auth/register`, { name, email, password });
+          const { data } = await axios.post(`${backendUrl}/auth/register`, { name, email, password });
           setState("Login"); 
           if (data.success) {
               toast.success("Account created successfully! Please login.");
@@ -86,7 +86,7 @@ const validateForm = () => {
           
       }
       else {
-          const { data } = await axios.post(`${backendUrl}/api/auth/login`, { email, password });
+          const { data } = await axios.post(`${backendUrl}/auth/login`, { email, password });
           if (data.success) {
               setIsLoggedin(true);
               await getUserData();

@@ -28,7 +28,7 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
   const getUserData = async () => {
     try {
       axios.defaults.withCredentials = true;
-      const { data } = await axios.post(`${backendUrl}/api/auth/getme`);
+      const { data } = await axios.post(`${backendUrl}/auth/getme`);
 
       if (data.success) {
         setUserData(data.userData);

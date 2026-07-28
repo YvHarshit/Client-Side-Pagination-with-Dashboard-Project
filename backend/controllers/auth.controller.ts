@@ -212,10 +212,10 @@ export const sendAuthenticateOtp = async (req: Request, res: Response) => {
 
     await user.save();
 
-   //  console.log("Sender Mail : ",process.env.BREVO_EMAIL)
-   //  console.log("Received At : ",user.email)
+  //   console.log("Sender Mail : ",process.env.BREVO_EMAIL)
+  //   console.log("Received At : ",user.email)
 
-   // console.log("Before sending mail");
+  //  console.log("Before sending mail");
 
 const info = await transporter.sendMail({
     from: `"App Admin" <harshityadav22sept@gmail.com>`, 
@@ -232,7 +232,7 @@ const info = await transporter.sendMail({
   });
 
 console.log(" mail sent ");
-// console.log(info);
+//console.log(info);
 
     return res.status(200).json({
       success: true,
