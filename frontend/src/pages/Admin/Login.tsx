@@ -27,7 +27,7 @@ export default function Login()
     const result = await signInWithPopup(auth, provider);
     const firebaseToken = await result.user.getIdToken();
 
-    const { data } = await axios.post(`${backendUrl}/api/auth/google`, { idToken: firebaseToken }, { withCredentials: true } );
+    const { data } = await axios.post(`${backendUrl}/auth/google`, { idToken: firebaseToken }, { withCredentials: true } );
 
     if (data.success) {
 
