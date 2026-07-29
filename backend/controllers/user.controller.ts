@@ -3,7 +3,8 @@ import Employee from "../models/user.model.js";
 import { nextId } from "../utils/idAllocator.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import transporter from "../utils/nodemailer.js";
+import sgMail from "../utils/sendgrid.js";
+//import transporter from "../utils/nodemailer.js";
 
 
 
@@ -80,33 +81,97 @@ export const addUser =  async (req : Request, res : Response): Promise<void> => 
       password: hashedPassword
     });
 
-    await transporter.sendMail({
-        from: process.env.EMAIL,
-        to: email ,
-        subject : "Welcome, Employee account created" ,
-        html: `
-    <h2>Welcome Buddy! 🎉</h2>
-    <p>Your employee account has been created successfully.</p>
-    <p><strong>Please change your password on your first login.</strong></p>
-    <table cellpadding="6" cellspacing="0" border="1" style="border-collapse: collapse;">
-      <tr>
-        <td><strong>Employee ID</strong></td>
-        <td>${employeeId}</td>
-      </tr>
-      <tr>
-        <td><strong>Email</strong></td>
-        <td>${email}</td>
-      </tr>
-      <tr>
-        <td><strong>Temporary Password</strong></td>
-        <td>${password}</td>
-      </tr>
-    </table>
-    <br/>
-    <p>Regards,<br/>HR Team</p>
+//     await transporter.sendMail({
+//         from: process.env.EMAIL,
+//         to: email ,
+//         subject : "Welcome, Employee account created" ,
+//         html: `
+//     <h2>Welcome Buddy! 🎉</h2>
+//     <p>Your employee account has been created successfully.</p>
+//     <p><strong>Please change your password on your first login.</strong></p>
+//     <table cellpadding="6" cellspacing="0" border="1" style="border-collapse: collapse;">
+//       <tr>
+//         <td><strong>Employee ID</strong></td>
+//         <td>${employeeId}</td>
+//       </tr>
+//       <tr>
+//         <td><strong>Email</strong></td>
+//         <td>${email}</td>
+//       </tr>
+//       <tr>
+//         <td><strong>Temporary Password</strong></td>
+//         <td>${password}</td>
+//       </tr>
+//     </table>
+//     <br/>
+//     <p>Regards,<br/>HR Team</p>
+//   `,
+// });
+await sgMail.send({
+  to: email,
+  from: process.env.SENDGRID_FROM_EMAIL!,
+  subject: "Welcome, Employee Account Created",
+  text: `
+Welcome!
+
+Your employee account has been created successfully.
+
+Employee ID: ${employeeId}
+Email: ${email}
+Temporary Password: ${password}
+
+Please change your password after your first login.
+
+Regards,
+HR Team
+  `,
+  html: `
+    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; border: 1px solid #ddd; border-radius: 8px;">
+      <h2 style="color: #16a34a;">🎉 Welcome to the Team!</h2>
+
+      <p>Your employee account has been created successfully.</p>
+
+      <p>
+        <strong style="color: #dc2626;">
+          Please change your password after your first login.
+        </strong>
+      </p>
+
+      <table
+        cellpadding="10"
+        cellspacing="0"
+        border="1"
+        style="border-collapse: collapse; width: 100%; margin-top: 20px;"
+      >
+        <tr style="background-color: #f3f4f6;">
+          <td><strong>Employee ID</strong></td>
+          <td>${employeeId}</td>
+        </tr>
+
+        <tr>
+          <td><strong>Email</strong></td>
+          <td>${email}</td>
+        </tr>
+
+        <tr>
+          <td><strong>Temporary Password</strong></td>
+          <td>${password}</td>
+        </tr>
+      </table>
+
+      <p style="margin-top: 20px;">
+        You can now log in using the above credentials.
+      </p>
+
+      <br>
+
+      <p>
+        Regards,<br>
+        <strong>HR Team</strong>
+      </p>
+    </div>
   `,
 });
-
     res.json(emp);
   }
     catch (err) {

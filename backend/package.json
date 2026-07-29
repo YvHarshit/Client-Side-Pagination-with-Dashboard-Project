@@ -14,6 +14,8 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@react-email/components": "^1.0.12",
+    "@sendgrid/mail": "^8.1.6",
     "axios": "^1.16.1",
     "bcryptjs": "^3.0.3",
     "cookie-parser": "^1.4.7",
@@ -26,6 +28,7 @@
     "mongoose-sequence": "^6.0.1",
     "node-cron": "^4.6.0",
     "nodemailer": "^9.0.1",
+    "resend": "^6.18.1",
     "zod": "^4.4.3"
   },
   "devDependencies": {

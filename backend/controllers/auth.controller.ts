@@ -3,10 +3,11 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import AuthUser from "../models/auth.model.js";
 import { authNextId } from "../utils/authUserIdAllocator.js";
-import transporter from "../utils/nodemailer.js";
+//import transporter from "../utils/nodemailer.js";
 
 import { getAuth } from "firebase-admin/auth";
 import "../config/firebaseAdmin.js";
+import sgMail from "../utils/sendgrid.js";
 
 
 export const googleLogin = async ( req: Request, res: Response): Promise<void> => {
@@ -212,27 +213,43 @@ export const sendAuthenticateOtp = async (req: Request, res: Response) => {
 
     await user.save();
 
-  //   console.log("Sender Mail : ",process.env.BREVO_EMAIL)
-  //   console.log("Received At : ",user.email)
-
   console.log("Before sending mail");
 
-const info = await transporter.sendMail({
-    from: `"App Admin" <harshityadav22sept@gmail.com>`, 
+// const info = await transporter.sendMail({
+//     from: `"App Admin" <harshityadav22sept@gmail.com>`, 
+//     to: user.email,
+//     subject: "User Account Authentication OTP",
+//     text: `Your OTP is ${otp}. This OTP is valid for 15 minutes.`,
+//     html: `
+//       <div style="font-family: Arial, sans-serif; padding: 20px;">
+//         <h2>Account Authentication</h2>
+//         <p>Your OTP is: <strong style="font-size: 24px; color: #4CAF50;">${otp}</strong></p>
+//         <p>This OTP is valid for 15 minutes.</p>
+//       </div>
+//     `,
+//  });
+await sgMail.send({
     to: user.email,
+    from: process.env.SENDGRID_FROM_EMAIL!,
     subject: "User Account Authentication OTP",
     text: `Your OTP is ${otp}. This OTP is valid for 15 minutes.`,
     html: `
-      <div style="font-family: Arial, sans-serif; padding: 20px;">
+      <div style="font-family: Arial, sans-serif; padding:20px;">
         <h2>Account Authentication</h2>
-        <p>Your OTP is: <strong style="font-size: 24px; color: #4CAF50;">${otp}</strong></p>
+
+        <p>Your OTP is:</p>
+
+        <h1 style="color:#22c55e;">
+          ${otp}
+        </h1>
+
         <p>This OTP is valid for 15 minutes.</p>
       </div>
     `,
-  });
+});
 
 console.log("After mail sent ");
-//console.log(info);
+// console.log(info);
 
     return res.status(200).json({
       success: true,
