@@ -296,8 +296,6 @@ export const empLogin = async (req: Request, res: Response) => {
 
 
 export const getEmpDetail = async (req: Request, res: Response) => {
-    //console.log("This is getEmpDetails (user.constrollers) ")
-
     const token = req.cookies.token ;
     if(!token) {
         return res.json ({

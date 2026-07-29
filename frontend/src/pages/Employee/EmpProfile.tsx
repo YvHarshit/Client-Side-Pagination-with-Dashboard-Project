@@ -137,12 +137,12 @@ const EmpDashboard = () => {
 
   const handleLogout = async() => {
     try {
-      const {data} = await axios.post(`${backendUrl}/user/emplogout`)
+      const {data} = await axios.post(`${backendUrl}/api/user/emplogout`)
 
       if(data.success){
         toast.success("Logout Successfully")
         navigate("/emp-login")
-        console.log("Calling from handlelogout")
+        // console.log("Calling from handlelogout")
       }
       
     } catch (error) {
@@ -153,8 +153,8 @@ const EmpDashboard = () => {
   }
 
   console.log("Employee Details:", empDetails);
-console.log("Gender:", empDetails?.gender);
-console.log("Experience:", empDetails?.experience);
+  console.log("Gender:", empDetails?.gender);
+  console.log("Experience:", empDetails?.experience);
 
 
 
