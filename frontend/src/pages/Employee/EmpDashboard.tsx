@@ -8,17 +8,7 @@ import { getAttendanceHistory } from "../../services/attendanceServices";
 import { getMyLeaves } from "../../services/leaveServices";
 import EmpNavbar from "./EmpNavbar";
 import {EventAvailableRounded, FactCheckRounded, Inventory2Rounded, PendingActionsRounded} from "@mui/icons-material";
-
-const TOTAL_LEAVE_ALLOWANCE = 24;
-const UPCOMING_HOLIDAYS = [
-  { name: "Independence Day", date: "2026-08-15" },
-  { name: "Gandhi Jayanti", date: "2026-10-02" },
-  { name: "Diwali", date: "2026-11-08" },
-];
-const ANNOUNCEMENTS = [
-  { title: "Office closed for maintenance", message: "The office will be closed on 25th July for AC maintenance.", date: "2026-07-18" },
-  { title: "New HR policy", message: "Updated leave policy is now live — check your email for details.", date: "2026-07-10" },
-];
+import { TOTAL_LEAVE_ALLOWANCE, UPCOMING_HOLIDAYS, ANNOUNCEMENTS } from "../../utils/constants";
 
 
 const MainEmpDas = () => {

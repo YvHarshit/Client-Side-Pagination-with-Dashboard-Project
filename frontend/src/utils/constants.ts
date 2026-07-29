@@ -1,3 +1,19 @@
+
+export const TOTAL_LEAVE_ALLOWANCE = 24;
+export const UPCOMING_HOLIDAYS = [
+  { name: "Independence Day", date: "2026-08-15" },
+  { name: "Gandhi Jayanti", date: "2026-10-02" },
+  { name: "Diwali", date: "2026-11-08" },
+];
+export const ANNOUNCEMENTS = [
+  { title: "Office closed for maintenance", message: "The office will be closed on 25th July for AC maintenance.", date: "2026-07-18" },
+  { title: "New HR policy", message: "Updated leave policy is now live — check your email for details.", date: "2026-07-10" },
+];
+
+
+
+
+
 export enum DEPARTMENT {
   SDE = "SDE",
   AIML = "AI/ML",
