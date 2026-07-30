@@ -7,6 +7,7 @@ import authRouter from "./routes/auth.routes.js";
 import cookieParser from "cookie-parser";
 import "./cron/lateMarkCron.js"
 import "./cron/autoCheckoutCron.js"
+import cronRoutes from "./routes/cron.routes.js";
 
 dotenv.config();
 const app: Application = express();
@@ -25,6 +26,7 @@ app.use(
 
 app.use("/api", userRoutes);
 app.use("/api/auth", authRouter);
+app.use("/api/cron", cronRoutes);
 
 mongoose.connect(process.env.MONGO_URL as string)
   .then(() => console.log("MongoDB Connected"))

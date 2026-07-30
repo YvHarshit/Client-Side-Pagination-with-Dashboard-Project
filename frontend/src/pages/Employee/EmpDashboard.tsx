@@ -9,6 +9,7 @@ import { getMyLeaves } from "../../services/leaveServices";
 import EmpNavbar from "./EmpNavbar";
 import {EventAvailableRounded, FactCheckRounded, Inventory2Rounded, PendingActionsRounded} from "@mui/icons-material";
 import { TOTAL_LEAVE_ALLOWANCE, UPCOMING_HOLIDAYS, ANNOUNCEMENTS } from "../../utils/constants";
+import axios from "axios";
 
 
 const MainEmpDas = () => {
@@ -44,10 +45,22 @@ const MainEmpDas = () => {
   fetchDashboardData();
 }, [backendUrl]);
 
-  const handleLogout = () => {
-    setOpenSidebar(false);
-    navigate("/emp-login");
-  };
+  const handleLogout = async() => {
+    try {
+      const {data} = await axios.post(`${backendUrl}/api/user/emplogout`)
+
+      if(data.success){
+        toast.success("Logout Successfully")
+        navigate("/emp-login")
+        // console.log("Calling from handlelogout")
+      }
+      
+    } catch (error) {
+      if (axios.isAxiosError(error))  toast.error(error.response?.data?.message);
+      else toast.error("Something went wrong");
+     }
+
+  }
 
   const todayStr = new Date().toISOString().split("T")[0];
   const todayRecord = attendance.find((a) => a.date?.startsWith(todayStr));
