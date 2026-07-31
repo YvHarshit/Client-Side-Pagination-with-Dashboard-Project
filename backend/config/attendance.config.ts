@@ -6,7 +6,7 @@ export const ATTENDANCE_CONFIG = {
     absentCheckHour: 14,
     absentCheckMinute: 10,
 
-    officeOverHour : 18 ,
-    officeOverMinute : 10 ,
+    officeOverHour : 13 ,
+    officeOverMinute : 25,
 
 };
