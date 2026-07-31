@@ -128,7 +128,7 @@ const AdminNavbar = ({ onAddEmployeeClick }: NavbarProps) => {
     </div>
 
       <button onClick={handleLogout}
-        className="mt-4 bg-red-500 rounded-md py-3 font-semibold">
+        className="mt-4 bg-red-500 rounded-md py-3 font-semibold cursor-pointer hover:bg-red-600 transition-colors">
         Logout </button>
   </div>
 </div>

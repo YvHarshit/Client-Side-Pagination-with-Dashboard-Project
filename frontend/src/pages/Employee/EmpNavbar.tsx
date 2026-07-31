@@ -3,17 +3,34 @@ import CloseIcon from '@mui/icons-material/Close';
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAppContext } from '../../context/AppContext'
+import { toast } from 'react-toastify';
+import axios from 'axios';
 
 const EmpNavbar = () => {
+
+  const {backendUrl} = useAppContext()
 
   const [openSidebar, setOpenSidebar] = useState(false);
   const { empDetails } = useAppContext();
   const navigate = useNavigate();
 
-  const handleLogout = () => {
-    setOpenSidebar(false);
-    navigate("/emp-login");
-  };
+ 
+  const handleLogout = async() => {
+    try {
+      const {data} = await axios.post(`${backendUrl}/api/user/emplogout`)
+
+      if(data.success){
+        toast.success("Logout Successfully")
+        navigate("/emp-login")
+      }
+      
+    } catch (error) {
+      if (axios.isAxiosError(error))  toast.error(error.response?.data?.message);
+      else toast.error("Something went wrong");
+     }
+
+  }
+
 
   return (
  <div className = "font-serif">
@@ -27,9 +44,6 @@ const EmpNavbar = () => {
         <MenuIcon className="text-lime-500" style={{fontSize : 30}}/>
        </button>
 
-       {/* <div>
-        <h1 className="text-3xl font-bold text-white"> Employee Dashboard </h1>
-       </div> */}
       </div>
 
       <div className="flex items-center gap-3">

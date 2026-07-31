@@ -9,7 +9,7 @@ import { getMyLeaves } from "../../services/leaveServices";
 import EmpNavbar from "./EmpNavbar";
 import {EventAvailableRounded, FactCheckRounded, Inventory2Rounded, PendingActionsRounded} from "@mui/icons-material";
 import { TOTAL_LEAVE_ALLOWANCE, UPCOMING_HOLIDAYS, ANNOUNCEMENTS } from "../../utils/constants";
-import axios from "axios";
+
 
 
 const MainEmpDas = () => {
@@ -45,22 +45,6 @@ const MainEmpDas = () => {
   fetchDashboardData();
 }, [backendUrl]);
 
-  const handleLogout = async() => {
-    try {
-      const {data} = await axios.post(`${backendUrl}/api/user/emplogout`)
-
-      if(data.success){
-        toast.success("Logout Successfully")
-        navigate("/emp-login")
-        // console.log("Calling from handlelogout")
-      }
-      
-    } catch (error) {
-      if (axios.isAxiosError(error))  toast.error(error.response?.data?.message);
-      else toast.error("Something went wrong");
-     }
-
-  }
 
   const todayStr = new Date().toISOString().split("T")[0];
   const todayRecord = attendance.find((a) => a.date?.startsWith(todayStr));
@@ -299,59 +283,8 @@ const MainEmpDas = () => {
             <CloseIcon className="text-white"/>
           </button>
         </div>
-
-  <div className="mt-8">
-   <div className="w-16 h-16 rounded-full bg-[#171f11] flex items-center justify-center text-[#a8d96c] text-2xl font-bold">
-    {empDetails?.name?.[0]?.toUpperCase()}
-    </div>
-     <h2 className="mt-3 text-xl text-white"> {empDetails?.name || "Employee"} </h2>
-     <p className="text-sm text-gray-800"> Employee </p>
-   </div> 
-   <div className="mt-10 space-y-2 overflow-y-auto flex-1">
-    <button onClick={() => setOpenSidebar(false)} className="w-full text-left px-4 py-3 rounded-md hover:bg-[#3a5035]">
-     Dashboard  </button>
-    <button onClick={() => {
-      setOpenSidebar(false);
-      navigate("/profile");  }}
-      className="w-full text-left px-4 py-3 rounded-md hover:bg-[#3a5035]">
-       My Profile </button>
-      <button onClick={() => {
-        setOpenSidebar(false);
-        navigate("/emp/apply-leave");
-        }}
-        className="w-full text-left px-4 py-3 rounded-md hover:bg-[#3a5035]">
-        Apply Leave
-      </button>
-
-      <button onClick={() => {
-        setOpenSidebar(false);
-        navigate("/emp/my-leaves");
-        }}
-        className="w-full text-left px-4 py-3 rounded-md hover:bg-[#3a5035]">
-         My Leaves </button>
-
-      <button onClick={() => {
-        setOpenSidebar(false);
-        navigate("/emp/attendance");
-        }}
-        className="w-full text-left px-4 py-3 rounded-md hover:bg-[#3a5035]">
-        Attendance </button>
-
-      {/* <button onClick={() => {
-        setOpenSidebar(false);
-        navigate("/emp/calender");
-        }}
-        className="w-full text-left px-4 py-3 rounded-md hover:bg-[#3a5035]">
-        Attendance Calendar </button> */}
-
-    </div>
-
-      <button onClick={handleLogout}
-        className="mt-4 bg-red-500 rounded-md py-3 font-semibold">
-        Logout  </button>
-
+        </div>   
       </div>
-    </div>
   );
 };
 
