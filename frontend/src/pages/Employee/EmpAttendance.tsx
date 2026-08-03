@@ -6,6 +6,7 @@ import { useAppContext } from "../../context/AppContext";
 import type {Attendance} from "../../types/user.types"
 import { checkIn, checkOut, getAttendanceHistory } from "../../services/attendanceServices";
 import EmpNavbar from "./EmpNavbar";
+import { Icon } from "@iconify/react";
 
 
 const EmpAttendance = () => {
@@ -77,10 +78,22 @@ const EmpAttendance = () => {
     }
   };
 
-  if (loading) {
-    return ( <div className="text-center mt-20 text-xl">  Loading Attendance... </div>
-    );
-  }
+
+if (loading) {
+  return (
+    <div className="min-h-screen bg-[#0A0F0A] flex flex-col justify-center items-center gap-4">
+      <Icon
+        icon="svg-spinners:bars-rotate-fade"
+        className="text-white"
+        width="60"
+        height="60"
+      />
+      <p className="text-gray-300 font-serif text-lg">
+        Loading Attendance...
+      </p>
+    </div>
+  );
+}
 
   const calculateWorkHours = (checkIn: string, checkOut?: string): string => {
     if (!checkIn || !checkOut) return "-";

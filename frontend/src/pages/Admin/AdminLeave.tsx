@@ -6,6 +6,7 @@ import TaskAltIcon from "@mui/icons-material/TaskAlt";
 import type { Leave } from "../../types/user.types";
 import { leaveToAdmin, updateLeaveStatus } from "../../services/leaveServices";
 import AdminNavbar from "./AdminNavbar";
+ import { Icon } from "@iconify/react";
 
 
 
@@ -43,13 +44,23 @@ const AdminLeave = () => {
     }
   };
 
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-[#0A0F0A] flex justify-center items-center text-gray-300 font-serif text-lg">
+ 
+
+if (loading) {
+  return (
+    <div className="min-h-screen bg-[#0A0F0A] flex flex-col justify-center items-center gap-4">
+      <Icon
+        icon="svg-spinners:bars-rotate-fade"
+        className="text-white"
+        width="60"
+        height="60"
+      />
+      <p className="text-gray-300 font-serif text-lg">
         Loading...
-      </div>
-    );
-  }
+      </p>
+    </div>
+  );
+}
 
   const formatDate = (date: string) => new Date(date).toLocaleDateString("en-IN");
 

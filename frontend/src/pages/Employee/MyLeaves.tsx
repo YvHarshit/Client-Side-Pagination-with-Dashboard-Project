@@ -5,6 +5,7 @@ import type { Leave } from "../../types/user.types";
 import { getMyLeaves } from "../../services/leaveServices";
 import { useAppContext } from "../../context/AppContext";
 import EmpNavbar from "./EmpNavbar";
+import { Icon } from "@iconify/react";
 
 const MyLeaves = () => {
   const {backendUrl} = useAppContext() ;
@@ -30,13 +31,22 @@ const MyLeaves = () => {
     }
   };
 
-  if (loading) {
-    return (
-      <div className="text-center mt-20 text-white text-xl">
-        Loading...
-      </div>
-    );
-  }
+
+if (loading) {
+  return (
+    <div className="min-h-screen bg-[#0A0F0A] flex flex-col justify-center items-center gap-4">
+      <Icon
+        icon="svg-spinners:bars-rotate-fade"
+        className="text-white"
+        width="60"
+        height="60"
+      />
+      <p className="text-gray-300 font-serif text-lg">
+        Data Loading...
+      </p>
+    </div>
+  );
+}
 
   const formatDate = (date: string) => new Date(date).toLocaleDateString("en-IN");
 
